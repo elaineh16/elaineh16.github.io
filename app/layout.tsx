@@ -16,9 +16,9 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Alex Chen | Operations Research Engineer",
+  title: "Elaine Hong | Operations Research Engineer",
   description:
-    "Tech-focused portfolio of Alex Chen, Operations Research Engineering student at Cornell, showcasing optimization algorithms, data science projects, and innovative technical solutions",
+    "Tech-focused portfolio of Elaine Hong, Operations Research Engineering student at Cornell, showcasing optimization algorithms, data science projects, and innovative technical solutions",
   generator: "v0.app",
 }
 

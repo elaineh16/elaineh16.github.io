@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import {
   ArrowRight,
   Github,
-  Linkedin,
+  LinkedinIcon,
   Mail,
   ExternalLink,
   BarChart3,
@@ -557,14 +557,14 @@ export default function Portfolio() {
               className="text-lg px-8 hover-lift hover-neon bg-white text-primary hover:bg-white/90 font-mono"
             >
               <Mail className="h-5 w-5 mr-2" />
-              elaine.hong@cornell.edu
+              eh698@cornell.edu
             </Button>
             <Button
               variant="outline"
               size="lg"
               className="text-lg px-8 border-white text-white hover:bg-white hover:text-primary bg-transparent hover-lift hover-neon font-mono"
             >
-              <Linkedin className="h-5 w-5 mr-2" />
+              <LinkedinIcon className="h-5 w-5 mr-2" />
               ./linkedin
             </Button>
             <Button
@@ -589,13 +589,13 @@ export default function Portfolio() {
             © 2024 Operations Research Professional Portfolio. All rights reserved.
           </div>
           <div className="flex gap-4">
-            <Button variant="ghost" size="sm" className="hover-lift">
-              <Linkedin className="h-4 w-4" />
+            <Button variant="outline" size="sm" className="hover-lift text-foreground border-foreground/20 hover:bg-foreground/5">
+              <LinkedinIcon className="h-4 w-4" />
             </Button>
-            <Button variant="ghost" size="sm" className="hover-lift">
+            <Button variant="outline" size="sm" className="hover-lift text-foreground border-foreground/20 hover:bg-foreground/5">
               <Github className="h-4 w-4" />
             </Button>
-            <Button variant="ghost" size="sm" className="hover-lift">
+            <Button variant="outline" size="sm" className="hover-lift text-foreground border-foreground/20 hover:bg-foreground/5">
               <Mail className="h-4 w-4" />
             </Button>
           </div>
