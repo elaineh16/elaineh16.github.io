@@ -116,52 +116,12 @@ export default function Portfolio() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
-                title: "Supply Chain Optimization",
-                result: "Reduced logistics costs by 23% ($2.1M savings)",
-                tags: ["Linear Programming", "Cost Reduction", "Python"],
+                title: "AI-Powered Image Generation Automation Website",
+                result: "Increased content production speed by ~40%",
+                tags: ["Python", "Next.js", "Forge UI", "Stable Diffusion API"],
                 gradient: "from-primary/20 to-secondary/20",
                 accentColor: "primary",
-                code: "optimize_supply_chain()",
-              },
-              {
-                title: "Inventory Management System",
-                result: "18% holding cost reduction, 99.2% service level",
-                tags: ["Stochastic Models", "Inventory Control", "R"],
-                gradient: "from-secondary/20 to-accent/20",
-                accentColor: "secondary",
-                code: "manage_inventory()",
-              },
-              {
-                title: "Production Scheduling",
-                result: "15% efficiency gain, 30% overtime reduction",
-                tags: ["MIP", "Production Planning", "CPLEX"],
-                gradient: "from-accent/20 to-primary/20",
-                accentColor: "accent",
-                code: "schedule_production()",
-              },
-              {
-                title: "Demand Forecasting Model",
-                result: "25% improvement in prediction accuracy",
-                tags: ["Machine Learning", "Forecasting", "Scikit-learn"],
-                gradient: "from-primary/20 to-accent/20",
-                accentColor: "primary",
-                code: "forecast_demand()",
-              },
-              {
-                title: "Route Optimization",
-                result: "20% fuel savings, 12% faster deliveries",
-                tags: ["VRP", "Algorithms", "Optimization"],
-                gradient: "from-secondary/20 to-primary/20",
-                accentColor: "secondary",
-                code: "optimize_routes()",
-              },
-              {
-                title: "Risk Assessment Framework",
-                result: "Portfolio analysis for $50M+ investments",
-                tags: ["Monte Carlo", "Risk Management", "Finance"],
-                gradient: "from-accent/20 to-secondary/20",
-                accentColor: "accent",
-                code: "assess_risk()",
+                code: "generate_ai_images()",
               },
             ].map((project, index) => (
               <div key={index} className={`opacity-0 animate-scale-in animate-delay-${(index % 3) * 100 + 200}`}>
@@ -218,19 +178,17 @@ export default function Portfolio() {
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
                 I'm a Cornell ORIE student passionate about solving complex optimization problems with real-world
-                impact. My experience spans supply chain analytics, machine learning, and operations research, with a
-                track record of delivering measurable results for Fortune 500 companies. When I'm not optimizing
-                algorithms, you'll find me competing in D1 fencing or exploring the latest developments in AI and data
+                impact. My experience sg the latest developments in AI and data
                 science. I thrive on turning complex data into actionable insights that drive business decisions.
               </p>
             </div>
-            <div className="opacity-0 animate-slide-in-right">
-              <div className="aspect-square bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20 rounded-lg overflow-hidden hover-lift p-2">
-                <div className="w-full h-full bg-gradient-to-br from-card to-background rounded-lg overflow-hidden">
-                  <img src="/elaine-headshot.jpg" alt="Elaine Hong headshot" className="w-full h-full object-cover" />
+                          <div className="opacity-0 animate-slide-in-right">
+                <div className="aspect-[4/5] bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20 rounded-lg overflow-hidden hover-lift p-2">
+                  <div className="w-full h-full bg-gradient-to-br from-card to-background rounded-lg overflow-hidden">
+                    <img src="/elaine-headshot.jpg" alt="Elaine Hong headshot" className="w-full h-full object-cover" />
+                  </div>
                 </div>
               </div>
-            </div>
           </div>
         </div>
       </section>
@@ -316,52 +274,12 @@ export default function Portfolio() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
-                title: "Supply Chain Cost Optimization",
+                title: "AI-Powered Image Generation Automation Website",
                 description:
-                  "Reduced logistics costs by 23% through multi-modal transportation optimization model, saving $2.1M annually for Fortune 500 client",
-                image: "/supply-chain-network.png",
-                tags: ["Cost Reduction", "Linear Programming", "ROI: 340%"],
-                impact: "$2.1M Annual Savings",
-              },
-              {
-                title: "Inventory Management System",
-                description:
-                  "Implemented dynamic inventory control reducing holding costs by 18% while maintaining 99.2% service level across 50+ locations",
-                image: "/analytics-dashboard.png",
-                tags: ["Inventory Control", "Stochastic Models", "Service Level: 99.2%"],
-                impact: "18% Cost Reduction",
-              },
-              {
-                title: "Production Scheduling Optimization",
-                description:
-                  "Developed mixed-integer programming model increasing production efficiency by 15% and reducing overtime costs by 30%",
-                image: "/optimization-model-visualization.png",
-                tags: ["MIP", "Production Planning", "Efficiency +15%"],
-                impact: "30% Overtime Reduction",
-              },
-              {
-                title: "Demand Forecasting Model",
-                description:
-                  "Built ML-powered forecasting system improving prediction accuracy by 25%, enabling better resource allocation and planning",
-                image: "/placeholder-nd9nj.png",
-                tags: ["Machine Learning", "Forecasting", "Accuracy +25%"],
-                impact: "25% Better Accuracy",
-              },
-              {
-                title: "Route Optimization Algorithm",
-                description:
-                  "Designed vehicle routing solution reducing fuel consumption by 20% and improving delivery times by 12% for logistics company",
-                image: "/fitness-app-ui.png",
-                tags: ["VRP", "Fuel Efficiency", "Time Savings"],
-                impact: "20% Fuel Savings",
-              },
-              {
-                title: "Risk Assessment Framework",
-                description:
-                  "Created Monte Carlo simulation model for portfolio risk analysis, enabling data-driven investment decisions worth $50M+",
+                  "Developed a web platform to automate AI-based image generation for a gaming company, integrating Stable Diffusion with a streamlined Forge UI backend. Implemented prompt optimization, model switching, and API integration to improve output quality and consistency.",
                 image: "/web-app-interface.png",
-                tags: ["Monte Carlo", "Risk Management", "Portfolio: $50M+"],
-                impact: "$50M+ Portfolio",
+                tags: ["Python", "Next.js", "Forge UI", "Production +40%"],
+                impact: "40% Production Increase",
               },
             ].map((project, index) => (
               <div key={index} className={`opacity-0 animate-scale-in animate-delay-${(index % 3) * 200 + 200}`}>
@@ -491,47 +409,7 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* Professional Recommendations */}
-      <section className="py-20 px-6 bg-muted/30">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="opacity-0 animate-fade-in-up">
-            <h2 className="text-4xl font-bold text-foreground mb-16">Professional Recommendations</h2>
-          </div>
-          <div className="grid md:grid-cols-2 gap-8">
-            {[
-              {
-                quote:
-                  "Delivered exceptional results on our supply chain optimization project. The 23% cost reduction exceeded our expectations and demonstrated strong analytical and problem-solving capabilities.",
-                author: "Sarah Chen, MBA",
-                role: "Director of Operations, LogiCorp",
-                company: "Fortune 500 Logistics Company",
-              },
-              {
-                quote:
-                  "Outstanding technical skills combined with business acumen. The inventory management system implementation was flawless and delivered immediate ROI. Highly recommend for complex optimization challenges.",
-                author: "Dr. Michael Rodriguez",
-                role: "VP of Supply Chain Analytics",
-                company: "Global Manufacturing Inc.",
-              },
-            ].map((testimonial, index) => (
-              <div key={index} className={`opacity-0 animate-scale-in animate-delay-${index * 200 + 200}`}>
-                <Card className="p-6 hover-lift transition-all-smooth h-full">
-                  <CardContent className="pt-6">
-                    <blockquote className="text-lg text-muted-foreground mb-6 italic leading-relaxed">
-                      "{testimonial.quote}"
-                    </blockquote>
-                    <div className="text-sm">
-                      <div className="font-semibold text-foreground">{testimonial.author}</div>
-                      <div className="text-primary font-medium">{testimonial.role}</div>
-                      <div className="text-muted-foreground">{testimonial.company}</div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+
 
       <section
         id="contact"
@@ -545,8 +423,8 @@ export default function Portfolio() {
 
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <div className="opacity-0 animate-fade-in-up">
-            <h2 className="text-4xl md:text-5xl font-sans font-bold mb-6 animate-neon-flicker">function contact</h2>
-            <p className="text-xl mb-8 opacity-90 leading-relaxed font-mono">
+            <h2 className="text-4xl md:text-5xl font-mono font-bold mb-6 animate-neon-flicker">Contact Information</h2>
+            <p className="text-xl mb-8 opacity-90 leading-relaxed font-mono text-red-500">
               // Ready to discuss optimization opportunities? Let's connect.
             </p>
           </div>
@@ -560,42 +438,47 @@ export default function Portfolio() {
               eh698@cornell.edu
             </Button>
             <Button
-              variant="outline"
+              variant="secondary"
               size="lg"
-              className="text-lg px-8 border-white text-white hover:bg-white hover:text-primary bg-transparent hover-lift hover-neon font-mono"
+              className="text-lg px-8 hover-lift hover-neon bg-white text-primary hover:bg-white/90 font-mono"
+              asChild
             >
-              <LinkedinIcon className="h-5 w-5 mr-2" />
-              ./linkedin
+              <a href="https://www.linkedin.com/in/elaine-hong-cornell" target="_blank" rel="noopener noreferrer">
+                <LinkedinIcon className="h-5 w-5 mr-2" />
+                ./linkedin
+              </a>
             </Button>
             <Button
-              variant="outline"
+              variant="secondary"
               size="lg"
-              className="text-lg px-8 border-white text-white hover:bg-white hover:text-primary bg-transparent hover-lift hover-neon font-mono"
+              className="text-lg px-8 hover-lift hover-neon bg-white text-primary hover:bg-white/90 font-mono"
             >
               <Github className="h-5 w-5 mr-2" />
               ./github
             </Button>
           </div>
           <div className="mt-8 opacity-0 animate-fade-in-up animate-delay-400">
-            <p className="font-mono text-accent text-lg">end</p>
+            <p className="font-mono text-accent text-lg"></p>
           </div>
         </div>
       </section>
 
       {/* Professional Footer */}
-      <footer className="py-8 px-6 bg-card border-t">
+      <footer className="py-6 px-6 bg-card border-t">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center">
           <div className="text-card-foreground mb-4 md:mb-0">
-            © 2024 Operations Research Professional Portfolio. All rights reserved.
+            © Elaine Hong 2025. All rights reserved.
           </div>
           <div className="flex gap-4">
-            <Button variant="outline" size="sm" className="hover-lift text-foreground border-foreground/20 hover:bg-foreground/5">
-              <LinkedinIcon className="h-4 w-4" />
+            <Button variant="secondary" size="sm" className="hover-lift" asChild>
+              <a href="https://www.linkedin.com/in/elaine-hong-cornell" target="_blank" rel="noopener noreferrer">
+                <LinkedinIcon className="h-4 w-4" />
+              </a>
             </Button>
-            <Button variant="outline" size="sm" className="hover-lift text-foreground border-foreground/20 hover:bg-foreground/5">
+            <Button variant="secondary" size="sm" className="hover-lift">
               <Github className="h-4 w-4" />
             </Button>
-            <Button variant="outline" size="sm" className="hover-lift text-foreground border-foreground/20 hover:bg-foreground/5">
+            <Button variant="secondary" size="sm" className="hover-lift">
               <Mail className="h-4 w-4" />
             </Button>
           </div>
