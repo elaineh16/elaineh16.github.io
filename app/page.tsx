@@ -177,9 +177,11 @@ export default function Portfolio() {
                 About
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                I'm a Cornell ORIE student passionate about solving complex optimization problems with real-world
-                impact. My experience sg the latest developments in AI and data
-                science. I thrive on turning complex data into actionable insights that drive business decisions.
+                Hi, I’m Elaine — a Cornell ORIE student who loves solving puzzles, whether that’s through 
+                optimization models, coding projects, or figuring out the best way to automate creative workflows.
+                When I’m not building tools or experimenting with data, you’ll probably find me fencing as part of Cornell’s
+                Division I team, exploring new ideas, or tinkering with side projects. I enjoy mixing logic with creativity 
+                and turning wild ideas into things that actually work.
               </p>
             </div>
                           <div className="opacity-0 animate-slide-in-right">
