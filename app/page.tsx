@@ -35,11 +35,11 @@ export default function Portfolio() {
             <a href="#skills" className="text-sm font-medium hover:text-primary transition-colors font-mono">
               Skills
             </a>
-            <a href="#resume" className="text-sm font-medium hover:text-primary transition-colors font-mono">
-              Resume
-            </a>
             <a href="#contact" className="text-sm font-medium hover:text-primary transition-colors font-mono">
               Contact
+            </a>
+            <a href="#resume" className="text-sm font-medium hover:text-primary transition-colors font-mono">
+              Resume
             </a>
             <Button variant="ghost" size="sm">
               <Sun className="h-4 w-4" />
@@ -96,6 +96,12 @@ export default function Portfolio() {
               variant="secondary"
               className="text-sm px-4 py-2 bg-gradient-to-r from-accent to-primary text-white font-mono neon-border"
             >
+              Engineering
+            </Badge>
+            <Badge
+              variant="secondary"
+              className="text-sm px-4 py-2 bg-gradient-to-r from-accent to-primary text-white font-mono neon-border"
+            >
               D1_Fencing.athlete
             </Badge>
           </div>
@@ -116,12 +122,28 @@ export default function Portfolio() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
+                title: "Trading Strategy Backtester",
+                result: "A full-stack tool for simulating and analyzing trading strategies with real market data",
+                tags: ["Python", "Pandas", "NumPy", "Next.js", "TypeScript"],
+                gradient: "from-secondary/20 to-accent/20",
+                accentColor: "secondary",
+                code: "backtest_strategy()",
+              },
+              {
                 title: "AI-Powered Image Generation Automation Website",
-                result: "Increased content production speed by ~40%",
+                result: "A web app that automates AI-powered game asset creation with Stable Diffusion",
                 tags: ["Python", "Next.js", "Forge UI", "Stable Diffusion API"],
                 gradient: "from-primary/20 to-secondary/20",
                 accentColor: "primary",
                 code: "generate_ai_images()",
+              },
+              {
+                title: "Opponent Intel Database",
+                result: "A centralized scouting platform for storing, searching, and annotating fencing opponent data",
+                tags: ["Python","Next.js", "Firebase", "Google Cloud"],
+                gradient: "from-accent/20 to-primary/20",
+                accentColor: "accent",
+                code: "opponents_db()",
               },
             ].map((project, index) => (
               <div key={index} className={`opacity-0 animate-scale-in animate-delay-${(index % 3) * 100 + 200}`}>
@@ -153,6 +175,7 @@ export default function Portfolio() {
                       variant="ghost"
                       size="sm"
                       className="text-primary hover:text-primary-foreground hover:bg-primary font-mono"
+                      onClick={() => document.getElementById("professional-experience")?.scrollIntoView({ behavior: "smooth" })}
                     >
                       read_more() →
                     </Button>
@@ -264,24 +287,37 @@ export default function Portfolio() {
       </section>
 
       {/* Professional Experience & Projects Section */}
-      <section className="py-20 px-6 bg-muted/30">
+      <section id="professional-experience" className="py-20 px-6 bg-muted/30">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16 opacity-0 animate-fade-in-up">
-            <h2 className="text-4xl font-bold text-foreground mb-4">Professional Experience & Projects</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Key projects and achievements demonstrating measurable business impact through operations research
-            </p>
+            <h2 className="text-4xl font-serif font-bold text-foreground mb-4">Professional Experience & Projects</h2>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
+                title: "Trading Strategy Backtester",
+                description:
+                  "Designed and implemented a production-grade platform that integrates Stable Diffusion with a Python backend to automate the generation of creative assets, including symbols, icons, and bonus art. Built an intuitive Next.js + Forge UI interface that enabled non-technical users to design and manage content workflows seamlessly. The solution streamlined asset production pipelines and improved output efficiency, increasing content generation speed by 40% while reducing dependency on manual design processes.",
+                image: "/analytics-dashboard.png",
+                tags: ["Next.js", "TypeScript", "Python", "Pandas", "NumPy", "Sharpe Ratio 1.8"],
+                impact: "12% Higher Returns",
+              },
+              {
                 title: "AI-Powered Image Generation Automation Website",
                 description:
-                  "Developed a web platform to automate AI-based image generation for a gaming company, integrating Stable Diffusion with a streamlined Forge UI backend. Implemented prompt optimization, model switching, and API integration to improve output quality and consistency.",
+                  "Developed a comprehensive backtesting platform integrating a Python backend for trade execution and portfolio performance computation with a Next.js + TypeScript frontend for visualization and parameter control. The system enabled efficient evaluation of strategies on historical data, supporting key metrics such as portfolio value, returns, and drawdowns. Demonstrated practical impact by achieving a Sharpe ratio of 1.8 and 12% higher returns compared to a buy-and-hold benchmark, providing a reliable framework for data-driven investment research.",
                 image: "/web-app-interface.png",
                 tags: ["Python", "Next.js", "Forge UI", "Production +40%"],
                 impact: "40% Production Increase",
+              },
+              {
+                title: "Opponent Intel Database",
+                description:
+                  "Engineered a full-stack web application with Next.js, Firebase, and Google Cloud to consolidate and streamline scouting operations for competitive fencing. The platform provided structured opponent profiles, tactical notes, and annotated bout videos, supported by a Firestore schema and RESTful API enabling sub-second search and automated summaries. Achieved 100% adoption within the training squad, with 12+ athletes leveraging the system to track over 50 opponents and improve preparation efficiency by 30%.",
+                image: "/web-app-interface.png",
+                tags: ["Next.js", "Firebase", "Google Cloud", "100% Adoption", "30% Efficiency"],
+                impact: "30% Prep Efficiency",
               },
             ].map((project, index) => (
               <div key={index} className={`opacity-0 animate-scale-in animate-delay-${(index % 3) * 200 + 200}`}>
