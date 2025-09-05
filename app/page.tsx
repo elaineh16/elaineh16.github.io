@@ -302,7 +302,7 @@ export default function Portfolio() {
                 title: "Trading Strategy Backtester",
                 description:
                   "Designed and implemented a production-grade platform that integrates Stable Diffusion with a Python backend to automate the generation of creative assets, including symbols, icons, and bonus art. Built an intuitive Next.js + Forge UI interface that enabled non-technical users to design and manage content workflows seamlessly. The solution streamlined asset production pipelines and improved output efficiency, increasing content generation speed by 40% while reducing dependency on manual design processes.",
-                image: "/analytics-dashboard.png",
+                image: "tradingbacktester.png",
                 tags: ["Next.js", "TypeScript", "Python", "Pandas", "NumPy", "Sharpe Ratio 1.8"],
                 impact: "12% Higher Returns",
               },
@@ -327,7 +327,7 @@ export default function Portfolio() {
                 <Card className="group hover-lift transition-all-smooth h-full">
                   <div className="aspect-video bg-gradient-to-br from-primary/5 to-secondary/10 overflow-hidden rounded-t-lg">
                     <img
-                      src={project.image || "/placeholder.svg"}
+                      src={project.image || "tradingbacktester.png"}
                       alt={project.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
