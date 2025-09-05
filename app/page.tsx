@@ -51,7 +51,7 @@ export default function Portfolio() {
         </div>
       </header>
 
-      <section className="min-h-[90vh] flex items-center justify-center px-6 bg-gradient-tech circuit-pattern relative overflow-hidden">
+      <section className="min-h-[90vh] flex items-center justify-center px-6 bg-background relative overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-20 left-10 w-32 h-32 bg-primary/10 rounded-lg animate-float circuit-pattern"></div>
           <div className="absolute bottom-20 right-10 w-24 h-24 bg-secondary/10 rounded-lg animate-float animate-delay-300 data-grid"></div>
@@ -80,9 +80,12 @@ export default function Portfolio() {
               variant="outline"
               size="lg"
               className="text-lg px-8 py-6 hover-lift neon-border hover-neon bg-transparent font-mono"
+              asChild
             >
-              <Download className="mr-2 h-5 w-5" />
-              download_resume.pdf
+              <a href="/elainehong_resume.pdf" download>
+                <Download className="mr-2 h-5 w-5" />
+                download_resume.pdf
+              </a>
             </Button>
           </div>
           <div className="opacity-0 animate-fade-in-up animate-delay-600 flex justify-center gap-3.5 items-center flex-row leading-7">
@@ -108,7 +111,7 @@ export default function Portfolio() {
         </div>
       </section>
 
-      <section id="projects" className="py-20 px-6 bg-gradient-subtle data-grid">
+      <section id="projects" className="py-20 px-6 bg-background">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16 opacity-0 animate-fade-in-up">
             <h2 className="text-4xl md:text-5xl font-sans font-bold text-foreground mb-4 bg-gradient-circuit bg-clip-text text-transparent">
@@ -187,7 +190,7 @@ export default function Portfolio() {
         </div>
       </section>
 
-      <section id="about" className="py-20 px-6 bg-white relative overflow-hidden">
+      <section id="about" className="py-20 px-6 bg-background relative overflow-hidden">
         <div className="absolute inset-0 overflow-hidden opacity-30">
           <div className="absolute top-10 right-10 w-40 h-40 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-3xl"></div>
           <div className="absolute bottom-10 left-10 w-32 h-32 bg-gradient-to-br from-accent/20 to-primary/20 rounded-full blur-2xl"></div>
@@ -210,7 +213,7 @@ export default function Portfolio() {
                           <div className="opacity-0 animate-slide-in-right">
                 <div className="aspect-[4/5] bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20 rounded-lg overflow-hidden hover-lift p-2">
                   <div className="w-full h-full bg-gradient-to-br from-card to-background rounded-lg overflow-hidden">
-                    <img src="/elaine-headshot.jpg" alt="Elaine Hong headshot" className="w-full h-full object-cover" />
+                    <img src="/IMG_9116.jpg" alt="Elaine Hong headshot" className="w-full h-full object-cover" />
                   </div>
                 </div>
               </div>
@@ -287,7 +290,7 @@ export default function Portfolio() {
       </section>
 
       {/* Professional Experience & Projects Section */}
-      <section id="professional-experience" className="py-20 px-6 bg-muted/30">
+      <section id="professional-experience" className="py-12 px-6 bg-background">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16 opacity-0 animate-fade-in-up">
             <h2 className="text-4xl font-serif font-bold text-foreground mb-4">Professional Experience & Projects</h2>
@@ -451,7 +454,7 @@ export default function Portfolio() {
 
       <section
         id="contact"
-        className="py-20 px-6 bg-gradient-circuit text-primary-foreground relative overflow-hidden circuit-pattern"
+        className="py-20 px-6 bg-background text-primary-foreground relative overflow-hidden"
       >
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-10 left-10 w-24 h-24 bg-white/10 rounded-lg animate-float circuit-pattern"></div>
