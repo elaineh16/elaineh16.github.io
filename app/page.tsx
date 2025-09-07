@@ -236,7 +236,6 @@ export default function Portfolio() {
                 <CardTitle className="text-lg mb-4 font-mono text-primary">optimization</CardTitle>
                 <div className="space-y-2 text-sm text-muted-foreground font-mono">
                   <div>linear_programming()</div>
-                  <div>cplex.solve()</div>
                   <div>mixed_integer_prog()</div>
                   <div>network_optimization()</div>
                 </div>
@@ -249,7 +248,6 @@ export default function Portfolio() {
                 <Brain className="h-8 w-8 text-secondary mx-auto mb-4" />
                 <CardTitle className="text-lg mb-4 font-mono text-secondary">machine_learning</CardTitle>
                 <div className="space-y-2 text-sm text-muted-foreground font-mono">
-                  <div>sklearn.fit()</div>
                   <div>statistical_analysis()</div>
                   <div>predictive_modeling()</div>
                   <div>data_visualization()</div>
@@ -263,10 +261,9 @@ export default function Portfolio() {
                 <Code2 className="h-8 w-8 text-accent mx-auto mb-4" />
                 <CardTitle className="text-lg mb-4 font-mono text-accent">development_stack</CardTitle>
                 <div className="space-y-2 text-sm text-muted-foreground font-mono">
-                  <div>python | r | sql</div>
-                  <div>tableau | power_bi</div>
-                  <div>git | docker</div>
-                  <div>aws | gcp</div>
+                  <div>python | java | typescript</div>
+                  <div>pandas | numpy</div>
+                  <div>git | next.js</div>
                 </div>
                 <div className="text-accent font-mono mt-4">end</div>
               </Card>
@@ -279,7 +276,6 @@ export default function Portfolio() {
                 <div className="space-y-2 text-sm text-muted-foreground font-mono">
                   <div>problem_solving()</div>
                   <div>project_management()</div>
-                  <div>client_communication()</div>
                   <div>team_leadership()</div>
                 </div>
                 <div className="text-accent font-mono mt-4">end</div>
@@ -315,10 +311,10 @@ export default function Portfolio() {
                 impact: "40% Production Increase",
               },
               {
-                title: "Opponent Intel Database",
+                title: "Fencing Opponent Intel Database",
                 description:
                   "Engineered a full-stack web application with Next.js, Firebase, and Google Cloud to consolidate and streamline scouting operations for competitive fencing. The platform provided structured opponent profiles, tactical notes, and annotated bout videos, supported by a Firestore schema and RESTful API enabling sub-second search and automated summaries. Achieved 100% adoption within the training squad, with 12+ athletes leveraging the system to track over 50 opponents and improve preparation efficiency by 30%.",
-                image: "/web-app-interface.png",
+                image: "fencing_analysis.png",
                 tags: ["Next.js", "Firebase", "Google Cloud", "100% Adoption", "30% Efficiency"],
                 impact: "30% Prep Efficiency",
               },
@@ -365,7 +361,7 @@ export default function Portfolio() {
       </section>
 
       {/* Technical Skills Section */}
-      <section className="py-20 px-6 bg-white">
+      <section className="py-20 px-6 bg-background">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16 opacity-0 animate-fade-in-up">
             <h2 className="text-4xl font-bold text-foreground mb-4">Technical Expertise</h2>
@@ -402,10 +398,10 @@ export default function Portfolio() {
                     Python
                   </Badge>
                   <Badge variant="outline" className="text-xs font-mono">
-                    R
+                    Java
                   </Badge>
                   <Badge variant="outline" className="text-xs font-mono">
-                    SQL
+                    TypeScript
                   </Badge>
                 </div>
               </Card>
@@ -435,10 +431,7 @@ export default function Portfolio() {
                 <CardTitle className="text-lg mb-3">Machine Learning</CardTitle>
                 <div className="space-y-2">
                   <Badge variant="outline" className="text-xs">
-                    Scikit-learn
-                  </Badge>
-                  <Badge variant="outline" className="text-xs">
-                    TensorFlow
+                    Numpy
                   </Badge>
                   <Badge variant="outline" className="text-xs">
                     Pandas
@@ -494,6 +487,7 @@ export default function Portfolio() {
               size="lg"
               className="text-lg px-8 hover-lift hover-neon bg-white text-primary hover:bg-white/90 font-mono"
             >
+              <a href="https://github.com/elaineh16" target="_blank" rel="noopener noreferrer"></a>
               <Github className="h-5 w-5 mr-2" />
               ./github
             </Button>
