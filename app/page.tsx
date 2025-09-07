@@ -79,7 +79,7 @@ export default function Portfolio() {
             <Button
               variant="outline"
               size="lg"
-              className="text-lg px-8 py-6 hover-lift neon-border hover-neon bg-transparent font-mono"
+              className="text-lg px-8 py-6 hover-lift neon-border hover-neon bg-background font-mono"
               asChild
             >
               <a href="/elainehong_resume.pdf" download>
@@ -365,42 +365,21 @@ export default function Portfolio() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16 opacity-0 animate-fade-in-up">
             <h2 className="text-4xl font-bold text-foreground mb-4">Technical Expertise</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Industry-standard tools and methodologies for delivering optimization solutions
-            </p>
           </div>
 
           <div className="grid md:grid-cols-4 gap-6">
             <div className="opacity-0 animate-slide-in-left">
               <Card className="hover-lift transition-all-smooth text-center p-6">
                 <Calculator className="h-8 w-8 text-primary mx-auto mb-4" />
-                <CardTitle className="text-lg mb-3">Optimization</CardTitle>
-                <div className="space-y-2">
-                  <Badge variant="outline" className="text-xs">
-                    CPLEX
-                  </Badge>
-                  <Badge variant="outline" className="text-xs">
-                    Gurobi
-                  </Badge>
-                  <Badge variant="outline" className="text-xs">
-                    AMPL
-                  </Badge>
-                </div>
-              </Card>
-            </div>
-
-            <div className="opacity-0 animate-fade-in-up animate-delay-200">
-              <Card className="hover-lift transition-all-smooth text-center p-6">
-                <Code2 className="h-8 w-8 text-primary mx-auto mb-4" />
                 <CardTitle className="text-lg mb-3">Programming</CardTitle>
                 <div className="space-y-2">
-                  <Badge variant="outline" className="text-xs font-mono">
+                  <Badge variant="outline" className="text-xs">
                     Python
                   </Badge>
-                  <Badge variant="outline" className="text-xs font-mono">
+                  <Badge variant="outline" className="text-xs">
                     Java
                   </Badge>
-                  <Badge variant="outline" className="text-xs font-mono">
+                  <Badge variant="outline" className="text-xs">
                     TypeScript
                   </Badge>
                 </div>
@@ -420,6 +399,24 @@ export default function Portfolio() {
                   </Badge>
                   <Badge variant="outline" className="text-xs">
                     Excel
+                  </Badge>
+                </div>
+              </Card>
+            </div>
+
+            <div className="opacity-0 animate-fade-in-up animate-delay-200">
+              <Card className="hover-lift transition-all-smooth text-center p-6">
+                <Code2 className="h-8 w-8 text-primary mx-auto mb-4" />
+                <CardTitle className="text-lg mb-3">Optimization</CardTitle>
+                <div className="space-y-2">
+                  <Badge variant="outline" className="text-xs font-mono">
+                    SciPy
+                  </Badge>
+                  <Badge variant="outline" className="text-xs font-mono">
+                    CPLEX
+                  </Badge>
+                  <Badge variant="outline" className="text-xs font-mono">
+                    cvxpy
                   </Badge>
                 </div>
               </Card>
@@ -511,7 +508,9 @@ export default function Portfolio() {
               </a>
             </Button>
             <Button variant="secondary" size="sm" className="hover-lift">
-              <Github className="h-4 w-4" />
+              <a href="https://github.com/elaineh16" target="_blank" rel="noopener noreferrer">
+                <Github className="h-4 w-4" />
+              </a>
             </Button>
             <Button variant="secondary" size="sm" className="hover-lift">
               <Mail className="h-4 w-4" />
