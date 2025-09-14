@@ -82,7 +82,7 @@ export default function Portfolio() {
               className="text-lg px-8 py-6 hover-lift neon-border hover-neon bg-background font-mono"
               asChild
             >
-              <a href="/elainehong_resume.pdf" download>
+              <a href="/elainehong_.pdf" download>
                 <Download className="mr-2 h-5 w-5" />
                 download_resume.pdf
               </a>
