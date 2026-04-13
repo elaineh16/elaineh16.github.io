@@ -4,25 +4,25 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Updated to white, red, and orange color palette */
-  --background: #ffffff; /* Clean white background */
-  --foreground: #1a1a1a; /* Dark text for readability */
-  --card: #fafafa; /* Light gray for cards */
-  --card-foreground: #1a1a1a; /* Dark text on cards */
-  --popover: #ffffff; /* White popover background */
-  --popover-foreground: #1a1a1a; /* Dark popover text */
+  /* Light (white) theme — red and orange accents */
+  --background: #ffffff;
+  --foreground: #1a1a1a;
+  --card: #ffffff;
+  --card-foreground: #1a1a1a;
+  --popover: #ffffff;
+  --popover-foreground: #1a1a1a;
   --primary: #dc2626; /* Bold red primary */
   --primary-foreground: #ffffff; /* White text on primary */
   --secondary: #ea580c; /* Orange secondary */
   --secondary-foreground: #ffffff; /* White text on secondary */
-  --muted: #f5f5f5; /* Light gray muted */
-  --muted-foreground: #6b7280; /* Gray muted text */
+  --muted: #f4f4f5;
+  --muted-foreground: #6b7280;
   --accent: #f97316; /* Bright orange accent */
   --accent-foreground: #ffffff; /* White text on accent */
   --destructive: #dc2626; /* Red for alerts */
   --destructive-foreground: #ffffff; /* White text on destructive */
   --border: #e5e7eb; /* Light gray borders */
-  --input: #f9fafb; /* Light gray input background */
+  --input: #ffffff;
   --ring: #dc2626; /* Red focus rings */
   --chart-1: #dc2626; /* Red for charts */
   --chart-2: #ea580c; /* Orange for charts */
@@ -30,7 +30,7 @@
   --chart-4: #fb923c; /* Light orange for charts */
   --chart-5: #b91c1c; /* Dark red for charts */
   --radius: 0.75rem; /* Rounded corners */
-  --sidebar: #fafafa; /* Light sidebar background */
+  --sidebar: #ffffff;
   --sidebar-foreground: #1a1a1a; /* Dark sidebar text */
   --sidebar-primary: #dc2626; /* Red sidebar highlights */
   --sidebar-primary-foreground: #ffffff; /* White sidebar primary text */
@@ -127,8 +127,11 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    color-scheme: light;
+  }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-white text-foreground;
   }
 }
 
