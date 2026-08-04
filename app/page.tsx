@@ -179,7 +179,7 @@ export default function Portfolio() {
 
         <div className="hero-visual" aria-hidden="true">
           <div className="portrait-frame">
-            <img src="/IMG_9116.jpg" alt="" />
+            <img src="/elaine-portrait.jpg" alt="" />
           </div>
           <div className="metric-card metric-one"><strong>Top 10%</strong><span>IMC Prosperity 4</span></div>
           <div className="metric-card metric-two"><strong>2× winner</strong><span>BigRed//Hacks</span></div>
