@@ -16,10 +16,9 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Elaine Hong | Operations Research Engineer",
+  title: "Elaine Hong | Software & Machine Learning Engineer",
   description:
-    "Tech-focused portfolio of Elaine Hong, Operations Research Engineering student at Cornell, showcasing optimization algorithms, data science projects, and innovative technical solutions",
-  generator: "v0.app",
+    "Portfolio of Elaine Hong, a Cornell Computer Science and Operations Research student building full-stack, machine learning, and quantitative systems.",
 }
 
 export default function RootLayout({
@@ -29,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} antialiased`}>
-      <body className="font-sans bg-white">{children}</body>
+      <body className="font-sans">{children}</body>
     </html>
   )
 }
