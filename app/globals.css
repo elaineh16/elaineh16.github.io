@@ -106,7 +106,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid var(--accent); outlin
 .split-heading > div { max-width: 720px; }
 .split-heading > a { display: inline-flex; align-items: center; gap: 7px; padding-bottom: 7px; border-bottom: 1px solid currentColor; font: 700 .8rem/1 var(--font-jetbrains-mono); white-space: nowrap; }
 .split-heading svg { width: 16px; }
-.project-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.project-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
 .project-card { min-height: 440px; padding: 28px; display: flex; flex-direction: column; border: 1px solid color-mix(in srgb, var(--background) 22%, transparent); background: color-mix(in srgb, var(--background) 5%, transparent); transition: transform .2s, border-color .2s; }
 .project-card:hover { transform: translateY(-5px); border-color: var(--accent); }
 .project-topline { display: flex; justify-content: space-between; font: 700 .75rem/1 var(--font-jetbrains-mono); opacity: .68; }

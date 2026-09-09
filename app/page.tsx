@@ -33,65 +33,57 @@ const experiences = [
     company: "FinMD",
     period: "Jun - Aug 2026",
     summary:
-      "Developed production underwriting and portfolio-management workflows using Next.js, TypeScript, Supabase, and PostgreSQL.",
+      "Architected production analytics and identity infrastructure across FinMD's SCOPE, PRISM, and RADAR products.",
     highlights: [
-      "Built tenant-authenticated APIs and PostgreSQL RPCs that prefill 10+ fields and improved form completion speed by 40%.",
-      "Implemented server-side pagination, filtering, and sorting for 1,000+ records, improving loading speed by 60%.",
+      "Migrated a live multi-product dashboard from mock data to tenant-scoped metrics with server-side aggregation.",
+      "Built PostgreSQL identity-resolution functions, enforced row-level security and ownership validation, and reduced p50 page-load latency by 60%.",
     ],
   },
   {
     role: "Machine Learning Engineer Intern",
     company: "Anote AI",
-    period: "Jun - Aug 2026",
+    period: "Jun - Aug 2025",
     summary:
-      "Built evaluation systems for financial-document question answering and product workflows for AI-powered outreach.",
+      "Evaluated retrieval-augmented generation systems for financial question answering and built high-throughput outreach automation.",
     highlights: [
-      "Tested RAG enhancements across 133 FinanceBench questions, measuring answer quality, numeric accuracy, latency, and cost.",
-      "Developed React and Redux workflows plus OAuth integrations for email and Slack.",
+      "Ran a seven-condition RAG ablation across 133 FinanceBench questions and prevented underperforming pipelines from reaching production.",
+      "Exposed a 10-16x underestimation of numeric accuracy in ROUGE-L, achieving 34.8% numerical Exact Match with semantic chunking.",
     ],
   },
   {
-    role: "Research Assistant",
+    role: "Undergraduate Research Assistant",
     company: "Cornell Engineering Undergraduate Research",
     period: "Aug 2025 - Jun 2026",
     summary:
-      "Evaluated how large language models reason about chess by benchmarking their decisions against Stockfish.",
+      "Built scalable infrastructure to evaluate how frontier language models reason about chess against Stockfish.",
     highlights: [
-      "Built Python pipelines covering 1,000+ positions and 200+ games.",
-      "Designed and evaluated 20+ prompting strategies to measure move quality and error rates.",
+      "Benchmarked 5+ frontier models across 10,000+ chess positions.",
+      "Designed ablation studies across 20+ prompting strategies over 200+ games to identify recurring failure modes.",
     ],
   },
 ]
 
 const projects = [
   {
-    title: "Algorithmic Trading System",
-    eyebrow: "Trading infrastructure",
+    title: "AI Asset Generation Platform",
+    eyebrow: "40% higher throughput",
     description:
-      "A modular trading backend with strategy execution, order management, real-time WebSocket market data, and portfolio updates.",
-    tags: ["Python", "FastAPI", "MySQL", "Redis", "Docker", "WebSockets"],
-  },
-  {
-    title: "IMC Prosperity 4",
-    eyebrow: "Top 10% globally",
-    description:
-      "Market-making strategies developed and backtested across simulated products, adapting pricing and risk to changing conditions.",
-    tags: ["Python", "Pandas", "NumPy", "Algorithmic Trading"],
+      "A full-stack Stable Diffusion platform that automates art-production workflows with task batching, caching, and asynchronous request handling.",
+    tags: ["Python", "Next.js", "Stable Diffusion", "REST APIs"],
   },
   {
     title: "Bear Escape",
     eyebrow: "BigRed//Hacks winner",
     description:
-      "An AI-powered rhythm game built in 36 hours, winning Best Use of Gemini and Best UI among 200+ participants.",
+      "An AI-powered multiplayer rhythm game with Gemini-generated beatmaps, OpenCV motion controls, and synchronized gameplay.",
     tags: ["React", "TypeScript", "Python", "Gemini API", "OpenCV", "SpaceTimeDB"],
   },
 ]
 
 const skillGroups = [
-  { label: "Languages", value: "Python, Java, C++, TypeScript, JavaScript, SQL, C" },
-  { label: "Frameworks", value: "FastAPI, React, Next.js, Redux, LangChain, Pandas, NumPy, OpenCV" },
-  { label: "Data & backend", value: "PostgreSQL, MySQL, Redis, Supabase, Firebase, SpaceTimeDB" },
-  { label: "Infrastructure", value: "AWS EC2, Docker, REST APIs, WebSockets, OAuth, Git, GitHub" },
+  { label: "Languages", value: "Python, C++, TypeScript, JavaScript, Java, SQL, C" },
+  { label: "Frameworks & AI", value: "React, Next.js, FastAPI, LangChain, RAG pipelines, LLM evaluation, Pandas, NumPy, OpenCV" },
+  { label: "Data & infrastructure", value: "PostgreSQL, MySQL, Supabase, Docker, AWS EC2, REST APIs, WebSockets, OAuth, Linux" },
 ]
 
 export default function Portfolio() {
@@ -159,7 +151,7 @@ export default function Portfolio() {
           <p className="kicker">Cornell engineer · Software & ML · NCAA athlete</p>
           <h1>I build systems that turn complex data into clear decisions.</h1>
           <p className="hero-intro">
-            I&apos;m Elaine Hong, a Cornell Computer Science and Operations Research student working across
+            I&apos;m Elaine Hong, a Cornell Computer Science and Operations Research dual-degree student working across
             full-stack engineering, machine learning, and quantitative systems.
           </p>
           <div className="button-row">
@@ -181,7 +173,7 @@ export default function Portfolio() {
           <div className="portrait-frame">
             <img src="/elaine-portrait.jpg" alt="" />
           </div>
-          <div className="metric-card metric-one"><strong>Top 10%</strong><span>IMC Prosperity 4</span></div>
+          <div className="metric-card metric-one"><strong>10,000+</strong><span>Chess positions evaluated</span></div>
           <div className="metric-card metric-two"><strong>2× winner</strong><span>BigRed//Hacks</span></div>
         </div>
       </section>
@@ -189,7 +181,7 @@ export default function Portfolio() {
       <section className="signal-strip" aria-label="Highlights">
         <div className="shell signal-grid">
           <div><BriefcaseBusiness /><span><strong>2 internships</strong> in software and ML</span></div>
-          <div><GraduationCap /><span><strong>Cornell Engineering</strong> Class of 2028</span></div>
+          <div><GraduationCap /><span><strong>Dual B.S. degrees</strong> Cornell Engineering '28</span></div>
           <div><Trophy /><span><strong>NCAA Division I</strong> varsity fencer</span></div>
         </div>
       </section>
@@ -244,12 +236,12 @@ export default function Portfolio() {
         <div className="about-copy">
           <p>
             I like problems where software, models, and people meet. Whether I&apos;m improving a production workflow,
-            evaluating a retrieval system, or adapting a trading strategy, I care about building the right thing and
+            evaluating a retrieval system, or designing production analytics, I care about building the right thing and
             proving that it performs.
           </p>
           <p>
             Outside the terminal, I compete on Cornell&apos;s Division I fencing team and serve as Conference Director
-            for the Society of Women Engineers at Cornell.
+            for the Society of Women Engineers at Cornell and Publicity Chair for the Cornell ORIE Club.
           </p>
         </div>
       </section>

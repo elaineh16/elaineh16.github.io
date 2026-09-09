@@ -18,7 +18,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Elaine Hong | Software & Machine Learning Engineer",
   description:
-    "Portfolio of Elaine Hong, a Cornell Computer Science and Operations Research student building full-stack, machine learning, and quantitative systems.",
+    "Portfolio of Elaine Hong, a Cornell Computer Science and Operations Research dual-degree student building full-stack and machine learning systems.",
 }
 
 export default function RootLayout({
