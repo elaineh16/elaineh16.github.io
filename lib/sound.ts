@@ -1,0 +1,62 @@
+// A soft menu click, synthesised with the Web Audio API (no audio files are shipped).
+
+let ctx: AudioContext | null = null
+
+export function playClick() {
+  try {
+    const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
+    ctx = ctx || new AC()
+    if (ctx.state === "suspended") void ctx.resume()
+    const t = ctx.currentTime + 0.005
+    const sr = ctx.sampleRate
+
+    const out = ctx.createGain()
+    out.gain.value = 0.5
+    const lp = ctx.createBiquadFilter()
+    lp.type = "lowpass"
+    lp.frequency.value = 2200
+    lp.Q.value = 0.5
+    out.connect(lp)
+    lp.connect(ctx.destination)
+
+    // Short, soft tick
+    const len = Math.floor(sr * 0.012)
+    const buf = ctx.createBuffer(1, len, sr)
+    const data = buf.getChannelData(0)
+    for (let i = 0; i < len; i++) data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3)
+    const src = ctx.createBufferSource()
+    src.buffer = buf
+    const bp = ctx.createBiquadFilter()
+    bp.type = "bandpass"
+    bp.frequency.value = 1600
+    bp.Q.value = 0.8
+    const ng = ctx.createGain()
+    ng.gain.value = 0.22
+    src.connect(bp)
+    bp.connect(ng)
+    ng.connect(out)
+    src.start(t)
+
+    // Hollow body of the click
+    const partials: [number, number, number, number][] = [
+      [880, 600, 0.26, 0.05],
+      [440, 360, 0.2, 0.045],
+    ]
+    for (const [f0, f1, peak, dur] of partials) {
+      const o = ctx.createOscillator()
+      o.type = "triangle"
+      o.frequency.setValueAtTime(f0, t)
+      o.frequency.exponentialRampToValueAtTime(f1, t + dur)
+      const g = ctx.createGain()
+      g.gain.setValueAtTime(0.0001, t)
+      g.gain.exponentialRampToValueAtTime(peak, t + 0.004)
+      g.gain.exponentialRampToValueAtTime(0.0001, t + dur)
+      o.connect(g)
+      g.connect(out)
+      o.start(t)
+      o.stop(t + dur + 0.01)
+    }
+  } catch {
+    // Audio is optional; ignore browsers that refuse it.
+  }
+}
