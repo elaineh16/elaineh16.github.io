@@ -1,30 +1,43 @@
-# Creative portfolio website
+# ELAINECRAFT
 
-*Automatically synced with your [v0.app](https://v0.app) deployments*
+Elaine Hong's personal site as a Minecraft-inspired game: a title screen over a pixelated Cornell campus view that changes with the seasons, and menus that open each part of the portfolio.
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/elainehong116-1996s-projects/v0-creative-portfolio-website)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/projects/DCy1c1lS5Cc)
+Live at **https://elaineh16.github.io**
 
-## Overview
+## Screens
 
-This repository will stay in sync with your deployed chats on [v0.app](https://v0.app).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app).
+| Menu | What's there |
+|---|---|
+| Singleplayer | About me, character, personal inventory |
+| Inventory | Projects (with category filters) and skills |
+| Advancements | Builder / Scholar / Athlete journey trees |
+| Realms | "Currently" panel and scrapbook |
+| Multiplayer | LinkedIn, GitHub, email, résumé |
+| Options | Season, weather, sound, achievements |
+| Quick View | One-page plain summary for recruiters |
 
-## Deployment
+Each screen has its own link (`/#inventory`, `/#advancements`, …), and the browser back button works.
 
-Your project is live at:
+## Editing content
 
-**[https://vercel.com/elainehong116-1996s-projects/v0-creative-portfolio-website](https://vercel.com/elainehong116-1996s-projects/v0-creative-portfolio-website)**
+All text, projects, links and stories live in **`data/content.ts`**. Anything still marked `[TODO …]` shows in a muted colour on the site so it's easy to find and fill in.
 
-## Build your app
+- Pixel art (icons, character, title logo): `lib/pixel-art.ts`
+- Season colours for the background: `lib/seasons.ts`
+- Background image: `public/backgrounds/campus.png` (128×128 pixelated). Replace it with your own photo for the public site.
+- Click sound (synthesised, no audio files): `lib/sound.ts`
 
-Continue building your app on:
+## Development
 
-**[https://v0.app/chat/projects/DCy1c1lS5Cc](https://v0.app/chat/projects/DCy1c1lS5Cc)**
+```bash
+npm install --legacy-peer-deps
+npm run dev      # http://localhost:3000
+npm run build    # static export to ./out
+```
 
-## How It Works
+Pushing to `main` deploys to GitHub Pages through `.github/workflows/nextjs.yml`.
 
-1. Create and modify your project using [v0.app](https://v0.app)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+## Credits
+
+- Font: [Monocraft](https://github.com/IdreesInc/Monocraft) by Idrees Hassan, SIL Open Font License 1.1 (`public/fonts/Monocraft-OFL.txt`).
+- Inspired by Minecraft. Not affiliated with Mojang or Microsoft. All art is original.
