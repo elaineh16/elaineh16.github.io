@@ -178,3 +178,31 @@ export function playSwish() {
     // Audio is optional.
   }
 }
+
+// A watery "plop" when the line lands or a fish bites.
+export function playSplash(strong = false) {
+  try {
+    const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
+    ctx = ctx || new AC()
+    if (ctx.state === "suspended") void ctx.resume()
+    const t = ctx.currentTime + 0.01
+    const len = Math.floor(ctx.sampleRate * (strong ? 0.35 : 0.2))
+    const buf = ctx.createBuffer(1, len, ctx.sampleRate)
+    const d = buf.getChannelData(0)
+    for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2)
+    const src = ctx.createBufferSource()
+    src.buffer = buf
+    const lp = ctx.createBiquadFilter()
+    lp.type = "lowpass"
+    lp.frequency.setValueAtTime(strong ? 2600 : 1400, t)
+    lp.frequency.exponentialRampToValueAtTime(300, t + (strong ? 0.3 : 0.18))
+    const g = ctx.createGain()
+    g.gain.value = strong ? 0.35 : 0.2
+    src.connect(lp)
+    lp.connect(g)
+    g.connect(ctx.destination)
+    src.start(t)
+  } catch {
+    // Audio is optional.
+  }
+}

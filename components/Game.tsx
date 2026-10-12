@@ -6,11 +6,12 @@ import { Background, Dialog, PixelIcon, Toast, Tooltip, ViewCount, Weather } fro
 import { Home } from "@/components/screens/Home"
 import { About, Arcade, Inventory, Multiplayer, QuickView } from "@/components/screens/Screens"
 import { Crafting } from "@/components/games/Crafting"
+import { Fishing } from "@/components/games/Fishing"
 import { SEASON_LIST, WEATHER, currentSeason, type Season } from "@/lib/seasons"
 import { playClick, playJingle } from "@/lib/sound"
 import { load, save } from "@/lib/storage"
 
-const SCREENS: ScreenId[] = ["home", "about", "inventory", "arcade", "crafting", "multiplayer", "quick"]
+const SCREENS: ScreenId[] = ["home", "about", "inventory", "arcade", "crafting", "fishing", "multiplayer", "quick"]
 
 function screenFromHash(): ScreenId {
   const h = window.location.hash.replace("#", "") as ScreenId
@@ -154,6 +155,7 @@ export default function Game() {
     save("ec.seen", {})
     save("ec.progress", EMPTY)
     save("ec.recipes", [])
+    save("ec.fish", [])
   }
   const onTitle = () => {
     setSpinning(false)
@@ -207,7 +209,7 @@ export default function Game() {
                 <h1>{SCREEN_TITLES[screen]}</h1>
               </div>
               <div style={{ width: 240, maxWidth: "100%" }}>
-                {screen === "crafting" ? (
+                {screen === "crafting" || screen === "fishing" ? (
                   <button type="button" className="mc-btn small" onClick={() => go("arcade")}>
                     Back to Arcade
                   </button>
@@ -227,6 +229,16 @@ export default function Game() {
                 onCraft={(n, total) => {
                   achieve("firstcraft")
                   if (n >= total) achieve("mastercrafter")
+                }}
+              />
+            ) : null}
+            {screen === "fishing" ? (
+              <Fishing
+                sound={sound}
+                onCatch={(c, n, total) => {
+                  achieve("firstcatch")
+                  if (c.rarity === "legendary") achieve("goldcatch")
+                  if (n >= total) achieve("fullbox")
                 }}
               />
             ) : null}
