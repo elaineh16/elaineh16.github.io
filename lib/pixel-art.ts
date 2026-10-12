@@ -149,7 +149,7 @@ export function drawBlockLogo(canvas: HTMLCanvasElement, word: string) {
 }
 
 // ---- Salute animation frames (20×32: the 16-wide sprite with 2 columns of room each side) ----
-export type SpriteFrame = "idle" | "front" | "up" | "down"
+export type SpriteFrame = "idle" | "front" | "up" | "down" | "lookleft"
 
 function frameRows(kind: SpriteFrame): string[] {
   // Start from the sprite without its épée (blade column and guard).
@@ -162,10 +162,14 @@ function frameRows(kind: SpriteFrame): string[] {
     if (row >= 0 && row < g.length && col + 2 >= 0 && col + 2 < 20) g[row][col + 2] = ch
   }
   // Eyes: glancing sideways while idle, looking at you otherwise.
+  // Eyes: "idle" glances right, "lookleft" glances left, the rest look at you.
   if (kind === "idle") {
     "SSEESSEE".split("").forEach((ch, k) => set(5, 4 + k, ch))
   }
-  if (kind === "idle" || kind === "front") {
+  if (kind === "lookleft") {
+    "EESSEESS".split("").forEach((ch, k) => set(5, 4 + k, ch))
+  }
+  if (kind === "idle" || kind === "front" || kind === "lookleft") {
     for (let r = 1; r <= 16; r++) set(r, 15, "B")
     set(17, 15, "g")
     set(18, 15, "g")
@@ -194,6 +198,7 @@ function frameRows(kind: SpriteFrame): string[] {
 
 export const SPRITE_FRAMES: Record<SpriteFrame, PixelMap> = {
   idle: [frameRows("idle"), SPRITE[1]],
+  lookleft: [frameRows("lookleft"), SPRITE[1]],
   front: [frameRows("front"), SPRITE[1]],
   up: [frameRows("up"), SPRITE[1]],
   down: [frameRows("down"), SPRITE[1]],
