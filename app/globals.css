@@ -574,12 +574,16 @@ strong, b { font-weight: 400; color: inherit; text-decoration: underline; text-d
    height and the jar fills the rest, scrolling inside itself so the page never grows. */
 .fortune .craft-side { display: flex; flex-direction: column; gap: 16px; }
 .fortune .craft-side > * { margin: 0; }
-.fortune .fortune-card { flex: 0 0 auto; height: 216px; min-height: 0; overflow: hidden; gap: 6px; padding-top: 12px; padding-bottom: 12px; }
+.fortune .fortune-card { flex: 0 0 auto; height: auto; min-height: 200px; gap: 6px; padding-top: 12px; padding-bottom: 12px; }
+.fortune .slip { padding: 10px 12px; }
+.fortune .slip-text { font-size: 16px; line-height: 1.4; margin-bottom: 6px; }
+.fortune .slip-text.long { font-size: 14px; }
+.fortune .slip-nums, .fortune .slip-learn { margin-bottom: 4px; }
 .fortune .recipe-book > .tab { align-self: flex-start; }
 .fortune .cookie-crack { width: 76px; height: 54px; flex: 0 0 auto; }
 .fortune .cookie-crack svg { width: 76px; height: 54px; }
-.fortune .recipe-book { flex: 1 1 0; min-height: 200px; display: flex; flex-direction: column; }
-.fortune .jar-list { flex: 1 1 0; min-height: 0; max-height: none; }
+.fortune .recipe-book { flex: 1 1 0; min-height: 170px; display: flex; flex-direction: column; }
+.fortune .jar-list { flex: 1 1 0; min-height: 110px; max-height: none; }
 @media (max-width: 760px) { .fortune .recipe-book { flex: 0 0 auto; height: 300px; } .fortune .fortune-card { height: auto; min-height: 230px; } }
 .wheel-stage { position: relative; width: min(340px, 100%); aspect-ratio: 1; margin: 6px auto 0; overflow: hidden; }
 .wheel-disc { position: absolute; inset: 14px 0 0; width: 100%; height: calc(100% - 14px); transition-property: transform; transition-timing-function: cubic-bezier(.12,.72,.17,1); will-change: transform; filter: drop-shadow(4px 6px 0 rgba(0,0,0,.35)); }
