@@ -196,7 +196,7 @@ export default function Game() {
 
       <main className="wrap">
         {screen === "home" ? (
-          <Home go={go} splash={splash} spinning={spinning} onTitle={onTitle} />
+          <Home go={go} splash={splash} spinning={spinning} onTitle={onTitle} sound={sound} />
         ) : (
           <>
             <div className="sub-head">

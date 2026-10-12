@@ -3,7 +3,8 @@
 import type React from "react"
 import { useEffect, useRef, useState } from "react"
 import { createPortal } from "react-dom"
-import { ICONS, SPRITE, drawBlockLogo, drawPixelMap, type IconName } from "@/lib/pixel-art"
+import { ICONS, SPRITE, SPRITE_FRAMES, drawBlockLogo, drawPixelMap, type IconName, type SpriteFrame } from "@/lib/pixel-art"
+import { playSwish } from "@/lib/sound"
 import { WEATHER, paintSeason, type Season } from "@/lib/seasons"
 
 export function PixelIcon({ name, size = 40 }: { name: IconName; size?: number }) {
@@ -29,6 +30,62 @@ export function Sprite({ scale = 5 }: { scale?: number }) {
       role="img"
       aria-label="Pixel-art Elaine in a red varsity jacket holding an épée"
     />
+  )
+}
+
+/**
+ * Clickable avatar: she turns to face you, raises her épée to her face,
+ * sweeps it down in a fencing salute, and hearts and sparkles float up.
+ */
+export function SalutingSprite({ scale = 7, sound = true, onSalute }: { scale?: number; sound?: boolean; onSalute?: () => void }) {
+  const ref = useRef<HTMLCanvasElement>(null)
+  const [frame, setFrame] = useState<SpriteFrame>("idle")
+  const [busy, setBusy] = useState(false)
+  const [burst, setBurst] = useState(0)
+  const [turning, setTurning] = useState(false)
+  const timers = useRef<ReturnType<typeof setTimeout>[]>([])
+
+  useEffect(() => {
+    if (ref.current) drawPixelMap(ref.current, SPRITE_FRAMES[frame])
+  }, [frame])
+  useEffect(() => () => timers.current.forEach(clearTimeout), [])
+
+  const salute = () => {
+    if (busy) return
+    setBusy(true)
+    onSalute?.()
+    const at = (ms: number, fn: () => void) => timers.current.push(setTimeout(fn, ms))
+    setTurning(true)
+    at(150, () => setFrame("front"))
+    at(320, () => setTurning(false))
+    at(420, () => {
+      setFrame("up")
+      setBurst((b) => b + 1)
+    })
+    at(980, () => {
+      setFrame("down")
+      if (sound) playSwish()
+    })
+    at(1600, () => setFrame("front"))
+    at(2600, () => {
+      setFrame("idle")
+      setBusy(false)
+    })
+  }
+
+  return (
+    <button type="button" className={"salute-btn" + (busy ? " busy" : "")} onClick={salute} aria-label="Elaine: click for a fencing salute" data-t1="Elaine Hong" data-t2="Click me!">
+      <canvas ref={ref} className={"pixel" + (turning ? " turning" : "")} width={20} height={32} style={{ width: 20 * scale, height: 32 * scale }} aria-hidden="true" />
+      {burst ? (
+        <span key={burst} className="salute-fx" aria-hidden="true">
+          <span className="fx heart h1" />
+          <span className="fx heart h2" />
+          <span className="fx spark s1" />
+          <span className="fx spark s2" />
+          <span className="fx spark s3" />
+        </span>
+      ) : null}
+    </button>
   )
 }
 
