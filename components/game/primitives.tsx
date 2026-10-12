@@ -4,7 +4,7 @@ import type React from "react"
 import { useEffect, useRef, useState } from "react"
 import { createPortal } from "react-dom"
 import { ICONS, SPRITE, SPRITE_FRAMES, blinkFrame, drawBlockLogo, drawPixelMap, type IconName, type SpriteFrame } from "@/lib/pixel-art"
-import { playSwish } from "@/lib/sound"
+import { playClick, playSwish } from "@/lib/sound"
 import { WEATHER, paintSeason, type Season } from "@/lib/seasons"
 
 export function PixelIcon({ name, size = 40 }: { name: IconName; size?: number }) {
@@ -37,7 +37,8 @@ export function Sprite({ scale = 5 }: { scale?: number }) {
  * Clickable avatar. At rest she faces you and now and then glances to one side.
  * Clicking her plays a fencing salute: épée up to the face, then swept down.
  */
-export function SalutingSprite({ scale = 7, sound = true, onSalute }: { scale?: number; sound?: boolean; onSalute?: () => void }) {
+/** The animated avatar: blinks, glances around, and does a move when clicked (a fencing salute or a wave). */
+export function SalutingSprite({ scale = 7, sound = true, onSalute, move = "salute" }: { scale?: number; sound?: boolean; onSalute?: () => void; move?: "salute" | "wave" }) {
   const ref = useRef<HTMLCanvasElement>(null)
   const [frame, setFrame] = useState<SpriteFrame>("front")
   const [blink, setBlink] = useState(false)
@@ -87,6 +88,15 @@ export function SalutingSprite({ scale = 7, sound = true, onSalute }: { scale?: 
     busy.current = true
     onSalute?.()
     const at = (ms: number, fn: () => void) => timers.current.push(setTimeout(fn, ms))
+    if (move === "wave") {
+      if (sound) playClick()
+      ;["waveA", "waveB", "waveA", "waveB", "waveA"].forEach((f, i) => at(i * 220, () => setFrame(f as SpriteFrame)))
+      at(1150, () => {
+        setFrame("front")
+        busy.current = false
+      })
+      return
+    }
     setFrame("front")
     at(120, () => setFrame("up"))
     at(700, () => {
@@ -100,7 +110,7 @@ export function SalutingSprite({ scale = 7, sound = true, onSalute }: { scale?: 
   }
 
   return (
-    <button type="button" className="salute-btn" onClick={salute} aria-label="Elaine: click for a fencing salute">
+    <button type="button" className="salute-btn" onClick={salute} aria-label={move === "wave" ? "Elaine: click to say hi" : "Elaine: click for a fencing salute"}>
       <canvas ref={ref} className="pixel" width={20} height={32} style={{ width: 20 * scale, height: 32 * scale }} aria-hidden="true" />
     </button>
   )

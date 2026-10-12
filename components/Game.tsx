@@ -228,7 +228,7 @@ export default function Game() {
                 )}
               </div>
             </div>
-            {screen === "about" ? <About onStory={(k) => collect("stories", k)} /> : null}
+            {screen === "about" ? <About onStory={(k) => collect("stories", k)} sound={sound} /> : null}
             {screen === "inventory" ? <Inventory selected={selected} onSelect={selectProject} /> : null}
             {screen === "arcade" ? <Arcade play={(id) => go(id as ScreenId)} /> : null}
             {screen === "crafting" ? (

@@ -17,14 +17,14 @@ import {
   type Category,
   type Project,
 } from "@/data/content"
-import { PixelIcon, Slot, Sprite, StaticSlot, Todo } from "@/components/game/primitives"
+import { SalutingSprite, PixelIcon, Slot, StaticSlot, Todo } from "@/components/game/primitives"
 import { Gallery, TopTracks } from "@/components/screens/Extras"
 import { TravelMap } from "@/components/screens/TravelMap"
 
 const projectById: Record<string, Project> = Object.fromEntries(PROJECTS.map((p) => [p.id, p]))
 
 /* ---------------- Singleplayer ---------------- */
-export function About({ onStory }: { onStory: (key: string) => void }) {
+export function About({ onStory, sound = true }: { onStory: (key: string) => void; sound?: boolean }) {
   const [tab, setTab] = useState<string>("about")
   const story = STORIES.find((s) => s.key === tab)
   return (
@@ -42,7 +42,7 @@ export function About({ onStory }: { onStory: (key: string) => void }) {
           </span>
         </div>
         <div className="sprite-box" style={{ padding: "12px 16px" }}>
-          <Sprite scale={7} />
+          <SalutingSprite scale={6} move="wave" sound={sound} />
         </div>
         <span className="px" style={{ fontSize: 20, color: "var(--ink)" }}>
           {PROFILE.name}
