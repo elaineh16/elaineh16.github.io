@@ -4,7 +4,7 @@
 export type IconName =
   | "laptop" | "knight" | "redstone" | "disc" | "book" | "chart" | "epee" | "coffee" | "passport"
   | "medal" | "paper" | "mail" | "stone" | "sign" | "map" | "camera" | "cards"
-  | "cod" | "salmon" | "matcha" | "banana" | "nametag" | "banner" | "chip" | "compass" | "stew" | "violin" | "boot" | "disc2" | "maple" | "goldepee" | "puffer" | "hat" | "ramen" | "git" | "heart" | "cookie"
+  | "cod" | "salmon" | "matcha" | "banana" | "nametag" | "banner" | "chip" | "compass" | "stew" | "violin" | "boot" | "disc2" | "maple" | "goldepee" | "puffer" | "hat" | "ramen" | "git" | "heart" | "cookie" | "blackcoffee"
 
 type PixelMap = [rows: string[], palette: Record<string, string>]
 
@@ -45,6 +45,7 @@ export const ICONS: Record<IconName, PixelMap> = {
   git: [[".DDDDDDDD.", "DDDDDDDDDD", "DDWWDDDWWD", "DDWWDDDWWD", "DDDWDDDWDD", "DDDWDDWDDD", "DDDWWWDDDD", "DDWWDDDDDD", "DDWWDDDDDD", ".DDDDDDDD."], { D: "#24292f", W: "#f0f6fc" }],
   heart: [["..........", ".RRR..RRR.", "RRwRRRRRRR", "RwRRRRRRRR", "RRRRRRRRRR", ".RRRRRRRr.", "..RRRRRr..", "...RRRr...", "....Rr....", ".........."], { R: "#e0365c", r: "#a8203f", w: "#ffd0dc" }],
   cookie: [["..........", "..........", "....TTTT..", "..TTttttT.", ".TtttttttT", ".TttttWttT", ".TtttTTttT", ".TttT..TtT", "..TT....T.", ".........."], { T: "#a8702e", t: "#e0b26a", W: "#fffaf0" }],
+  blackcoffee: [["......zzzz", "........z.", ".......z..", "......zzzz", ".kkkkkk...", ".KBBBBKKK.", ".KBbBBK.K.", ".KBBBBKKK.", ".KKKKKK...", "..KKKK...."], { K: "#3a3a44", k: "#6a6a78", B: "#1c120c", b: "#3a2618", z: "#c9d8ea" }],
   goldepee: [[".........S", "........S.", ".......S..", "......S...", ".....S....", "..ggS.....", "..gGg.....", ".H.gg.....", "H.........", ".........."], { S: "#ffe27a", G: "#b5862a", g: "#f2c94c", H: "#8a5a1a" }],
 }
 

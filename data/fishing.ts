@@ -20,7 +20,7 @@ export const CATCHES: Catch[] = [
   { id: "nametag", icon: "nametag", name: "Name Tag", rarity: "common", fact: "I am fluent in both English and Mandarin (perfectly bilingual?). I know a bit of French, and currently learning Russian on Duolingo." },
   { id: "lounge", icon: "banner", name: "Study Lounge Banner", rarity: "common", fact: "My favourite spot at Cornell is the Cocktail Lounge in Uris Library. It's a study space, I promise!" },
   { id: "chip", icon: "chip", name: "Poker Chip", rarity: "common", fact: "I play poker for fun. I love bluffing tho... it's a problem" },
-  { id: "compass", icon: "compass", name: "Compass", rarity: "common", fact: "I've logged 34 places across North America. Check the Map tab in Singleplayer." },
+  { id: "coffee", icon: "blackcoffee", name: "Black Coffee", rarity: "common", fact: "I love coffee (especially black) but caffeine makes me really sleepy" },
   { id: "soup", icon: "stew", name: "Bowl of Soup", rarity: "common", fact: "Soup is my comfort food. Any kind." },
   { id: "violin", icon: "violin", name: "Violin", rarity: "common", fact: "I played violin for 10 years. Can I still play tho?" },
   { id: "salmon", icon: "salmon", name: "Raw Salmon", rarity: "common", fact: "Cats love these. I can't pick between cats and dogs, so I love both." },
