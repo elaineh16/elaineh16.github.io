@@ -1,5 +1,6 @@
 "use client"
 
+import type React from "react"
 import { useEffect, useRef, useState } from "react"
 import { ICONS, SPRITE, drawBlockLogo, drawPixelMap, type IconName } from "@/lib/pixel-art"
 import { WEATHER, paintSeason, type Season } from "@/lib/seasons"
@@ -68,6 +69,7 @@ export function Slot({
   label,
   selected,
   dim,
+  enchanted,
   onClick,
 }: {
   icon: IconName
@@ -75,12 +77,13 @@ export function Slot({
   label: string
   selected?: boolean
   dim?: boolean
+  enchanted?: boolean
   onClick?: () => void
 }) {
   return (
     <button
       type="button"
-      className={"slot" + (selected ? " sel" : "") + (dim ? " dim" : "")}
+      className={"slot" + (selected ? " sel" : "") + (dim ? " dim" : "") + (enchanted ? " enchanted" : "")}
       aria-label={label}
       aria-pressed={selected}
       data-t1={tip.t1}
@@ -93,9 +96,9 @@ export function Slot({
   )
 }
 
-export function StaticSlot({ icon, size }: { icon: IconName; size?: number }) {
+export function StaticSlot({ icon, size, enchanted }: { icon: IconName; size?: number; enchanted?: boolean }) {
   return (
-    <span className="slot static">
+    <span className={"slot static" + (enchanted ? " enchanted" : "")}>
       <PixelIcon name={icon} size={size} />
     </span>
   )
@@ -216,6 +219,36 @@ export function Toast({ title, icon }: { title: string; icon: IconName }) {
           {title}
         </span>
       </span>
+    </div>
+  )
+}
+
+/** Minecraft-style modal window. Esc or the close button dismisses it. */
+export function Dialog({ title, onClose, children }: { title: string; onClose: () => void; children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const prev = document.activeElement as HTMLElement | null
+    ref.current?.querySelector<HTMLElement>("button")?.focus()
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose()
+    }
+    document.addEventListener("keydown", onKey)
+    return () => {
+      document.removeEventListener("keydown", onKey)
+      prev?.focus()
+    }
+  }, [onClose])
+  return (
+    <div className="dialog-backdrop" onClick={onClose}>
+      <div className="win dialog" role="dialog" aria-modal="true" aria-label={title} ref={ref} onClick={(e) => e.stopPropagation()}>
+        <div className="dialog-head">
+          <h2 className="px">{title}</h2>
+          <button type="button" className="dialog-x" onClick={onClose} aria-label="Close">
+            ×
+          </button>
+        </div>
+        <div className="dialog-body">{children}</div>
+      </div>
     </div>
   )
 }

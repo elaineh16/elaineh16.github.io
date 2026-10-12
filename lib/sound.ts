@@ -60,3 +60,36 @@ export function playClick() {
     // Audio is optional; ignore browsers that refuse it.
   }
 }
+
+// A short, soft three-note chime for achievement toasts.
+export function playJingle() {
+  try {
+    const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
+    ctx = ctx || new AC()
+    if (ctx.state === "suspended") void ctx.resume()
+    const t0 = ctx.currentTime + 0.02
+    const out = ctx.createGain()
+    out.gain.value = 0.18
+    out.connect(ctx.destination)
+    ;[659.25, 830.61, 987.77].forEach((f, i) => {
+      const t = t0 + i * 0.09
+      const o = ctx!.createOscillator()
+      o.type = "square"
+      o.frequency.value = f
+      const lp = ctx!.createBiquadFilter()
+      lp.type = "lowpass"
+      lp.frequency.value = 2400
+      const g = ctx!.createGain()
+      g.gain.setValueAtTime(0.0001, t)
+      g.gain.exponentialRampToValueAtTime(0.5, t + 0.01)
+      g.gain.exponentialRampToValueAtTime(0.0001, t + (i === 2 ? 0.35 : 0.12))
+      o.connect(lp)
+      lp.connect(g)
+      g.connect(out)
+      o.start(t)
+      o.stop(t + 0.4)
+    })
+  } catch {
+    // Audio is optional.
+  }
+}

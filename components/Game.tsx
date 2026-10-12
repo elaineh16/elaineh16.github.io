@@ -1,20 +1,23 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
-import { ACHIEVEMENTS, HOTBAR, SCREEN_TITLES, SPLASHES, type HomeItem, type ScreenId } from "@/data/content"
-import { Background, PixelIcon, Toast, Tooltip, Weather } from "@/components/game/primitives"
+import { ACHIEVEMENTS, ACHIEVEMENT_BY_ID, HOTBAR, PROJECTS, SCREEN_TITLES, SPLASHES, STORIES, type ScreenId } from "@/data/content"
+import { Background, Dialog, PixelIcon, Toast, Tooltip, Weather } from "@/components/game/primitives"
 import { Home } from "@/components/screens/Home"
-import { About, Advancements, Inventory, Multiplayer, Options, QuickView, Realms } from "@/components/screens/Screens"
-import { currentSeason, type Season } from "@/lib/seasons"
-import { playClick } from "@/lib/sound"
+import { About, Arcade, Inventory, Multiplayer, QuickView } from "@/components/screens/Screens"
+import { SEASON_LIST, WEATHER, currentSeason, type Season } from "@/lib/seasons"
+import { playClick, playJingle } from "@/lib/sound"
 import { load, save } from "@/lib/storage"
 
-const SCREENS: ScreenId[] = ["home", "about", "inventory", "advancements", "realms", "multiplayer", "options", "quick"]
+const SCREENS: ScreenId[] = ["home", "about", "inventory", "arcade", "multiplayer", "quick"]
 
 function screenFromHash(): ScreenId {
   const h = window.location.hash.replace("#", "") as ScreenId
   return SCREENS.includes(h) ? h : "home"
 }
+
+type Progress = { stories: string[]; projects: string[]; seasons: string[] }
+const EMPTY: Progress = { stories: [], projects: [], seasons: [] }
 
 export default function Game() {
   const [screen, setScreen] = useState<ScreenId>("home")
@@ -22,23 +25,27 @@ export default function Game() {
   const [weather, setWeather] = useState(false)
   const [sound, setSound] = useState(true)
   const [seen, setSeen] = useState<Record<string, boolean>>({})
+  const [progress, setProgress] = useState<Progress>(EMPTY)
   const [toast, setToast] = useState<string | null>(null)
+  const [dialog, setDialog] = useState<"settings" | "achievements" | null>(null)
   const [selected, setSelected] = useState("finmd")
-  const [node, setNode] = useState("b2")
   const [splash, setSplash] = useState(SPLASHES[0])
   const [spinning, setSpinning] = useState(false)
+  const [loaded, setLoaded] = useState(false)
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const soundRef = useRef(sound)
   soundRef.current = sound
 
-  // Load saved settings on the client.
+  // Load saved settings and progress on the client.
   useEffect(() => {
     setSeasonState(load<Season>("ec.season", currentSeason()))
     setWeather(load("ec.weather", false))
     setSound(load("ec.sound", true))
     setSeen(load("ec.seen", {}))
+    setProgress({ ...EMPTY, ...load<Progress>("ec.progress", EMPTY) })
     setSplash(SPLASHES[Math.floor(Math.random() * SPLASHES.length)])
     setScreen(screenFromHash())
+    setLoaded(true)
     const onHash = () => {
       setScreen(screenFromHash())
       window.scrollTo(0, 0)
@@ -61,22 +68,46 @@ export default function Game() {
     return () => document.removeEventListener("click", onClick, true)
   }, [])
 
-  const achieve = useCallback((key: string) => {
+  const achieve = useCallback((id: string) => {
     setSeen((prev) => {
-      if (prev[key] || !ACHIEVEMENTS[key]) return prev
-      const next = { ...prev, [key]: true }
+      if (prev[id] || !ACHIEVEMENT_BY_ID[id]) return prev
+      const next = { ...prev, [id]: true }
       save("ec.seen", next)
-      setToast(key)
+      setToast(id)
+      if (soundRef.current) setTimeout(playJingle, 60)
       if (toastTimer.current) clearTimeout(toastTimer.current)
       toastTimer.current = setTimeout(() => setToast(null), 3800)
       return next
     })
   }, [])
 
+  // Track things visitors collect (stories read, projects opened, seasons tried).
+  const collect = useCallback(
+    (kind: keyof Progress, key: string) => {
+      setProgress((prev) => {
+        if (prev[kind].includes(key)) return prev
+        const next = { ...prev, [kind]: [...prev[kind], key] }
+        save("ec.progress", next)
+        return next
+      })
+    },
+    [],
+  )
+
   useEffect(() => {
-    achieve(screen)
+    if (!loaded) return
+    if (progress.stories.length >= STORIES.length) achieve("stories")
+    if (progress.projects.length >= PROJECTS.length) achieve("projects")
+    if (progress.seasons.length >= SEASON_LIST.length) achieve("seasons")
+  }, [progress, loaded, achieve])
+
+  useEffect(() => {
+    if (!loaded) return
+    if (screen !== "home") achieve(screen)
+    if (screen === "inventory") collect("projects", selected)
     document.title = screen === "home" ? "ELAINECRAFT · Elaine Hong" : `${SCREEN_TITLES[screen]} · ELAINECRAFT`
-  }, [screen, achieve])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [screen, loaded])
 
   const go = (s: ScreenId) => {
     if (s === "home") {
@@ -90,23 +121,15 @@ export default function Game() {
     }
   }
 
-  const openProject = (id: string) => {
+  const selectProject = (id: string) => {
     setSelected(id)
-    go("inventory")
-  }
-
-  const onHomeItem = (it: HomeItem) => {
-    if (it.action === "project") openProject(it.key)
-    else if (it.action === "epee") {
-      setNode("a3")
-      go("advancements")
-    } else if (it.action === "passport") go("about")
-    else if (it.action === "coffee") achieve("coffee")
+    collect("projects", id)
   }
 
   const setSeason = (s: Season) => {
     setSeasonState(s)
     save("ec.season", s)
+    collect("seasons", s)
   }
   const toggleWeather = () => {
     const next = !weather
@@ -119,6 +142,12 @@ export default function Game() {
     setSound(next)
     save("ec.sound", next)
   }
+  const resetProgress = () => {
+    setSeen({})
+    setProgress(EMPTY)
+    save("ec.seen", {})
+    save("ec.progress", EMPTY)
+  }
   const onTitle = () => {
     setSpinning(false)
     requestAnimationFrame(() => setSpinning(true))
@@ -127,31 +156,27 @@ export default function Game() {
     achieve("egg")
   }
 
+  const found = ACHIEVEMENTS.filter((a) => seen[a.id]).length
+
   return (
     <>
       <Background season={season} />
       <div id="shade" />
       {screen !== "home" ? <div id="dim" /> : null}
       <Weather season={season} on={weather} />
-      {toast ? <Toast title={ACHIEVEMENTS[toast][0]} icon={ACHIEVEMENTS[toast][1]} /> : null}
+      {toast ? <Toast title={ACHIEVEMENT_BY_ID[toast].title} icon={ACHIEVEMENT_BY_ID[toast].icon} /> : null}
       <Tooltip />
 
-      <button
-        type="button"
-        className="wx-btn"
-        onClick={toggleWeather}
-        aria-pressed={weather}
-        aria-label={weather ? "Stop the seasonal weather" : "Start the seasonal weather"}
-      >
-        <svg width="28" height="28" viewBox="0 0 7 7" shapeRendering="crispEdges" aria-hidden="true">
-          <path d="M3 0h1v2H3zM1 2h2v1h1V2h2v2H5v1h1v2H4V6H3v1H1V5h1V4H1z" fill="#E6A4B4" />
-          <path d="M3 3h1v1H3z" fill="#ffff55" />
+      <button type="button" className="corner-btn" onClick={() => setDialog("settings")} aria-label="Settings" data-t1="Settings">
+        <svg width="26" height="26" viewBox="0 0 13 13" shapeRendering="crispEdges" aria-hidden="true">
+          <path d="M5 0h3v2h1V1h2v2h-1v1h2v3h-2v1h1v2h-2V9H8v2H5V9H4v1H2V8h1V7H0V4h2V3H1V1h2v1h2z" fill="#c6c6c6" />
+          <path d="M5 4h3v1h1v3H8v1H5V8H4V5h1z" fill="#2a2730" />
         </svg>
       </button>
 
       <main className="wrap">
         {screen === "home" ? (
-          <Home go={go} splash={splash} spinning={spinning} onTitle={onTitle} onItem={onHomeItem} />
+          <Home go={go} splash={splash} spinning={spinning} onTitle={onTitle} />
         ) : (
           <>
             <div className="sub-head">
@@ -167,27 +192,10 @@ export default function Game() {
                 </button>
               </div>
             </div>
-            {screen === "about" ? <About /> : null}
-            {screen === "inventory" ? <Inventory selected={selected} onSelect={setSelected} /> : null}
-            {screen === "advancements" ? <Advancements node={node} onNode={setNode} openProject={openProject} /> : null}
-            {screen === "realms" ? <Realms /> : null}
+            {screen === "about" ? <About onStory={(k) => collect("stories", k)} /> : null}
+            {screen === "inventory" ? <Inventory selected={selected} onSelect={selectProject} /> : null}
+            {screen === "arcade" ? <Arcade /> : null}
             {screen === "multiplayer" ? <Multiplayer /> : null}
-            {screen === "options" ? (
-              <Options
-                season={season}
-                setSeason={setSeason}
-                weather={weather}
-                toggleWeather={toggleWeather}
-                sound={sound}
-                toggleSound={toggleSound}
-                found={Object.keys(seen).length}
-                total={Object.keys(ACHIEVEMENTS).length}
-                resetAchievements={() => {
-                  setSeen({})
-                  save("ec.seen", {})
-                }}
-              />
-            ) : null}
             {screen === "quick" ? <QuickView /> : null}
           </>
         )}
@@ -200,21 +208,76 @@ export default function Game() {
             <>
               <span className="slot">
                 <PixelIcon name={h.icon} />
+                {h.action === "achievements" ? <span className="count">{found}</span> : null}
               </span>
               <span className="lbl">{h.label}</span>
             </>
           )
           return h.href ? (
-            <a key={h.label} className="hot" href={h.href} target="_blank" rel="noreferrer" aria-label={h.label}>
+            <a key={h.label} className="hot" href={h.href} target={h.href.startsWith("mailto:") ? undefined : "_blank"} rel="noreferrer" aria-label={h.label}>
               {inner}
             </a>
           ) : (
-            <button key={h.label} type="button" className="hot" aria-label={h.label} onClick={() => go(h.screen as ScreenId)}>
+            <button key={h.label} type="button" className="hot" aria-label={`${h.label}: ${found} of ${ACHIEVEMENTS.length}`} onClick={() => setDialog("achievements")}>
               {inner}
             </button>
           )
         })}
       </nav>
+
+      {dialog === "settings" ? (
+        <Dialog title="Settings" onClose={() => setDialog(null)}>
+          <div className="stack-16">
+            <div>
+              <h3 className="px dlg-label">Season</h3>
+              <div className="season-grid">
+                {SEASON_LIST.map(([id, label]) => (
+                  <button key={id} type="button" aria-pressed={season === id} className={"mc-btn small" + (season === id ? " on" : "")} onClick={() => setSeason(id)}>
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <button type="button" className="mc-btn" onClick={toggleWeather} aria-pressed={weather}>
+              <span>Weather</span>
+              <span className="sub">{weather ? `ON · ${WEATHER[season].label}` : "OFF"}</span>
+            </button>
+            <button type="button" className="mc-btn" onClick={toggleSound} aria-pressed={sound}>
+              <span>Sound</span>
+              <span className="sub">{sound ? "ON" : "OFF"}</span>
+            </button>
+            <button type="button" className="mc-btn" onClick={resetProgress}>
+              <span>Reset progress</span>
+              <span className="sub">
+                {found} / {ACHIEVEMENTS.length}
+              </span>
+            </button>
+            <p className="vt" style={{ margin: 0, fontSize: 14, color: "#4a4a4a" }}>
+              Animations switch off automatically when your device asks for reduced motion.
+            </p>
+          </div>
+        </Dialog>
+      ) : null}
+
+      {dialog === "achievements" ? (
+        <Dialog title={`Achievements · ${found} / ${ACHIEVEMENTS.length}`} onClose={() => setDialog(null)}>
+          <div className="ach-bar" aria-hidden="true">
+            <span style={{ width: `${(found / ACHIEVEMENTS.length) * 100}%` }} />
+          </div>
+          <ul className="ach-list">
+            {ACHIEVEMENTS.map((a) => (
+              <li key={a.id} className={seen[a.id] ? "got" : ""}>
+                <span className="slot static">{seen[a.id] ? <PixelIcon name={a.icon} size={30} /> : <span className="px lock">?</span>}</span>
+                <span className="ach-text">
+                  <strong className="px">{a.title}</strong>
+                  <span>{a.how}</span>
+                </span>
+                <span className="vt ach-state">{seen[a.id] ? "Unlocked" : "Locked"}</span>
+              </li>
+            ))}
+          </ul>
+        </Dialog>
+      ) : null}
     </>
   )
 }
