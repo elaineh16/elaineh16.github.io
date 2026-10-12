@@ -257,3 +257,41 @@ export function Dialog({ title, onClose, children }: { title: string; onClose: (
     document.body,
   )
 }
+
+/**
+ * Site-wide view counter (free Abacus counter, no account needed).
+ * Counts once per browser session; hides itself if the service can't be reached.
+ */
+export function ViewCount() {
+  const [views, setViews] = useState<number | null>(null)
+  useEffect(() => {
+    let counted = false
+    try {
+      counted = sessionStorage.getItem("ec.counted") === "1"
+    } catch {}
+    const action = counted ? "get" : "hit"
+    let alive = true
+    fetch(`https://abacus.jasoncameron.dev/${action}/elaineh16-github-io/views`)
+      .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+      .then((j: { value?: number }) => {
+        if (typeof j.value === "number" && j.value >= 0 && alive) setViews(j.value)
+        try {
+          sessionStorage.setItem("ec.counted", "1")
+        } catch {}
+      })
+      .catch(() => {})
+    return () => {
+      alive = false
+    }
+  }, [])
+  if (views === null) return null
+  return (
+    <p className="views" aria-label={`${views.toLocaleString()} views`}>
+      <svg width="14" height="10" viewBox="0 0 7 5" shapeRendering="crispEdges" aria-hidden="true">
+        <path d="M2 0h3v1h1v1h1v1H6v1H5v1H2V4H1V3H0V2h1V1h1z" fill="#cfc6cc" />
+        <path d="M3 1h1v1h1v1H4v1H3V3H2V2h1z" fill="#2a2730" />
+      </svg>
+      {views.toLocaleString()} views
+    </p>
+  )
+}
