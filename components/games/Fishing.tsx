@@ -98,25 +98,8 @@ export function Fishing({ sound, onCatch }: { sound: boolean; onCatch: (c: Catch
           </span>
         </div>
 
-        <div className={"pond " + phase} aria-hidden="true">
-          <div className="pond-sky" />
-          <div className="rod" />
-          {phase !== "ready" && phase !== "caught" ? (
-            <>
-              <svg className="line" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <line x1="4" y1="6" x2="58" y2={phase === "bite" ? 66 : 58} stroke="#e8e8e8" strokeWidth="0.5" vectorEffect="non-scaling-stroke" />
-              </svg>
-              <span className="bobber" />
-            </>
-          ) : null}
-          {phase === "bite" ? (
-            <>
-              <span className="bang px">!</span>
-              <span className="splash-fx s1" />
-              <span className="splash-fx s2" />
-              <span className="splash-fx s3" />
-            </>
-          ) : null}
+        <div className={"pond fp " + phase} aria-hidden="true">
+          <Scene phase={phase} casts={casts} />
           {phase === "caught" && last ? (
             <span key={casts} className={"catch-pop " + last.rarity}>
               <PixelIcon name={last.icon} size={56} />
@@ -200,5 +183,118 @@ export function Fishing({ sound, onCatch }: { sound: boolean; onCatch: (c: Catch
         </section>
       </div>
     </div>
+  )
+}
+
+/* ---------- First-person scene (320×180 pixel grid) ---------- */
+
+const W = 320
+const H = 180
+const HORIZON = 76
+const TIP = { x: 214, y: 34 } // rod tip
+const BOB = { x: 146, y: 112 } // bobber resting spot
+
+// Water bands get taller toward the viewer to fake perspective.
+const WATER: { y: number; h: number; c: string }[] = (() => {
+  const rows = []
+  let y = HORIZON
+  let h = 3
+  let i = 0
+  while (y < H) {
+    rows.push({ y, h, c: i % 2 ? "#3a63b8" : "#4472c8" })
+    y += h
+    h = Math.round(h * 1.28) + 1
+    i++
+  }
+  return rows
+})()
+
+// Rod drawn as stepped pixel blocks from the hand up to the tip.
+const ROD: { x: number; y: number }[] = (() => {
+  const from = { x: 286, y: 176 }
+  const n = 26
+  return Array.from({ length: n }, (_, i) => ({
+    x: Math.round((from.x + ((TIP.x - from.x) * i) / (n - 1)) / 2) * 2,
+    y: Math.round((from.y + ((TIP.y - from.y) * i) / (n - 1)) / 2) * 2,
+  }))
+})()
+
+const TREES = [18, 62, 112, 196, 248, 300]
+
+function Scene({ phase, casts }: { phase: Phase; casts: number }) {
+  const lineOut = phase === "waiting" || phase === "bite" || phase === "early" || phase === "escaped"
+  const by = phase === "bite" ? BOB.y + 4 : BOB.y
+  return (
+    <svg className="fp-scene" viewBox={`0 0 ${W} ${H}`} shapeRendering="crispEdges" preserveAspectRatio="xMidYMid slice">
+      {/* sky */}
+      <rect x="0" y="0" width={W} height={HORIZON} fill="#7ea6ec" />
+      <rect x="0" y="34" width={W} height={HORIZON - 34} fill="#94b8f0" />
+      <rect x="0" y="56" width={W} height={HORIZON - 56} fill="#aecbf4" />
+      <rect x="252" y="10" width="22" height="22" fill="#ffe27a" />
+      <rect x="256" y="14" width="14" height="14" fill="#fff6c2" />
+      <g className="fp-clouds">
+        <rect x="20" y="16" width="44" height="8" fill="#fff" />
+        <rect x="30" y="10" width="22" height="6" fill="#fff" />
+        <rect x="130" y="24" width="56" height="8" fill="#f2f6ff" />
+        <rect x="146" y="18" width="24" height="6" fill="#f2f6ff" />
+      </g>
+      {/* far shore */}
+      <rect x="0" y={HORIZON - 8} width={W} height="5" fill="#5f8f45" />
+      <rect x="0" y={HORIZON - 3} width={W} height="3" fill="#7a5a3a" />
+      {TREES.map((x) => (
+        <g key={x}>
+          <rect x={x - 1} y={HORIZON - 14} width="3" height="7" fill="#5a3f24" />
+          <rect x={x - 6} y={HORIZON - 24} width="13" height="11" fill="#3f7a30" />
+          <rect x={x - 3} y={HORIZON - 27} width="7" height="3" fill="#3f7a30" />
+          <rect x={x - 6} y={HORIZON - 24} width="4" height="3" fill="#559a40" />
+        </g>
+      ))}
+      {/* water */}
+      {WATER.map((r) => (
+        <rect key={r.y} x="0" y={r.y} width={W} height={r.h} fill={r.c} />
+      ))}
+      <g className="fp-glints">
+        <rect x="40" y="90" width="10" height="2" fill="#8fb4ee" />
+        <rect x="222" y="98" width="14" height="2" fill="#8fb4ee" />
+        <rect x="88" y="132" width="18" height="3" fill="#8fb4ee" />
+        <rect x="190" y="150" width="22" height="3" fill="#8fb4ee" />
+      </g>
+
+      {/* line + bobber */}
+      {lineOut ? (
+        <>
+          <path d={`M${TIP.x} ${TIP.y} Q ${(TIP.x + BOB.x) / 2} ${by - 18} ${BOB.x + 2} ${by}`} fill="none" stroke="#2b2b2b" strokeWidth="1" shapeRendering="auto" />
+          <g className={"fp-bobber" + (phase === "bite" ? " bite" : "")}>
+            <rect x={BOB.x - 2} y={by - 2} width="8" height="4" fill="#d93a3a" />
+            <rect x={BOB.x - 2} y={by + 2} width="8" height="3" fill="#f4f4f4" />
+            <rect x={BOB.x - 4} y={by + 5} width="12" height="1" fill="#2c4f94" />
+          </g>
+        </>
+      ) : null}
+      {phase === "bite" ? (
+        <g className="fp-splash">
+          <rect className="d1" x={BOB.x - 8} y={by} width="3" height="3" fill="#e8f3ff" />
+          <rect className="d2" x={BOB.x + 1} y={by - 2} width="3" height="3" fill="#e8f3ff" />
+          <rect className="d3" x={BOB.x + 9} y={by} width="3" height="3" fill="#e8f3ff" />
+          <text x={BOB.x + 2} y={by - 12} textAnchor="middle" className="fp-bang">
+            !
+          </text>
+        </g>
+      ) : null}
+
+      {/* rod + arm, swings on each cast */}
+      <g key={casts} className={"fp-arm" + (phase === "waiting" ? " cast" : phase === "caught" ? " reel" : "")}>
+        {ROD.map((p, i) => (
+          <rect key={i} x={p.x - 2} y={p.y - 2} width="5" height="5" fill={i % 3 === 0 ? "#4a3420" : "#6b4f2a"} />
+        ))}
+        <rect x={TIP.x - 2} y={TIP.y - 2} width="4" height="4" fill="#9a9a9a" />
+        <g transform="rotate(-28 290 180)">
+          <rect x="272" y="146" width="34" height="60" fill="#B31B1B" />
+          <rect x="272" y="146" width="8" height="60" fill="#7f1212" />
+          <rect x="272" y="128" width="34" height="20" fill="#f1c9a5" />
+          <rect x="272" y="128" width="8" height="20" fill="#d9a784" />
+        </g>
+      </g>
+    </svg>
   )
 }

@@ -261,7 +261,7 @@ export const STORIES: Story[] = [
 export const ARCADE: { id: string; icon: IconName; name: string; blurb: string; status: "soon" | "locked" | "ready" }[] = [
   { id: "crafting", icon: "book", name: "Crafting Elaine", blurb: "Combine items to unlock stories and fun facts. 6 recipes to find.", status: "ready" },
   { id: "fencing", icon: "epee", name: "Fencing Duel", blurb: "Parry, riposte, first to 5 touches. How long can your streak go?", status: "soon" },
-  { id: "fishing", icon: "cod", name: "Gone Fishing", blurb: "Cast, wait for the splash, reel it in. 14 catches to collect, including one legendary.", status: "ready" },
+  { id: "fishing", icon: "puffer", name: "Gone Fishing", blurb: "Cast, wait for the splash, reel it in. 14 catches to collect, including one legendary.", status: "ready" },
 ]
 
 /* ---------- Multiplayer ---------- */
@@ -337,7 +337,7 @@ export const ACHIEVEMENTS: Achievement[] = [
   { id: "seasons", title: "Four Seasons", how: "Try all four seasons", icon: "map" },
   { id: "firstcraft", title: "First Craft", how: "Craft your first recipe", icon: "book" },
   { id: "mastercrafter", title: "Master Crafter", how: "Find all 6 recipes", icon: "book" },
-  { id: "firstcatch", title: "Gone Fishing", how: "Reel in your first catch", icon: "cod" },
+  { id: "firstcatch", title: "Gone Fishing", how: "Reel in your first catch", icon: "puffer" },
   { id: "goldcatch", title: "Gold Medal Catch", how: "Catch the legendary Golden Épée", icon: "goldepee" },
   { id: "fullbox", title: "Full Tackle Box", how: "Catch all 14 items", icon: "compass" },
   { id: "engarde", title: "En Garde!", how: "Win a fencing bout (coming soon)", icon: "epee" },
