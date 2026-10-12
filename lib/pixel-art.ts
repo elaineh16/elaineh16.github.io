@@ -185,6 +185,10 @@ function frameRows(kind: SpriteFrame): string[] {
       set(r, -1, "R")
       set(r, 0, "r")
     }
+    // Smile while waving: mouth corners up, a curve underneath.
+    set(7, 7, "S"); set(7, 8, "S")
+    set(7, 6, "M"); set(7, 9, "M")
+    set(8, 7, "M"); set(8, 8, "M")
     if (kind === "waveA") {
       // Hand tipped outward.
       set(6, -2, "W"); set(6, -1, "W")
