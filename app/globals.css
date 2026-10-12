@@ -567,3 +567,33 @@ strong, b { font-weight: 400; color: inherit; text-decoration: underline; text-d
 .loader-step { margin: 0; min-height: 1.4em; font-size: 14px; color: #ffff55; text-shadow: 1px 1px 0 #3f3f00; }
 .loader-skip { margin: 4px 0 0; font-size: 11px; color: #8a7a70; }
 @media (prefers-reduced-motion: reduce) { .loader-bear, .loader-bar span { animation: none; } #loader { transition: none; } }
+
+/* ---- Fortune Cookie Wheel ---- */
+.fortune { display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start; }
+.wheel-stage { position: relative; width: min(340px, 100%); aspect-ratio: 1; margin: 6px auto 0; }
+.wheel-disc { position: absolute; inset: 14px 0 0; width: 100%; height: calc(100% - 14px); transition-property: transform; transition-timing-function: cubic-bezier(.12,.72,.17,1); will-change: transform; filter: drop-shadow(4px 6px 0 rgba(0,0,0,.35)); }
+.wheel-disc svg { width: 100%; height: 100%; display: block; }
+.wheel-pointer { position: absolute; left: 50%; top: 0; z-index: 2; width: 0; height: 0; transform: translateX(-50%); border-left: 13px solid transparent; border-right: 13px solid transparent; border-top: 24px solid #B31B1B; filter: drop-shadow(0 3px 0 #3a2a20); }
+.fortune-card { min-height: 190px; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; }
+.fortune-card.golden { box-shadow: 0 0 0 3px #f2c94c, 0 0 22px 6px rgba(255,226,122,.55); }
+.fortune-card.enchanted { box-shadow: 0 0 0 3px #9a62e0, 0 0 22px 6px rgba(180,120,255,.5); }
+.cookie-crack { position: relative; width: 96px; height: 68px; }
+.cookie-crack .half { position: absolute; inset: 0; }
+.cookie-crack .half.l { clip-path: inset(0 50% 0 0); }
+.cookie-crack .half.r { clip-path: inset(0 0 0 50%); }
+.cookie-crack.cracking .half { animation: wobble .3s steps(3) 2; }
+.cookie-crack.open .half.l { transform: translateX(-16px) rotate(-14deg); transition: transform .25s steps(3); }
+.cookie-crack.open .half.r { transform: translateX(16px) rotate(14deg); transition: transform .25s steps(3); }
+@keyframes wobble { 33% { transform: rotate(-6deg); } 66% { transform: rotate(6deg); } }
+.cookie-wait { display: flex; flex-direction: column; align-items: center; gap: 10px; margin: auto 0; font-size: 13px; color: #5a4a44; }
+.cookie-wait svg { animation: loaderhop .6s steps(2) infinite; }
+.slip { width: 100%; padding: 12px 14px; background: #fffaf0; border: 2px solid #c9b48a; box-shadow: 3px 3px 0 rgba(0,0,0,.15); animation: slipout .35s steps(5); }
+@keyframes slipout { from { transform: translateY(-14px) scaleY(.2); opacity: 0; } to { transform: none; opacity: 1; } }
+.slip-text { margin: 0 0 8px; font-size: 17px; line-height: 1.45; color: var(--ink); }
+.slip-nums, .slip-learn { margin: 0 0 6px; font-size: 12px; color: #5a4a44; }
+.slip-nums b, .slip-learn b { color: var(--wine); font-weight: 400; }
+.jar-list { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; max-height: 260px; overflow-y: auto; }
+.jar-list li { padding: 6px 8px; background: #fffaf0; border: 2px solid #c9b48a; font-size: 13px; color: var(--ink); line-height: 1.35; }
+.jar-list li.golden { border-color: #d6a531; background: #fff6d2; }
+.jar-list li.enchanted { border-color: #9a62e0; background: #f4ecff; }
+@media (prefers-reduced-motion: reduce) { .cookie-crack .half, .slip { animation: none !important; } }
