@@ -3,7 +3,7 @@
 import type React from "react"
 import { useEffect, useRef, useState } from "react"
 import { createPortal } from "react-dom"
-import { ICONS, SPRITE, SPRITE_FRAMES, SPRITE_FRAMES_FENCING, type Outfit, blinkFrame, drawBlockLogo, drawPixelMap, type IconName, type SpriteFrame } from "@/lib/pixel-art"
+import { ICONS, SPRITE, SPRITE_FRAMES, SPRITE_FRAMES_FENCING, SPRITE_FRAMES_MUSIC, type Outfit, blinkFrame, drawBlockLogo, drawPixelMap, type IconName, type SpriteFrame } from "@/lib/pixel-art"
 import { playClick, playSwish } from "@/lib/sound"
 import { WEATHER, paintSeason, type Season } from "@/lib/seasons"
 
@@ -60,7 +60,7 @@ export function SalutingSprite({
   const timers = useRef<ReturnType<typeof setTimeout>[]>([])
 
   useEffect(() => {
-    const frames = outfit === "fencing" ? SPRITE_FRAMES_FENCING : SPRITE_FRAMES
+    const frames = outfit === "fencing" ? SPRITE_FRAMES_FENCING : outfit === "music" ? SPRITE_FRAMES_MUSIC : SPRITE_FRAMES
     if (ref.current) drawPixelMap(ref.current, blink ? blinkFrame(frames[frame]) : frames[frame])
   }, [frame, blink, outfit])
 

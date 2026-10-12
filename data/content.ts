@@ -207,8 +207,6 @@ export interface Story {
   extra?: "gallery" | "music" | "map"
   /** A button at the end of the story. */
   link?: { href: string; label: string }
-  /** A short label/value list shown under the text, like a character sheet. */
-  stats?: [string, string][]
 }
 
 /* Photos live in public/photos (resized, location data removed). */
@@ -240,7 +238,6 @@ export const STORIES: Story[] = [
       "It’s also taught me a lot about discipline and time management. Balancing training, travel, classes, and everything else has forced me to be intentional with my time.",
       "It turns out a lot of that carries over to engineering too: read the situation, make a decision, learn from what failed, and adjust fast.",
     ],
-    link: { href: "https://cornellbigred.com/sports/fencing/roster/elaine-hong/85287", label: "View my Cornell roster profile" },
   },
   {
     key: "camera",
@@ -271,12 +268,6 @@ export const STORIES: Story[] = [
       "I’m technically a night owl, except I’m also terrible at actually staying up late.",
       "I also love collecting computer stickers. My laptop and my water bottle has basically become a archive of places, projects, clubs, and random things I liked enough to stick on something.",
       "I’m also a Conference Director for Cornell SWE and Publicity Chair for the Cornell ORIE Club, which means a decent amount of my time goes toward planning events, making things look good, and convincing engineers to show up to things.",
-    ],
-    stats: [
-      ["Current obsessions", "Poker, BTD6, coffee"],
-      ["Loot collection", "Computer stickers"],
-      ["Sleep build", "Night owl with low stamina"],
-      ["Campus quests", "SWE + C.ORIE"],
     ],
   },
   {
