@@ -207,6 +207,8 @@ export interface Story {
   extra?: "gallery" | "music" | "map"
   /** A button at the end of the story. */
   link?: { href: string; label: string }
+  /** A short label/value list shown under the text, like a character sheet. */
+  stats?: [string, string][]
 }
 
 /* Photos live in public/photos (resized, location data removed). */
@@ -234,7 +236,7 @@ export const STORIES: Story[] = [
     body: [
       "I started fencing almost by accident. My brother’s friend invited us to try it because he got a discount if we signed up with him. I stayed long after the discount ran out.",
       "Over time, fencing became a huge part of my life. Making the Canadian National Team is still one of my proudest moments, and now I compete on Cornell’s NCAA Division I varsity fencing team.",
-      "What I love most about fencing is how mental it is. You’re constantly reading your opponent, making decisions with incomplete information, and adjusting in real time. One bad touch can throw you off if you let it, so you learn pretty quickly how to reset, stay calm under pressure, and try something different.",
+      "What I love most about fencing is how mental it is. You’re constantly reading your opponent, making decisions with incomplete information, and adjusting in real time.",
       "It’s also taught me a lot about discipline and time management. Balancing training, travel, classes, and everything else has forced me to be intentional with my time.",
       "It turns out a lot of that carries over to engineering too: read the situation, make a decision, learn from what failed, and adjust fast.",
     ],
@@ -265,8 +267,16 @@ export const STORIES: Story[] = [
     type: "Fun facts & hobbies",
     title: "Side quests",
     body: [
-      "When I'm not fencing or in class, I'm usually playing poker, trying a new coffee shop, or playing Minecraft or Bloons TD 6.",
-      "I'm also Conference Director for the Society of Women Engineers at Cornell and Publicity Chair for the Cornell ORIE Club.",
+      "When I’m not fencing or in class, I’m probably playing poker, watching youtube for a new Bloons TD 6 strategy, or finding an excuse to check out a new coffee shop.",
+      "I’m technically a night owl, except I’m also terrible at actually staying up late.",
+      "I also love collecting computer stickers. My laptop and my water bottle has basically become a archive of places, projects, clubs, and random things I liked enough to stick on something.",
+      "I’m also a Conference Director for Cornell SWE and Publicity Chair for the Cornell ORIE Club, which means a decent amount of my time goes toward planning events, making things look good, and convincing engineers to show up to things.",
+    ],
+    stats: [
+      ["Current obsessions", "Poker, BTD6, coffee"],
+      ["Loot collection", "Computer stickers"],
+      ["Sleep build", "Night owl with low stamina"],
+      ["Campus quests", "SWE + C.ORIE"],
     ],
   },
   {

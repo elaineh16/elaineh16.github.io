@@ -16,7 +16,7 @@ export const ICONS: Record<IconName, PixelMap> = {
   book: [["..........", ".BBBBBBBB.", ".BbPPPPPB.", ".BbPPPPPB.", ".BbPllPPB.", ".BbPPPPPB.", ".BbPllPPB.", ".BbPPPPPB.", ".BBBBBBBB.", ".........."], { B: "#7a4a2a", b: "#5a3318", P: "#F5E9D4", l: "#8b8b8b" }],
   chart: [["..........", "........Y.", ".......YY.", "......Y...", "..Y..Y....", ".Y.YY.....", "Y.........", "GGGGGGGGGG", "G.G.G.G.G.", ".........."], { Y: "#f2c94c", G: "#4f7342" }],
   epee: [[".........S", "........S.", ".......S..", "......S...", ".....S....", "..ggS.....", "..gGg.....", ".H.gg.....", "H.........", ".........."], { S: "#e8edf3", G: "#b5862a", g: "#d6a531", H: "#4a2f1f" }],
-  coffee: [["..........", "...w.w....", "....w.w...", ".CCCCCC...", ".CBBBBCCC.", ".CBBBBC.C.", ".CBBBBCCC.", ".CBBBBC...", "..CCCC....", ".........."], { C: "#F5E9D4", B: "#6b3e22", w: "#e0e0e0" }],
+  coffee: [["..........", "...w.w....", "....w.w...", ".CCCCCC...", ".CBBBBCCC.", ".CBBBBC.C.", ".CBBBBCCC.", ".CBBBBC...", "..CCCC....", ".........."], { C: "#c9b48a", B: "#6b3e22", w: "#b0b0b0" }],
   passport: [["..........", "..NNNNNN..", "..NNNNNN..", "..NNYYNN..", "..NYNNYN..", "..NNYYNN..", "..NNNNNN..", "..NYYYYN..", "..NNNNNN..", ".........."], { N: "#2d3f6b", Y: "#f2c94c" }],
   medal: [["..R....R..", "...R..R...", "....RR....", "...YYYY...", "..YYWYYY..", "..YWYYYY..", "..YYYYYY..", "...YYYY...", "..........", ".........."], { R: "#B31B1B", Y: "#f2c94c", W: "#fff6c2" }],
   paper: [["..PPPPP...", "..PllPPP..", "..PPPPPP..", "..PllllP..", "..PPPPPP..", "..PllllP..", "..PPPPPP..", "..PllllP..", "..PPPPPP..", ".........."], { P: "#F5E9D4", l: "#8b8b8b" }],

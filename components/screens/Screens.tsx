@@ -83,7 +83,7 @@ export function About({ onStory, sound = true }: { onStory: (key: string) => voi
             </button>
           ))}
         </div>
-        <article className="paper prose book-page" role="tabpanel" aria-live="polite">
+        <article className={"paper prose book-page" + (story && story.body.join(" ").length > 600 ? " long" : "")} role="tabpanel" aria-live="polite">
           {story ? (
             <>
               <span className="book-kicker">{story.type}</span>
@@ -93,6 +93,16 @@ export function About({ onStory, sound = true }: { onStory: (key: string) => voi
                   <Todo text={b} />
                 </p>
               ))}
+              {story.stats ? (
+                <dl className="side-stats">
+                  {story.stats.map(([k, v]) => (
+                    <div key={k}>
+                      <dt>{k}</dt>
+                      <dd>{v}</dd>
+                    </div>
+                  ))}
+                </dl>
+              ) : null}
               {story.link ? (
                 <a className="join" style={{ alignSelf: "flex-start" }} href={story.link.href} target="_blank" rel="noreferrer">
                   {story.link.label}
