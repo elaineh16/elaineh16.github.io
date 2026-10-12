@@ -34,57 +34,59 @@ export function Sprite({ scale = 5 }: { scale?: number }) {
 }
 
 /**
- * Clickable avatar: she turns to face you, raises her épée to her face,
- * sweeps it down in a fencing salute, and hearts and sparkles float up.
+ * Clickable avatar. At rest she faces you and now and then glances to one side.
+ * Clicking her plays a fencing salute: épée up to the face, then swept down.
  */
 export function SalutingSprite({ scale = 7, sound = true, onSalute }: { scale?: number; sound?: boolean; onSalute?: () => void }) {
   const ref = useRef<HTMLCanvasElement>(null)
-  const [frame, setFrame] = useState<SpriteFrame>("idle")
-  const [busy, setBusy] = useState(false)
-  const [burst, setBurst] = useState(0)
-  const [turning, setTurning] = useState(false)
+  const [frame, setFrame] = useState<SpriteFrame>("front")
+  const busy = useRef(false)
   const timers = useRef<ReturnType<typeof setTimeout>[]>([])
 
   useEffect(() => {
     if (ref.current) drawPixelMap(ref.current, SPRITE_FRAMES[frame])
   }, [frame])
+
+  // Idle: every 3–7 seconds, glance left or right for about a second.
+  useEffect(() => {
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return
+    let t: ReturnType<typeof setTimeout>
+    const loop = () => {
+      t = setTimeout(() => {
+        if (!busy.current) {
+          setFrame(Math.random() < 0.5 ? "idle" : "lookleft")
+          t = setTimeout(() => {
+            if (!busy.current) setFrame("front")
+            loop()
+          }, 900 + Math.random() * 600)
+        } else loop()
+      }, 3000 + Math.random() * 4000)
+    }
+    loop()
+    return () => clearTimeout(t)
+  }, [])
   useEffect(() => () => timers.current.forEach(clearTimeout), [])
 
   const salute = () => {
-    if (busy) return
-    setBusy(true)
+    if (busy.current) return
+    busy.current = true
     onSalute?.()
     const at = (ms: number, fn: () => void) => timers.current.push(setTimeout(fn, ms))
-    setTurning(true)
-    at(150, () => setFrame("front"))
-    at(320, () => setTurning(false))
-    at(420, () => {
-      setFrame("up")
-      setBurst((b) => b + 1)
-    })
-    at(980, () => {
+    setFrame("front")
+    at(120, () => setFrame("up"))
+    at(700, () => {
       setFrame("down")
       if (sound) playSwish()
     })
-    at(1600, () => setFrame("front"))
-    at(2600, () => {
-      setFrame("idle")
-      setBusy(false)
+    at(1300, () => {
+      setFrame("front")
+      busy.current = false
     })
   }
 
   return (
-    <button type="button" className={"salute-btn" + (busy ? " busy" : "")} onClick={salute} aria-label="Elaine: click for a fencing salute" data-t1="Elaine Hong" data-t2="Click me!">
-      <canvas ref={ref} className={"pixel" + (turning ? " turning" : "")} width={20} height={32} style={{ width: 20 * scale, height: 32 * scale }} aria-hidden="true" />
-      {burst ? (
-        <span key={burst} className="salute-fx" aria-hidden="true">
-          <span className="fx heart h1" />
-          <span className="fx heart h2" />
-          <span className="fx spark s1" />
-          <span className="fx spark s2" />
-          <span className="fx spark s3" />
-        </span>
-      ) : null}
+    <button type="button" className="salute-btn" onClick={salute} aria-label="Elaine: click for a fencing salute" data-t1="Elaine Hong" data-t2="Click me!">
+      <canvas ref={ref} className="pixel" width={20} height={32} style={{ width: 20 * scale, height: 32 * scale }} aria-hidden="true" />
     </button>
   )
 }
