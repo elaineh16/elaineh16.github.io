@@ -1,6 +1,7 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
 import "./globals.css"
+import { Loader } from "@/components/game/Loader"
 
 export const metadata: Metadata = {
   title: "Elaine Hong - Elaine's Craft",
@@ -24,11 +25,20 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preload" href="/fonts/monocraft.woff2" as="font" type="font/woff2" crossOrigin="" />
+        {/* Skip the loading screen if it was already shown this session (runs before paint). */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: 'try{if(sessionStorage.getItem("ec.loaded"))document.documentElement.classList.add("skip-loader")}catch(e){}',
+          }}
+        />
       </head>
-      <body>{children}</body>
+      <body>
+        <Loader />
+        {children}
+      </body>
     </html>
   )
 }
