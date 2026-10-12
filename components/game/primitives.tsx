@@ -37,8 +37,8 @@ export function Sprite({ scale = 5 }: { scale?: number }) {
  * Clickable avatar. At rest she faces you and now and then glances to one side.
  * Clicking her plays a fencing salute: épée up to the face, then swept down.
  */
-/** The animated avatar: blinks, glances around, and does a move when clicked (a fencing salute or a wave). */
-export function SalutingSprite({ scale = 7, sound = true, onSalute, move = "salute" }: { scale?: number; sound?: boolean; onSalute?: () => void; move?: "salute" | "wave" }) {
+/** The animated avatar: blinks, glances around, does a move when clicked (a fencing salute or a wave), and can wave hello on arrival (greet). */
+export function SalutingSprite({ scale = 7, sound = true, onSalute, move = "salute", greet = false }: { scale?: number; sound?: boolean; onSalute?: () => void; move?: "salute" | "wave"; greet?: boolean }) {
   const ref = useRef<HTMLCanvasElement>(null)
   const [frame, setFrame] = useState<SpriteFrame>("front")
   const [blink, setBlink] = useState(false)
@@ -83,20 +83,22 @@ export function SalutingSprite({ scale = 7, sound = true, onSalute, move = "salu
   }, [])
   useEffect(() => () => timers.current.forEach(clearTimeout), [])
 
+  const at = (ms: number, fn: () => void) => timers.current.push(setTimeout(fn, ms))
+
+  const wave = (withSound: boolean) => {
+    if (busy.current) return
+    busy.current = true
+    if (withSound && sound) playClick()
+    ;["waveA", "waveB", "waveA", "waveB", "waveA"].forEach((f, i) => at(i * 220, () => setFrame(f as SpriteFrame)))
+    at(1150, () => {
+      setFrame("front")
+      busy.current = false
+    })
+  }
+
   const salute = () => {
     if (busy.current) return
     busy.current = true
-    onSalute?.()
-    const at = (ms: number, fn: () => void) => timers.current.push(setTimeout(fn, ms))
-    if (move === "wave") {
-      if (sound) playClick()
-      ;["waveA", "waveB", "waveA", "waveB", "waveA"].forEach((f, i) => at(i * 220, () => setFrame(f as SpriteFrame)))
-      at(1150, () => {
-        setFrame("front")
-        busy.current = false
-      })
-      return
-    }
     setFrame("front")
     at(120, () => setFrame("up"))
     at(700, () => {
@@ -109,8 +111,23 @@ export function SalutingSprite({ scale = 7, sound = true, onSalute, move = "salu
     })
   }
 
+  const onClick = () => {
+    onSalute?.()
+    if (move === "wave") wave(true)
+    else salute()
+  }
+
+  // Greet: wave hello (silently) shortly after she appears, once the loading screen is gone.
+  useEffect(() => {
+    if (!greet || window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return
+    const delay = document.getElementById("loader") ? 1900 : 600
+    const t = setTimeout(() => wave(false), delay)
+    return () => clearTimeout(t)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [greet])
+
   return (
-    <button type="button" className="salute-btn" onClick={salute} aria-label={move === "wave" ? "Elaine: click to say hi" : "Elaine: click for a fencing salute"}>
+    <button type="button" className="salute-btn" onClick={onClick} aria-label={move === "wave" ? "Elaine: click to say hi" : "Elaine: click for a fencing salute"}>
       <canvas ref={ref} className="pixel" width={20} height={32} style={{ width: 20 * scale, height: 32 * scale }} aria-hidden="true" />
     </button>
   )
