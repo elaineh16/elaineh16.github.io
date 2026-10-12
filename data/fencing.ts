@@ -23,7 +23,7 @@ export const RIVALS: Rival[] = [
   { rung: "Final", name: "Olympian", blurb: "The fastest on the circuit. Win this and keep defending the title.", sock: "#1f1f26", window: 660, riposte: 640, feint: 0.38, hint: false },
 ]
 
-export const TOUCHES_TO_WIN = 5
+export const TOUCHES_TO_WIN = 3
 
 /** How long a feint shows its first line before switching (ms). */
 export const FEINT_SWITCH = 380

@@ -318,9 +318,6 @@ export function Arcade({ play }: { play: (id: string) => void }) {
           </section>
         ))}
       </div>
-      <p className="chatlog" style={{ margin: 0 }}>
-        [Arcade] Crafting Elaine is open! Fencing Duel is being built. Check back soon.
-      </p>
     </div>
   )
 }
