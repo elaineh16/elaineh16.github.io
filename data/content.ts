@@ -113,7 +113,7 @@ export const PROJECTS: Project[] = [
   {
     id: "navidate",
     kind: "project",
-    icon: "map",
+    icon: "heart",
     name: "Navidate",
     type: "Hackathon",
     period: "BigRed//Hacks 2026",
