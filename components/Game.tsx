@@ -167,6 +167,19 @@ export default function Game() {
       {toast ? <Toast title={ACHIEVEMENT_BY_ID[toast].title} icon={ACHIEVEMENT_BY_ID[toast].icon} /> : null}
       <Tooltip />
 
+      <button
+        type="button"
+        className="corner-btn wx"
+        onClick={toggleWeather}
+        aria-pressed={weather}
+        aria-label={weather ? "Turn off the weather" : "Turn on the weather"}
+        data-t1={weather ? `Weather: ${WEATHER[season].label}` : "Weather: off"}
+      >
+        <svg width="26" height="26" viewBox="0 0 7 7" shapeRendering="crispEdges" aria-hidden="true">
+          <path d="M3 0h1v2H3zM1 2h2v1h1V2h2v2H5v1h1v2H4V6H3v1H1V5h1V4H1z" fill={weather ? "#E6A4B4" : "#9a8f96"} />
+          <path d="M3 3h1v1H3z" fill="#ffff55" />
+        </svg>
+      </button>
       <button type="button" className="corner-btn" onClick={() => setDialog("settings")} aria-label="Settings" data-t1="Settings">
         <svg width="26" height="26" viewBox="0 0 13 13" shapeRendering="crispEdges" aria-hidden="true">
           <path d="M5 0h3v2h1V1h2v2h-1v1h2v3h-2v1h1v2h-2V9H8v2H5V9H4v1H2V8h1V7H0V4h2V3H1V1h2v1h2z" fill="#c6c6c6" />
@@ -199,7 +212,7 @@ export default function Game() {
             {screen === "quick" ? <QuickView /> : null}
           </>
         )}
-        <p className="foot">Inspired by Minecraft. Not affiliated with Mojang or Microsoft. Original art.</p>
+        <p className="foot">Fan-made · not affiliated with Mojang</p>
       </main>
 
       <nav className="hotbar" aria-label="Quick access">
