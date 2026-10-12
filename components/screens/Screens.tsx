@@ -24,8 +24,8 @@ const projectById: Record<string, Project> = Object.fromEntries(PROJECTS.map((p)
 
 /* ---------------- Singleplayer ---------------- */
 export function About({ onStory }: { onStory: (key: string) => void }) {
-  const [picked, setPicked] = useState<string>(STORIES[0].key)
-  const story = STORIES.find((s) => s.key === picked) || STORIES[0]
+  const [tab, setTab] = useState<string>("about")
+  const story = STORIES.find((s) => s.key === tab)
   return (
     <div className="row">
       <section className="win profile-card" aria-labelledby="pdat">
@@ -59,49 +59,52 @@ export function About({ onStory }: { onStory: (key: string) => void }) {
         </dl>
       </section>
 
-      <div className="grow stack-20">
-        <article className="paper prose">
-          <h2 className="px">{PROFILE.headline}</h2>
-          {PROFILE.about.map((p) => (
-            <p key={p.slice(0, 24)}>{p}</p>
+      <section className="win grow about-book" aria-label="About me">
+        <div className="book-tabs" role="tablist" aria-label="About me sections">
+          <button type="button" role="tab" aria-selected={tab === "about"} className={"book-tab" + (tab === "about" ? " on" : "")} onClick={() => setTab("about")}>
+            <PixelIcon name="paper" size={24} />
+            <span>About Me</span>
+          </button>
+          {STORIES.map((s) => (
+            <button
+              key={s.key}
+              type="button"
+              role="tab"
+              aria-selected={tab === s.key}
+              className={"book-tab" + (tab === s.key ? " on" : "")}
+              onClick={() => {
+                setTab(s.key)
+                onStory(s.key)
+              }}
+            >
+              <PixelIcon name={s.icon} size={24} />
+              <span>{s.name}</span>
+            </button>
           ))}
+        </div>
+        <article className="paper prose book-page" role="tabpanel" aria-live="polite">
+          {story ? (
+            <>
+              <span className="book-kicker">{story.type}</span>
+              <h2>{story.title}</h2>
+              {story.body.map((b) => (
+                <p key={b.slice(0, 24)}>
+                  <Todo text={b} />
+                </p>
+              ))}
+            </>
+          ) : (
+            <>
+              <span className="book-kicker">About me</span>
+              <h2>{PROFILE.headline}</h2>
+              {PROFILE.about.map((p) => (
+                <p key={p.slice(0, 24)}>{p}</p>
+              ))}
+              <p className="book-hint">Pick a tab above to read more: fencing, photos, places, music and side quests.</p>
+            </>
+          )}
         </article>
-
-        <section className="win" style={{ padding: "16px 20px" }} aria-labelledby="pinv">
-          <h2 id="pinv" className="px" style={{ margin: "0 0 4px", fontSize: 18, color: "var(--ink)" }}>
-            Personal Inventory
-          </h2>
-          <p className="vt" style={{ margin: "0 0 12px", fontSize: 14, color: "#4a4a4a" }}>
-            Pick an item to read its story.
-          </p>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-            {STORIES.map((s) => (
-              <Slot
-                key={s.key}
-                icon={s.icon}
-                label={s.name}
-                tip={{ t1: s.name, t2: s.type }}
-                selected={picked === s.key}
-                onClick={() => {
-                  setPicked(s.key)
-                  onStory(s.key)
-                }}
-              />
-            ))}
-          </div>
-          <div className="paper story" aria-live="polite">
-            <span className="vt" style={{ fontSize: 14, color: "var(--wine)" }}>
-              {story.name} · {story.type}
-            </span>
-            <h3 className="px">{story.title}</h3>
-            {story.body.map((b) => (
-              <p key={b.slice(0, 24)}>
-                <Todo text={b} />
-              </p>
-            ))}
-          </div>
-        </section>
-      </div>
+      </section>
     </div>
   )
 }
