@@ -2,6 +2,7 @@
 // Anything still marked [TODO] renders in a muted colour so it is easy to spot.
 
 import type { IconName } from "@/lib/pixel-art"
+import { CATCHES } from "@/data/fishing"
 
 export type ScreenId = "home" | "about" | "inventory" | "arcade" | "crafting" | "fishing" | "multiplayer" | "quick"
 
@@ -106,6 +107,22 @@ export const PROJECTS: Project[] = [
     ],
     stack: "RAG pipelines · LLM evaluation",
     result: "34.8% numerical Exact Match",
+  },
+  {
+    id: "navidate",
+    kind: "project",
+    icon: "map",
+    name: "Navidate",
+    type: "Hackathon",
+    period: "BigRed//Hacks 2026",
+    cats: ["hack", "swe", "ai"],
+    desc: "A date planner for Cornell and Ithaca. Tell it your vibe, budget and time, and it plans a little adventure with stops you can save and share with your partner.",
+    bullets: [
+      "Plans around a starting point, time window, budget for two, mood, dietary needs, and walking or driving.",
+      "Navi, a voice assistant, helps you talk through date ideas.",
+    ],
+    stack: "Web app · voice assistant",
+    link: "https://www.navidate.us/",
   },
   {
     id: "asset",
@@ -259,9 +276,9 @@ export const STORIES: Story[] = [
 
 /* ---------- Mini-Games ---------- */
 export const ARCADE: { id: string; icon: IconName; name: string; blurb: string; status: "soon" | "locked" | "ready" }[] = [
-  { id: "crafting", icon: "book", name: "Crafting Elaine", blurb: "Combine items to unlock stories and fun facts. 6 recipes to find.", status: "ready" },
+  { id: "fishing", icon: "puffer", name: "Gone Fishing", blurb: `Cast, wait for the splash, reel it in. ${CATCHES.length} catches to collect, including one legendary.`, status: "ready" },
   { id: "fencing", icon: "epee", name: "Fencing Duel", blurb: "Parry, riposte, first to 5 touches. How long can your streak go?", status: "soon" },
-  { id: "fishing", icon: "puffer", name: "Gone Fishing", blurb: "Cast, wait for the splash, reel it in. 14 catches to collect, including one legendary.", status: "ready" },
+  { id: "crafting", icon: "book", name: "Crafting Elaine", blurb: "Combine items to unlock stories and fun facts. 6 recipes to find.", status: "ready" },
 ]
 
 /* ---------- Multiplayer ---------- */
@@ -339,7 +356,7 @@ export const ACHIEVEMENTS: Achievement[] = [
   { id: "mastercrafter", title: "Master Crafter", how: "Find all 6 recipes", icon: "book" },
   { id: "firstcatch", title: "Gone Fishing", how: "Reel in your first catch", icon: "puffer" },
   { id: "goldcatch", title: "Gold Medal Catch", how: "Catch the legendary Golden Épée", icon: "goldepee" },
-  { id: "fullbox", title: "Full Tackle Box", how: "Catch all 14 items", icon: "compass" },
+  { id: "fullbox", title: "Full Tackle Box", how: `Catch all ${CATCHES.length} items`, icon: "compass" },
   { id: "engarde", title: "En Garde!", how: "Win a fencing bout (coming soon)", icon: "epee" },
   { id: "hotstreak", title: "Hot Streak", how: "Win 3 bouts in a row (coming soon)", icon: "medal" },
 ]
