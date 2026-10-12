@@ -224,18 +224,6 @@ export const STORIES: Story[] = [
     extra: "gallery",
   },
   {
-    key: "map",
-    icon: "map",
-    name: "Map",
-    type: "Travel & places",
-    title: "Spawn points",
-    body: [
-      "Born in Toronto, raised in Shanghai, now based in Ithaca for Cornell.",
-      "Fencing has taken me all over North America. Here's every place I've logged so far. Hover a marker or pick a city below.",
-    ],
-    extra: "map",
-  },
-  {
     key: "disc",
     icon: "disc",
     name: "Music Disc",
@@ -255,6 +243,17 @@ export const STORIES: Story[] = [
       "I'm also Conference Director for the Society of Women Engineers at Cornell and Publicity Chair for the Cornell ORIE Club.",
       "Fun fact: I was born in Toronto but grew up in Shanghai.",
     ],
+  },
+  {
+    key: "map",
+    icon: "map",
+    name: "Map",
+    type: "Travel & places",
+    title: "Spawn points",
+    body: [
+      "Fencing has taken me all over North America. Here's every place I've logged so far. Hover a marker or pick a city below.",
+    ],
+    extra: "map",
   },
 ]
 
