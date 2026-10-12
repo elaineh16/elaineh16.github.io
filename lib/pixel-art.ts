@@ -4,6 +4,7 @@
 export type IconName =
   | "laptop" | "knight" | "redstone" | "disc" | "book" | "chart" | "epee" | "coffee" | "passport"
   | "medal" | "paper" | "mail" | "stone" | "sign" | "map" | "camera" | "cards"
+  | "cod" | "salmon" | "matcha" | "banana" | "nametag" | "banner" | "chip" | "compass" | "stew" | "violin" | "boot" | "disc2" | "maple" | "goldepee"
 
 type PixelMap = [rows: string[], palette: Record<string, string>]
 
@@ -25,6 +26,20 @@ export const ICONS: Record<IconName, PixelMap> = {
   map: [["MMMMMMMMMM", "MggMMMbbMM", "MgggMbbbMM", "MMgMMMbMRM", "MMMMMMMMMM", "MbbMMggMMM", "MbbbMgggMM", "MMMRMMMMMM", "MMMMMMMMMM", "MMMMMMMMMM"], { M: "#e8d9b5", g: "#6B9255", b: "#7fa7c9", R: "#B31B1B" }],
   camera: [["..........", "..........", "...KKK....", ".KKKKKKKK.", ".KGGGGGGK.", ".KGWWWGGK.", ".KGWBWGGK.", ".KGWWWGGK.", ".KKKKKKKK.", ".........."], { K: "#2b2b33", G: "#6f6f6f", W: "#d0d0d0", B: "#1e2a3a" }],
   cards: [["..........", ".WWWW.....", ".WRWWW....", ".WWWWWW...", ".WWRRWWW..", "..WWWWWW..", "...WWRWW..", "....WWWW..", "..........", ".........."], { W: "#F5E9D4", R: "#B31B1B" }],
+  cod: [["..........", "..........", "...TTTT...", "..TttttT.T", ".TtEttttTT", ".TttttttTT", "..TttttT.T", "...TTTT...", "..........", ".........."], { T: "#8a6a48", t: "#c9a77c", E: "#222222" }],
+  salmon: [["..........", "..........", "...SSSS...", "..SssssS.S", ".SsEssssSS", ".SssssssSS", "..SssssS.S", "...SSSS...", "..........", ".........."], { S: "#a3412e", s: "#e0876a", E: "#222222" }],
+  matcha: [["..........", "...w..w...", "....w..w..", ".CCCCCCC..", ".CGGGGGCCC", ".CGgGGGC.C", ".CGGGgGCCC", ".CGGGGGC..", "..CCCCC...", ".........."], { C: "#F5E9D4", G: "#7fae4a", g: "#a8cf6f", w: "#e0e0e0" }],
+  banana: [["..........", "........S.", ".......YY.", "......YYY.", ".....YYY..", "...YYYY...", ".YYYYY....", "YYYyy.....", ".yy.......", ".........."], { Y: "#f2d24c", y: "#c9a227", S: "#6b4f2a" }],
+  nametag: [["..........", ".s........", "..s.......", "..TTTTTTT.", ".TTttttTT.", ".TtTTTTtT.", ".TTttttTT.", "..TTTTTTT.", "..........", ".........."], { T: "#c9b48a", t: "#8b7a5a", s: "#9a9a9a" }],
+  banner: [["BBBBBBBBBB", ".RRRRRRRR.", ".RRWWWWRR.", ".RWRRRRWR.", ".RRWWWWRR.", ".RRRRRRRR.", ".RRRRRRRR.", "..RRRRRR..", "...RRRR...", "....RR...."], { B: "#6b4f2a", R: "#B31B1B", W: "#F5E9D4" }],
+  chip: [["...RRRR...", ".RRWRRWRR.", ".RRRRRRRR.", "RWRRWWRRWR", "RRRWRRWRRR", "RRRWRRWRRR", "RWRRWWRRWR", ".RRRRRRRR.", ".RRWRRWRR.", "...RRRR..."], { R: "#2d5fb5", W: "#F5E9D4" }],
+  compass: [["..GGGGGG..", ".GddddddG.", "GdddRRdddG", "GddRRddddG", "GddddWWddG", "GdddddWWdG", ".GddddddG.", "..GGGGGG..", "..........", ".........."], { G: "#9aa3ad", d: "#3a3a46", R: "#e02a2a", W: "#e8edf3" }],
+  stew: [["..........", "..........", "...r..b...", ".BBrBBbBB.", "BbbbbbbbbB", ".BbbbbbbB.", "..BBBBBB..", "...BBBB...", "..........", ".........."], { B: "#7a4a2a", b: "#c98b4a", r: "#c43a3a" }],
+  violin: [["........k.", ".......k..", "......B...", ".....B....", "..OOOB....", ".OoooO....", "OooOoO....", "OoooOO....", ".OooO.....", "..OO......"], { O: "#7a3f1a", o: "#b5652a", B: "#2b2b33", k: "#e0e0e0" }],
+  boot: [["..........", "...LLLL...", "...LllL...", "...LllL...", "...LllL...", "...LllLLL.", "..LlllllL.", "..LLLLLLLL", "..........", ".........."], { L: "#5a3a22", l: "#8a5a32" }],
+  disc2: [["...DDDD...", ".DDDDDDDD.", ".DDLLLLDD.", "DDLLPPLLDD", "DDLPOOPLDD", "DDLPOOPLDD", "DDLLPPLLDD", ".DDLLLLDD.", ".DDDDDDDD.", "...DDDD..."], { D: "#1f1f26", L: "#3a3a46", P: "#4aa3e0", O: "#F5E9D4" }],
+  maple: [["....R.....", "...RRR....", ".R.RRR.R..", ".RRRRRRR..", "RRRRRRRRR.", ".RRRRRRR..", "..RRRRR...", ".R.RRR.R..", "....R.....", "....r....."], { R: "#d52b1e", r: "#7a1c12" }],
+  goldepee: [[".........S", "........S.", ".......S..", "......S...", ".....S....", "..ggS.....", "..gGg.....", ".H.gg.....", "H.........", ".........."], { S: "#ffe27a", G: "#b5862a", g: "#f2c94c", H: "#8a5a1a" }],
 }
 
 const spriteRows = [
