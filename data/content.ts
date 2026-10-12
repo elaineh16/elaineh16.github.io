@@ -4,7 +4,7 @@
 import type { IconName } from "@/lib/pixel-art"
 import { CATCHES } from "@/data/fishing"
 
-export type ScreenId = "home" | "about" | "inventory" | "arcade" | "crafting" | "fishing" | "fencing" | "multiplayer" | "quick"
+export type ScreenId = "home" | "about" | "inventory" | "arcade" | "fortune" | "fishing" | "fencing" | "multiplayer" | "quick"
 
 export type Category = "swe" | "ai" | "research" | "quant" | "hack"
 
@@ -281,7 +281,7 @@ export const STORIES: Story[] = [
 export const ARCADE: { id: string; icon: IconName; name: string; blurb: string; status: "soon" | "locked" | "ready" }[] = [
   { id: "fishing", icon: "puffer", name: "Gone Fishing", blurb: `Cast, wait for the splash, reel it in. ${CATCHES.length} catches to collect, including one legendary.`, status: "ready" },
   { id: "fencing", icon: "epee", name: "Fencing Duel", blurb: "Read the attack, parry, riposte. First to 3 touches. Climb from the pool to the final.", status: "ready" },
-  { id: "crafting", icon: "book", name: "Crafting Elaine", blurb: "Combine items to unlock stories and fun facts. 6 recipes to find.", status: "ready" },
+  { id: "fortune", icon: "cookie", name: "Fortune Cookie Wheel", blurb: "Spin the wheel, crack a cookie, read your fortune. Fill your jar and hunt for the golden cookie.", status: "ready" },
 ]
 
 /* ---------- Multiplayer ---------- */
@@ -320,7 +320,7 @@ export const SCREEN_TITLES: Record<Exclude<ScreenId, "home">, string> = {
   about: "Singleplayer · About Me",
   inventory: "Inventory · Projects & Experience",
   arcade: "Mini-Games · Arcade",
-  crafting: "Crafting Elaine",
+  fortune: "Fortune Cookie Wheel",
   fishing: "Gone Fishing",
   fencing: "Fencing Duel",
   multiplayer: "Multiplayer · Connect",
@@ -377,8 +377,9 @@ export const ACHIEVEMENTS: Achievement[] = [
   { id: "egg", title: "Easter Egg Hunter", how: "Click the title", icon: "medal" },
   { id: "weather", title: "Weather Watcher", how: "Turn on the weather", icon: "map" },
   { id: "seasons", title: "Four Seasons", how: "Try all four seasons", icon: "map" },
-  { id: "firstcraft", title: "First Craft", how: "Craft your first recipe", icon: "book" },
-  { id: "mastercrafter", title: "Master Crafter", how: "Find all 6 recipes", icon: "book" },
+  { id: "firstcookie", title: "Fortune Teller", how: "Crack your first fortune cookie", icon: "cookie" },
+  { id: "goldencookie", title: "Golden Cookie", how: "Land on the golden cookie", icon: "cookie" },
+  { id: "fortunejar", title: "Full Jar", how: "Collect every fortune", icon: "cookie" },
   { id: "firstcatch", title: "Gone Fishing", how: "Reel in your first catch", icon: "puffer" },
   { id: "goldcatch", title: "Gold Medal Catch", how: "Catch the legendary Golden Épée", icon: "goldepee" },
   { id: "fullbox", title: "Full Tackle Box", how: `Catch all ${CATCHES.length} items`, icon: "compass" },

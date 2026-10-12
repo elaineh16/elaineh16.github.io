@@ -5,17 +5,19 @@ import { ACHIEVEMENTS, ACHIEVEMENT_BY_ID, HOTBAR, PROJECTS, SCREEN_TITLES, SPLAS
 import { Background, Dialog, PixelIcon, Toast, Tooltip, ViewCount, Weather } from "@/components/game/primitives"
 import { Home } from "@/components/screens/Home"
 import { About, Arcade, Inventory, Multiplayer, QuickView } from "@/components/screens/Screens"
-import { Crafting } from "@/components/games/Crafting"
+import { FortuneWheel } from "@/components/games/Fortune"
 import { Fishing } from "@/components/games/Fishing"
 import { Fencing } from "@/components/games/Fencing"
 import { SEASON_LIST, WEATHER, currentSeason, type Season } from "@/lib/seasons"
 import { playClick, playJingle } from "@/lib/sound"
 import { load, save } from "@/lib/storage"
 
-const SCREENS: ScreenId[] = ["home", "about", "inventory", "arcade", "crafting", "fishing", "fencing", "multiplayer", "quick"]
+const SCREENS: ScreenId[] = ["home", "about", "inventory", "arcade", "fortune", "fishing", "fencing", "multiplayer", "quick"]
 
 function screenFromHash(): ScreenId {
-  const h = window.location.hash.replace("#", "") as ScreenId
+  const raw = window.location.hash.replace("#", "")
+  // Old links to the retired crafting game open the fortune wheel instead.
+  const h = (raw === "crafting" ? "fortune" : raw) as ScreenId
   return SCREENS.includes(h) ? h : "home"
 }
 
@@ -155,7 +157,7 @@ export default function Game() {
     setProgress(EMPTY)
     save("ec.seen", {})
     save("ec.progress", EMPTY)
-    save("ec.recipes", [])
+    save("ec.fortunes", [])
     save("ec.fish", [])
     save("ec.fence", { rung: 0, streak: 0, best: 0, defences: 0 })
   }
@@ -217,7 +219,7 @@ export default function Game() {
                 <h1>{SCREEN_TITLES[screen]}</h1>
               </div>
               <div className="back-wrap">
-                {screen === "crafting" || screen === "fishing" || screen === "fencing" ? (
+                {screen === "fortune" || screen === "fishing" || screen === "fencing" ? (
                   <button type="button" className="mc-btn small back-btn" onClick={() => go("arcade")}>
                     Back to Arcade
                   </button>
@@ -231,12 +233,13 @@ export default function Game() {
             {screen === "about" ? <About onStory={(k) => collect("stories", k)} sound={sound} /> : null}
             {screen === "inventory" ? <Inventory selected={selected} onSelect={selectProject} /> : null}
             {screen === "arcade" ? <Arcade play={(id) => go(id as ScreenId)} /> : null}
-            {screen === "crafting" ? (
-              <Crafting
+            {screen === "fortune" ? (
+              <FortuneWheel
                 sound={sound}
-                onCraft={(n, total) => {
-                  achieve("firstcraft")
-                  if (n >= total) achieve("mastercrafter")
+                onFortune={(f, n, total) => {
+                  achieve("firstcookie")
+                  if (f.golden) achieve("goldencookie")
+                  if (n >= total) achieve("fortunejar")
                 }}
               />
             ) : null}

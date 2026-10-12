@@ -259,3 +259,65 @@ export function playBuzz() {
     // Audio is optional.
   }
 }
+
+// A tiny wooden "tick" as the wheel's pointer passes each slice.
+export function playTick() {
+  try {
+    const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
+    ctx = ctx || new AC()
+    if (ctx.state === "suspended") void ctx.resume()
+    const t = ctx.currentTime + 0.003
+    const o = ctx.createOscillator()
+    o.type = "square"
+    o.frequency.setValueAtTime(1400, t)
+    o.frequency.exponentialRampToValueAtTime(700, t + 0.02)
+    const g = ctx.createGain()
+    g.gain.setValueAtTime(0.0001, t)
+    g.gain.exponentialRampToValueAtTime(0.05, t + 0.002)
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.03)
+    const lp = ctx.createBiquadFilter()
+    lp.type = "lowpass"
+    lp.frequency.value = 2500
+    o.connect(lp)
+    lp.connect(g)
+    g.connect(ctx.destination)
+    o.start(t)
+    o.stop(t + 0.04)
+  } catch {
+    // Audio is optional.
+  }
+}
+
+// A crunchy "crack" when a fortune cookie breaks open.
+export function playCrunch() {
+  try {
+    const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
+    ctx = ctx || new AC()
+    if (ctx.state === "suspended") void ctx.resume()
+    const t = ctx.currentTime + 0.01
+    const sr = ctx.sampleRate
+    const len = Math.floor(sr * 0.18)
+    const buf = ctx.createBuffer(1, len, sr)
+    const d = buf.getChannelData(0)
+    // A few sharp crackles inside a short burst.
+    for (let i = 0; i < len; i++) {
+      const env = Math.pow(1 - i / len, 2)
+      const crackle = Math.random() < 0.06 ? 1 : 0.25
+      d[i] = (Math.random() * 2 - 1) * env * crackle
+    }
+    const src = ctx.createBufferSource()
+    src.buffer = buf
+    const bp = ctx.createBiquadFilter()
+    bp.type = "bandpass"
+    bp.frequency.value = 2400
+    bp.Q.value = 0.9
+    const g = ctx.createGain()
+    g.gain.value = 0.5
+    src.connect(bp)
+    bp.connect(g)
+    g.connect(ctx.destination)
+    src.start(t)
+  } catch {
+    // Audio is optional.
+  }
+}
