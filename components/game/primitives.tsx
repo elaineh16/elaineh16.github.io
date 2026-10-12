@@ -3,7 +3,7 @@
 import type React from "react"
 import { useEffect, useRef, useState } from "react"
 import { createPortal } from "react-dom"
-import { ICONS, SPRITE, SPRITE_FRAMES, blinkFrame, drawBlockLogo, drawPixelMap, type IconName, type SpriteFrame } from "@/lib/pixel-art"
+import { ICONS, SPRITE, SPRITE_FRAMES, SPRITE_FRAMES_FENCING, type Outfit, blinkFrame, drawBlockLogo, drawPixelMap, type IconName, type SpriteFrame } from "@/lib/pixel-art"
 import { playClick, playSwish } from "@/lib/sound"
 import { WEATHER, paintSeason, type Season } from "@/lib/seasons"
 
@@ -38,7 +38,21 @@ export function Sprite({ scale = 5 }: { scale?: number }) {
  * Clicking her plays a fencing salute: épée up to the face, then swept down.
  */
 /** The animated avatar: blinks, glances around, does a move when clicked (a fencing salute or a wave), and can wave hello on arrival (greet). */
-export function SalutingSprite({ scale = 7, sound = true, onSalute, move = "salute", greet = false }: { scale?: number; sound?: boolean; onSalute?: () => void; move?: "salute" | "wave"; greet?: boolean }) {
+export function SalutingSprite({
+  scale = 7,
+  sound = true,
+  onSalute,
+  move = "salute",
+  greet = false,
+  outfit = "casual",
+}: {
+  scale?: number
+  sound?: boolean
+  onSalute?: () => void
+  move?: "salute" | "wave"
+  greet?: boolean
+  outfit?: Outfit
+}) {
   const ref = useRef<HTMLCanvasElement>(null)
   const [frame, setFrame] = useState<SpriteFrame>("front")
   const [blink, setBlink] = useState(false)
@@ -46,8 +60,9 @@ export function SalutingSprite({ scale = 7, sound = true, onSalute, move = "salu
   const timers = useRef<ReturnType<typeof setTimeout>[]>([])
 
   useEffect(() => {
-    if (ref.current) drawPixelMap(ref.current, blink ? blinkFrame(SPRITE_FRAMES[frame]) : SPRITE_FRAMES[frame])
-  }, [frame, blink])
+    const frames = outfit === "fencing" ? SPRITE_FRAMES_FENCING : SPRITE_FRAMES
+    if (ref.current) drawPixelMap(ref.current, blink ? blinkFrame(frames[frame]) : frames[frame])
+  }, [frame, blink, outfit])
 
   // Blink every 2 seconds.
   useEffect(() => {

@@ -205,6 +205,8 @@ export interface Story {
   body: string[]
   /** Extra live content shown under the text. */
   extra?: "gallery" | "music" | "map"
+  /** A button at the end of the story. */
+  link?: { href: string; label: string }
 }
 
 /* Photos live in public/photos (resized, location data removed). */
@@ -230,10 +232,13 @@ export const STORIES: Story[] = [
     type: "Fencing story",
     title: "En garde",
     body: [
-      "I started fencing because my brother's friend invited us along: he got a discount if we signed up. I stayed long after the discount ran out.",
-      "Making the Canadian National Team is still my proudest moment. Now I compete on Cornell's NCAA Division I varsity team.",
-      "Fencing taught me to read people, stay calm under pressure, adjust fast after a mistake, and manage my time. It turns out that's most of engineering too.",
+      "I started fencing almost by accident. My brother’s friend invited us to try it because he got a discount if we signed up with him. I stayed long after the discount ran out.",
+      "Over time, fencing became a huge part of my life. Making the Canadian National Team is still one of my proudest moments, and now I compete on Cornell’s NCAA Division I varsity fencing team.",
+      "What I love most about fencing is how mental it is. You’re constantly reading your opponent, making decisions with incomplete information, and adjusting in real time. One bad touch can throw you off if you let it, so you learn pretty quickly how to reset, stay calm under pressure, and try something different.",
+      "It’s also taught me a lot about discipline and time management. Balancing training, travel, classes, and everything else has forced me to be intentional with my time.",
+      "It turns out a lot of that carries over to engineering too: read the situation, make a decision, learn from what failed, and adjust fast.",
     ],
+    link: { href: "https://cornellbigred.com/sports/fencing/roster/elaine-hong/85287", label: "View my Cornell roster profile" },
   },
   {
     key: "camera",
