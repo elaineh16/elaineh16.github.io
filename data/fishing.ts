@@ -1,5 +1,5 @@
 // Gone Fishing: everything a visitor can reel in, each with a fun fact.
-// Rarity sets the odds: common ~75% of casts, rare ~20%, legendary ~5%.
+// Rarity sets the odds: common ~75% of casts, rare ~20%, legendary ~5%, tilted toward items not caught yet.
 
 import type { IconName } from "@/lib/pixel-art"
 
@@ -32,16 +32,29 @@ export const CATCHES: Catch[] = [
 
 const TIER_ODDS: Record<Rarity, number> = { common: 0.75, rare: 0.2, legendary: 0.05 }
 
-/** Pick a catch: tiers keep their odds, and items not caught yet are 3× more likely within a tier. */
+/** How often a cast lands on something you haven't caught yet, when the tier still has one. */
+const NEW_CHANCE = 0.75
+
+/**
+ * Pick a catch. Tiers keep their odds, but a tier you've finished is skipped in favour of
+ * tiers that still have new items, and within a tier new items come up 75% of the time.
+ */
 export function rollCatch(caught: string[], rand = Math.random): Catch {
-  const tierRoll = rand()
-  const tier: Rarity = tierRoll < TIER_ODDS.legendary ? "legendary" : tierRoll < TIER_ODDS.legendary + TIER_ODDS.rare ? "rare" : "common"
-  const pool = CATCHES.filter((c) => c.rarity === tier)
-  const weights = pool.map((c) => (caught.includes(c.id) ? 1 : 3))
-  let r = rand() * weights.reduce((a, b) => a + b, 0)
-  for (let i = 0; i < pool.length; i++) {
-    r -= weights[i]
-    if (r <= 0) return pool[i]
+  const tiers: Rarity[] = ["legendary", "rare", "common"]
+  const open = tiers.filter((t) => CATCHES.some((c) => c.rarity === t && !caught.includes(c.id)))
+  const pickFrom = open.length ? open : tiers
+  const total = pickFrom.reduce((a, t) => a + TIER_ODDS[t], 0)
+  let r = rand() * total
+  let tier = pickFrom[pickFrom.length - 1]
+  for (const t of pickFrom) {
+    r -= TIER_ODDS[t]
+    if (r < 0) {
+      tier = t
+      break
+    }
   }
-  return pool[pool.length - 1]
+  const pool = CATCHES.filter((c) => c.rarity === tier)
+  const fresh = pool.filter((c) => !caught.includes(c.id))
+  const from = fresh.length && rand() < NEW_CHANCE ? fresh : pool
+  return from[Math.floor(rand() * from.length)]
 }
