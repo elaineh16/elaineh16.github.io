@@ -333,7 +333,6 @@ export const SPLASHES = [
   "Now with 100% more épée!",
   "Spawned in Toronto!",
   "Powered by matcha!",
-  "Also try Bloons TD 6!",
   "Don't stop believin'!",
   "Say my name!",
   "Read Harry Potter 7 times!",
