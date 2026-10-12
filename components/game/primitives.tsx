@@ -3,7 +3,7 @@
 import type React from "react"
 import { useEffect, useRef, useState } from "react"
 import { createPortal } from "react-dom"
-import { ICONS, SPRITE, SPRITE_FRAMES, drawBlockLogo, drawPixelMap, type IconName, type SpriteFrame } from "@/lib/pixel-art"
+import { ICONS, SPRITE, SPRITE_FRAMES, blinkFrame, drawBlockLogo, drawPixelMap, type IconName, type SpriteFrame } from "@/lib/pixel-art"
 import { playSwish } from "@/lib/sound"
 import { WEATHER, paintSeason, type Season } from "@/lib/seasons"
 
@@ -40,12 +40,27 @@ export function Sprite({ scale = 5 }: { scale?: number }) {
 export function SalutingSprite({ scale = 7, sound = true, onSalute }: { scale?: number; sound?: boolean; onSalute?: () => void }) {
   const ref = useRef<HTMLCanvasElement>(null)
   const [frame, setFrame] = useState<SpriteFrame>("front")
+  const [blink, setBlink] = useState(false)
   const busy = useRef(false)
   const timers = useRef<ReturnType<typeof setTimeout>[]>([])
 
   useEffect(() => {
-    if (ref.current) drawPixelMap(ref.current, SPRITE_FRAMES[frame])
-  }, [frame])
+    if (ref.current) drawPixelMap(ref.current, blink ? blinkFrame(SPRITE_FRAMES[frame]) : SPRITE_FRAMES[frame])
+  }, [frame, blink])
+
+  // Blink every 2 seconds.
+  useEffect(() => {
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return
+    let off: ReturnType<typeof setTimeout>
+    const iv = setInterval(() => {
+      setBlink(true)
+      off = setTimeout(() => setBlink(false), 150)
+    }, 2000)
+    return () => {
+      clearInterval(iv)
+      clearTimeout(off)
+    }
+  }, [])
 
   // Idle: every 3–7 seconds, glance left or right for about a second.
   useEffect(() => {
@@ -85,7 +100,7 @@ export function SalutingSprite({ scale = 7, sound = true, onSalute }: { scale?: 
   }
 
   return (
-    <button type="button" className="salute-btn" onClick={salute} aria-label="Elaine: click for a fencing salute" data-t1="Elaine Hong" data-t2="Click me!">
+    <button type="button" className="salute-btn" onClick={salute} aria-label="Elaine: click for a fencing salute">
       <canvas ref={ref} className="pixel" width={20} height={32} style={{ width: 20 * scale, height: 32 * scale }} aria-hidden="true" />
     </button>
   )

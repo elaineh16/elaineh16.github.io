@@ -197,6 +197,11 @@ function frameRows(kind: SpriteFrame): string[] {
   return g.map((r) => r.join(""))
 }
 
+/** The same frame with eyes closed (eye pixels become eyelid shade). */
+export function blinkFrame([rows, palette]: PixelMap): PixelMap {
+  return [rows.map((r) => r.replace(/E/g, "s")), palette]
+}
+
 export const SPRITE_FRAMES: Record<SpriteFrame, PixelMap> = {
   idle: [frameRows("idle"), SPRITE[1]],
   lookleft: [frameRows("lookleft"), SPRITE[1]],

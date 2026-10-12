@@ -460,7 +460,6 @@ strong, b { font-weight: 400; color: inherit; text-decoration: underline; text-d
 /* ---- clickable avatar salute ---- */
 .salute-btn { position: relative; display: block; padding: 0; margin: 0; background: none; border: 0; cursor: pointer; }
 .salute-btn:focus-visible { outline: 3px dashed #fff6c2; outline-offset: 4px; }
-.salute-btn:hover canvas { filter: drop-shadow(0 0 6px rgba(255,246,194,.6)); }
 @media (max-width: 700px) { .player .salute-btn canvas { width: 105px !important; height: 168px !important; } }
 .player { position: absolute; }
 .player .nametag { position: relative; z-index: 1; }
