@@ -4,7 +4,7 @@
 export type IconName =
   | "laptop" | "knight" | "redstone" | "disc" | "book" | "chart" | "epee" | "coffee" | "passport"
   | "medal" | "paper" | "mail" | "stone" | "sign" | "map" | "camera" | "cards"
-  | "cod" | "salmon" | "matcha" | "banana" | "nametag" | "banner" | "chip" | "compass" | "stew" | "violin" | "boot" | "disc2" | "maple" | "goldepee" | "puffer" | "hat" | "ramen" | "git" | "heart" | "cookie"
+  | "cod" | "salmon" | "matcha" | "banana" | "nametag" | "banner" | "chip" | "compass" | "stew" | "violin" | "boot" | "disc2" | "maple" | "goldepee" | "puffer" | "hat" | "ramen" | "git" | "heart" | "cookie" | "blackcoffee"
 
 type PixelMap = [rows: string[], palette: Record<string, string>]
 
@@ -16,7 +16,7 @@ export const ICONS: Record<IconName, PixelMap> = {
   book: [["..........", ".BBBBBBBB.", ".BbPPPPPB.", ".BbPPPPPB.", ".BbPllPPB.", ".BbPPPPPB.", ".BbPllPPB.", ".BbPPPPPB.", ".BBBBBBBB.", ".........."], { B: "#7a4a2a", b: "#5a3318", P: "#F5E9D4", l: "#8b8b8b" }],
   chart: [["..........", "........Y.", ".......YY.", "......Y...", "..Y..Y....", ".Y.YY.....", "Y.........", "GGGGGGGGGG", "G.G.G.G.G.", ".........."], { Y: "#f2c94c", G: "#4f7342" }],
   epee: [[".........S", "........S.", ".......S..", "......S...", ".....S....", "..ggS.....", "..gGg.....", ".H.gg.....", "H.........", ".........."], { S: "#e8edf3", G: "#b5862a", g: "#d6a531", H: "#4a2f1f" }],
-  coffee: [["..........", "...w.w....", "....w.w...", ".CCCCCC...", ".CBBBBCCC.", ".CBBBBC.C.", ".CBBBBCCC.", ".CBBBBC...", "..CCCC....", ".........."], { C: "#F5E9D4", B: "#6b3e22", w: "#e0e0e0" }],
+  coffee: [["..........", "...w.w....", "....w.w...", ".CCCCCC...", ".CBBBBCCC.", ".CBBBBC.C.", ".CBBBBCCC.", ".CBBBBC...", "..CCCC....", ".........."], { C: "#c9b48a", B: "#6b3e22", w: "#b0b0b0" }],
   passport: [["..........", "..NNNNNN..", "..NNNNNN..", "..NNYYNN..", "..NYNNYN..", "..NNYYNN..", "..NNNNNN..", "..NYYYYN..", "..NNNNNN..", ".........."], { N: "#2d3f6b", Y: "#f2c94c" }],
   medal: [["..R....R..", "...R..R...", "....RR....", "...YYYY...", "..YYWYYY..", "..YWYYYY..", "..YYYYYY..", "...YYYY...", "..........", ".........."], { R: "#B31B1B", Y: "#f2c94c", W: "#fff6c2" }],
   paper: [["..PPPPP...", "..PllPPP..", "..PPPPPP..", "..PllllP..", "..PPPPPP..", "..PllllP..", "..PPPPPP..", "..PllllP..", "..PPPPPP..", ".........."], { P: "#F5E9D4", l: "#8b8b8b" }],
@@ -45,6 +45,7 @@ export const ICONS: Record<IconName, PixelMap> = {
   git: [[".DDDDDDDD.", "DDDDDDDDDD", "DDWWDDDWWD", "DDWWDDDWWD", "DDDWDDDWDD", "DDDWDDWDDD", "DDDWWWDDDD", "DDWWDDDDDD", "DDWWDDDDDD", ".DDDDDDDD."], { D: "#24292f", W: "#f0f6fc" }],
   heart: [["..........", ".RRR..RRR.", "RRwRRRRRRR", "RwRRRRRRRR", "RRRRRRRRRR", ".RRRRRRRr.", "..RRRRRr..", "...RRRr...", "....Rr....", ".........."], { R: "#e0365c", r: "#a8203f", w: "#ffd0dc" }],
   cookie: [["..........", "..........", "....TTTT..", "..TTttttT.", ".TtttttttT", ".TttttWttT", ".TtttTTttT", ".TttT..TtT", "..TT....T.", ".........."], { T: "#a8702e", t: "#e0b26a", W: "#fffaf0" }],
+  blackcoffee: [["......zzzz", "........z.", ".......z..", "......zzzz", ".kkkkkk...", ".KBBBBKKK.", ".KBbBBK.K.", ".KBBBBKKK.", ".KKKKKK...", "..KKKK...."], { K: "#3a3a44", k: "#6a6a78", B: "#1c120c", b: "#3a2618", z: "#c9d8ea" }],
   goldepee: [[".........S", "........S.", ".......S..", "......S...", ".....S....", "..ggS.....", "..gGg.....", ".H.gg.....", "H.........", ".........."], { S: "#ffe27a", G: "#b5862a", g: "#f2c94c", H: "#8a5a1a" }],
 }
 
@@ -157,9 +158,9 @@ export function drawBlockLogo(canvas: HTMLCanvasElement, word: string) {
 // ---- Salute animation frames (20×32: the 16-wide sprite with 2 columns of room each side) ----
 export type SpriteFrame = "idle" | "front" | "up" | "down" | "lookleft" | "waveA" | "waveB"
 
-function frameRows(kind: SpriteFrame): string[] {
+function frameRows(kind: SpriteFrame, base: string[] = spriteRows): string[] {
   // Start from the sprite without its épée (blade column and guard).
-  const g = spriteRows.map((row, i) => {
+  const g = base.map((row, i) => {
     let r = row.split("")
     if (i >= 1 && i <= 18) r[15] = "."
     return ".." + r.join("") + ".."
@@ -178,13 +179,16 @@ function frameRows(kind: SpriteFrame): string[] {
   if (kind === "waveA" || kind === "waveB") {
     // Free arm (viewer's left) raised beside her head, hand tipping out (A) and in (B).
     for (let r = 13; r <= 18; r++) {
+      set(r, 0, ".")
       set(r, 1, ".")
       set(r, 2, ".")
     }
-    set(12, 1, "R"); set(12, 2, "r")
+    // Sleeve colour matches the outfit: red tee, or the white fencing jacket.
+    const [sl, sd, cf] = base === spriteRows ? ["R", "r", "W"] : ["J", "j", "L"]
+    set(12, 1, sl); set(12, 2, sd)
     for (let r = 7; r <= 11; r++) {
-      set(r, -1, "R")
-      set(r, 0, "r")
+      set(r, -1, sl)
+      set(r, 0, sd)
     }
     // Smile while waving: mouth corners up, a curve underneath.
     set(7, 7, "S"); set(7, 8, "S")
@@ -192,12 +196,12 @@ function frameRows(kind: SpriteFrame): string[] {
     set(8, 7, "M"); set(8, 8, "M")
     if (kind === "waveA") {
       // Hand tipped outward.
-      set(6, -2, "W"); set(6, -1, "W")
+      set(6, -2, cf); set(6, -1, cf)
       set(5, -2, "S"); set(5, -1, "S")
       set(4, -2, "S"); set(4, -1, "s")
     } else {
       // Hand tipped inward, a little higher.
-      set(6, -1, "W"); set(6, 0, "W")
+      set(6, -1, cf); set(6, 0, cf)
       set(5, 0, "S"); set(5, 1, "S")
       set(4, 0, "S"); set(4, 1, "S")
       set(3, 1, "s")
@@ -234,6 +238,20 @@ function frameRows(kind: SpriteFrame): string[] {
 export function blinkFrame([rows, palette]: PixelMap): PixelMap {
   return [rows.map((r) => r.replace(/E/g, "s")), palette]
 }
+
+/* Fencing outfit: white jacket and knickers, red-and-white socks, mask tucked under her arm. */
+const fencingRows = [
+  ...spriteRows.slice(0, 9).map((r) => r.slice(0, 15) + "."),
+  "..HHHHsSSsHHHH..", "..HHJJJJJJJJHH..", ".JJHHJJjJJJHHJJ.", ".JJHHJJjJJJHHJJ.", "XxXHHJJjJJJHHJJ.", "xXxHJJJjJJJJHjJ.",
+  "XxXJJJJjJJJJJjJ.", "LLLJJJJjJJJJJjJ.", ".jjJJJJJJJJJJjj.", ".SSjjjjjjjjjjLL.", "...JJJJJJJJJJ...", "...JJJJjJJJJJ...",
+  "...JJJJjJJJJJ...", "...JJJJjJJJJJ...", "...JJJJ.JJJJJ...", "...OOOO.OOOOO...", "...JJJJ.JJJJJ...", "...OOOO.OOOOO...",
+  "...OOOO.OOOOO...", "...KKKKkKKKKK...", "..KKKKKkKKKKKK..", "..kkkkk.kkkkkk..", "................",
+].map((row, i) => (i >= 1 && i <= 16 ? row.slice(0, 15) + "B" : i === 17 || i === 18 ? row.slice(0, 15) + "g" : row))
+
+export type Outfit = "casual" | "fencing"
+const FENCING_PALETTE = { ...SPRITE[1], J: "#f4f4f4", j: "#d0d0d6", X: "#2b2b33", x: "#55555f", L: "#e4e4e8", O: "#B31B1B" }
+const FRAME_KINDS: SpriteFrame[] = ["idle", "lookleft", "front", "up", "down", "waveA", "waveB"]
+export const SPRITE_FRAMES_FENCING = Object.fromEntries(FRAME_KINDS.map((k) => [k, [frameRows(k, fencingRows), FENCING_PALETTE] as PixelMap])) as unknown as Record<SpriteFrame, PixelMap>
 
 export const SPRITE_FRAMES: Record<SpriteFrame, PixelMap> = {
   idle: [frameRows("idle"), SPRITE[1]],

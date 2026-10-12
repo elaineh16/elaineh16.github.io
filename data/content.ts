@@ -45,9 +45,9 @@ export const PROFILE = {
   ] as [string, string][],
   headline: "Analytical by training. Competitive by nature.",
   about: [
-    "I'm Elaine Hong, a Cornell Computer Science and Operations Research dual-degree student working across full-stack engineering, machine learning, and quantitative systems.",
+    "Hi! I'm Elaine Hong, a Computer Science and ORIE (Operations Research and Information Engineering) student at Cornell working across full-stack engineering, machine learning, and quantitative systems.",
     "I like problems where software, models, and people meet. Whether I'm improving a production workflow, evaluating a retrieval system, or designing production analytics, I care about building the right thing and proving that it performs.",
-    "Outside the terminal, I compete on Cornell's Division I fencing team and serve as Conference Director for the Society of Women Engineers at Cornell and Publicity Chair for the Cornell ORIE Club.",
+    "Outside the terminal, I compete on Cornell's Division I fencing team and serve as Conference Director for the Society of Women Engineers at Cornell and Publicity Chair for the Cornell ORIE Club :)",
   ],
   summaryLine: "Cornell Engineering '28 · B.S. Computer Science + Operations Research · NCAA Division I fencer",
 }
@@ -205,6 +205,10 @@ export interface Story {
   body: string[]
   /** Extra live content shown under the text. */
   extra?: "gallery" | "music" | "map"
+  /** A button at the end of the story. */
+  link?: { href: string; label: string }
+  /** A short label/value list shown under the text, like a character sheet. */
+  stats?: [string, string][]
 }
 
 /* Photos live in public/photos (resized, location data removed). */
@@ -230,10 +234,13 @@ export const STORIES: Story[] = [
     type: "Fencing story",
     title: "En garde",
     body: [
-      "I started fencing because my brother's friend invited us along: he got a discount if we signed up. I stayed long after the discount ran out.",
-      "Making the Canadian National Team is still my proudest moment. Now I compete on Cornell's NCAA Division I varsity team.",
-      "Fencing taught me to read people, stay calm under pressure, adjust fast after a mistake, and manage my time. It turns out that's most of engineering too.",
+      "I started fencing almost by accident. My brother’s friend invited us to try it because he got a discount if we signed up with him. I stayed long after the discount ran out.",
+      "Over time, fencing became a huge part of my life. Making the Canadian National Team is still one of my proudest moments, and now I compete on Cornell’s NCAA Division I varsity fencing team.",
+      "What I love most about fencing is how mental it is. You’re constantly reading your opponent, making decisions with incomplete information, and adjusting in real time.",
+      "It’s also taught me a lot about discipline and time management. Balancing training, travel, classes, and everything else has forced me to be intentional with my time.",
+      "It turns out a lot of that carries over to engineering too: read the situation, make a decision, learn from what failed, and adjust fast.",
     ],
+    link: { href: "https://cornellbigred.com/sports/fencing/roster/elaine-hong/85287", label: "View my Cornell roster profile" },
   },
   {
     key: "camera",
@@ -260,8 +267,16 @@ export const STORIES: Story[] = [
     type: "Fun facts & hobbies",
     title: "Side quests",
     body: [
-      "When I'm not fencing or in class, I'm usually playing poker, trying a new coffee shop, or playing Minecraft or Bloons TD 6.",
-      "I'm also Conference Director for the Society of Women Engineers at Cornell and Publicity Chair for the Cornell ORIE Club.",
+      "When I’m not fencing or in class, I’m probably playing poker, watching youtube for a new Bloons TD 6 strategy, or finding an excuse to check out a new coffee shop.",
+      "I’m technically a night owl, except I’m also terrible at actually staying up late.",
+      "I also love collecting computer stickers. My laptop and my water bottle has basically become a archive of places, projects, clubs, and random things I liked enough to stick on something.",
+      "I’m also a Conference Director for Cornell SWE and Publicity Chair for the Cornell ORIE Club, which means a decent amount of my time goes toward planning events, making things look good, and convincing engineers to show up to things.",
+    ],
+    stats: [
+      ["Current obsessions", "Poker, BTD6, coffee"],
+      ["Loot collection", "Computer stickers"],
+      ["Sleep build", "Night owl with low stamina"],
+      ["Campus quests", "SWE + C.ORIE"],
     ],
   },
   {
