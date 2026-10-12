@@ -66,6 +66,16 @@ export function Fishing({ sound, onCatch }: { sound: boolean; onCatch: (c: Catch
     onCatch(c, next.length, CATCHES.length)
   }
 
+  const reset = () => {
+    if (timer.current) clearTimeout(timer.current)
+    setCaught([])
+    save("ec.fish", [])
+    setCasts(0)
+    setLast(null)
+    setShown(null)
+    setPhase("ready")
+  }
+
   const main = phase === "waiting" || phase === "bite" ? reel : cast
   const label =
     phase === "waiting" ? "Reel in" : phase === "bite" ? "Reel in!" : phase === "ready" ? "Cast" : "Cast again"
@@ -180,6 +190,11 @@ export function Fishing({ sound, onCatch }: { sound: boolean; onCatch: (c: Catch
           <p className="vt" style={{ margin: "10px 0 0", fontSize: 12, color: "#3a3a3a" }}>
             Border colour shows rarity: grey common, blue rare, gold legendary.
           </p>
+          {caught.length ? (
+            <button type="button" className="tab small" onClick={reset} style={{ marginTop: 10 }}>
+              Reset catch log
+            </button>
+          ) : null}
         </section>
       </div>
     </div>
