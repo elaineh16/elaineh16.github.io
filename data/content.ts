@@ -182,7 +182,24 @@ export interface Story {
   type: string
   title: string
   body: string[]
+  /** Extra live content shown under the text. */
+  extra?: "gallery" | "music"
 }
+
+/* Photos live in public/photos (resized, location data removed). */
+export const PHOTOS: { src: string; thumb: string; alt: string; caption: string }[] = [
+  { src: "/photos/canada-games.jpg", thumb: "/photos/canada-games-thumb.jpg", alt: "Two épée fencers mid-bout at the Canada Games", caption: "Épée at the Canada Games" },
+  { src: "/photos/bigredhacks.jpg", thumb: "/photos/bigredhacks-thumb.jpg", alt: "The Bear Escape team holding a laptop and a guitar controller at BigRed//Hacks", caption: "BigRed//Hacks with the Bear Escape team" },
+  { src: "/photos/golden-hour.jpg", thumb: "/photos/golden-hour-thumb.jpg", alt: "Elaine in a grey flat cap at sunset on a stone bridge", caption: "Golden hour on a fencing trip" },
+  { src: "/photos/cultural-night.jpg", thumb: "/photos/cultural-night-thumb.jpg", alt: "Elaine and a friend at a decorated table at a cultural night", caption: "Cultural night with friends" },
+]
+
+/*
+ * Live "most played this week" from Last.fm (link Spotify to Last.fm first).
+ * Fill in your Last.fm username and API key (https://www.last.fm/api/account/create).
+ * The key is read-only, so it is fine to keep it in the site.
+ */
+export const LASTFM = { user: "", apiKey: "" }
 
 export const STORIES: Story[] = [
   {
@@ -203,7 +220,8 @@ export const STORIES: Story[] = [
     name: "Camera",
     type: "Photos",
     title: "Snapshots",
-    body: ["Photo album loading… Fencing, travel, Cornell and coffee shops, coming soon."],
+    body: ["A few snapshots from fencing, hackathons, travel and Cornell. Click one to see it bigger."],
+    extra: "gallery",
   },
   {
     key: "map",
@@ -222,7 +240,8 @@ export const STORIES: Story[] = [
     name: "Music Disc",
     type: "Favourite music",
     title: "On repeat",
-    body: ["Mostly indie, R&B and EDM."],
+    body: ["Mostly indie, R&B and EDM. Here's what I've played most this week:"],
+    extra: "music",
   },
   {
     key: "coffee",
