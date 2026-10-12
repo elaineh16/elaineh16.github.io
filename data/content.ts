@@ -281,7 +281,7 @@ export const STORIES: Story[] = [
 /* ---------- Mini-Games ---------- */
 export const ARCADE: { id: string; icon: IconName; name: string; blurb: string; status: "soon" | "locked" | "ready" }[] = [
   { id: "fishing", icon: "puffer", name: "Gone Fishing", blurb: `Cast, wait for the splash, reel it in. ${CATCHES.length} catches to collect, including one legendary.`, status: "ready" },
-  { id: "fencing", icon: "epee", name: "Fencing Duel", blurb: "Read the attack, parry, riposte. First to 5 touches. Climb from the pool to the final.", status: "ready" },
+  { id: "fencing", icon: "epee", name: "Fencing Duel", blurb: "Read the attack, parry, riposte. First to 3 touches. Climb from the pool to the final.", status: "ready" },
   { id: "crafting", icon: "book", name: "Crafting Elaine", blurb: "Combine items to unlock stories and fun facts. 6 recipes to find.", status: "ready" },
 ]
 
