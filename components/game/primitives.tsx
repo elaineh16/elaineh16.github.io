@@ -2,6 +2,7 @@
 
 import type React from "react"
 import { useEffect, useRef, useState } from "react"
+import { createPortal } from "react-dom"
 import { ICONS, SPRITE, drawBlockLogo, drawPixelMap, type IconName } from "@/lib/pixel-art"
 import { WEATHER, paintSeason, type Season } from "@/lib/seasons"
 
@@ -240,7 +241,8 @@ export function Dialog({ title, onClose, children }: { title: string; onClose: (
       prev?.focus()
     }
   }, [onClose])
-  return (
+  // Render at the end of <body> so no panel's stacking order can cover it.
+  return createPortal(
     <div className="dialog-backdrop" onClick={onClose}>
       <div className="win dialog" role="dialog" aria-modal="true" aria-label={title} ref={ref} onClick={(e) => e.stopPropagation()}>
         <div className="dialog-head">
@@ -251,6 +253,7 @@ export function Dialog({ title, onClose, children }: { title: string; onClose: (
         </div>
         <div className="dialog-body">{children}</div>
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }
