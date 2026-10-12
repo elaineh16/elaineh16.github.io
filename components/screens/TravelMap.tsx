@@ -52,7 +52,7 @@ function project(g: MapGrid, p: Place) {
 const kindLabel = (p: Place) => (p.kind === "spawn" ? "Spawn point" : p.kind === "base" ? "Current base" : "Visited")
 
 export function TravelMap() {
-  const [view, setView] = useState<ViewId>("na")
+  const view: ViewId = "na"
   const [picked, setPicked] = useState<string | null>(null)
   const ref = useRef<HTMLCanvasElement>(null)
   const g = MAP_VIEWS[view]
@@ -62,23 +62,11 @@ export function TravelMap() {
   }, [g])
 
   const countries = ["Canada", "United States", "Mexico"] as const
-  const choose = (p: Place) => {
-    setPicked(p.name)
-    // Zoom in when the place is in the crowded north-east.
-    const east = project(MAP_VIEWS.east, p).inside
-    setView(east ? "east" : "na")
-  }
+  const choose = (p: Place) => setPicked(p.name)
+
 
   return (
     <div className="travel">
-      <div className="map-tabs" role="tablist" aria-label="Map view">
-        {(Object.keys(MAP_VIEWS) as ViewId[]).map((v) => (
-          <button key={v} type="button" role="tab" aria-selected={view === v} className={"tab small" + (view === v ? " on" : "")} onClick={() => setView(v)}>
-            {VIEW_LABEL[v]}
-          </button>
-        ))}
-      </div>
-
       <div className="travel-body">
         <div className="travel-main">
         <div className="mc-map">
@@ -104,21 +92,22 @@ export function TravelMap() {
           </div>
         </div>
 
-        <div className="map-legend vt">
-          <span>
-            <i className="pin spawn static" /> Spawn
-          </span>
-          <span>
-            <i className="pin base static" /> Base
-          </span>
-          <span>
-            <i className="pin visited static" /> Visited
-          </span>
-          <span className="map-total">
-            {PLACES.length} places · {countries.filter((c) => PLACES.some((p) => p.country === c)).length} countries
-          </span>
         </div>
-        </div>
+        <div className="travel-side">
+          <div className="map-legend vt">
+            <span>
+              <i className="pin spawn static" /> Spawn
+            </span>
+            <span>
+              <i className="pin base static" /> Base
+            </span>
+            <span>
+              <i className="pin visited static" /> Visited
+            </span>
+            <span className="map-total">
+              {PLACES.length} places · {countries.filter((c) => PLACES.some((p) => p.country === c)).length} countries
+            </span>
+          </div>
         <aside className="place-log" aria-label="Places visited">
           {countries.map((c) => {
             const list = PLACES.filter((p) => p.country === c)
@@ -139,6 +128,7 @@ export function TravelMap() {
             )
           })}
         </aside>
+        </div>
       </div>
     </div>
   )
