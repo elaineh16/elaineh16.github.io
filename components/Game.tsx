@@ -1,7 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
-import { ACHIEVEMENTS, ACHIEVEMENT_BY_ID, HOTBAR, PROJECTS, SCREEN_TITLES, SPLASHES, STORIES, type ScreenId } from "@/data/content"
+import { ACHIEVEMENTS, ACHIEVEMENT_BY_ID, HOTBAR, PROJECTS, SCREEN_TITLES, SPLASHES, STORIES, pickSplash, type ScreenId } from "@/data/content"
 import { Background, Dialog, PixelIcon, Toast, Tooltip, ViewCount, Weather } from "@/components/game/primitives"
 import { Home } from "@/components/screens/Home"
 import { About, Arcade, Inventory, Multiplayer, QuickView } from "@/components/screens/Screens"
@@ -45,7 +45,7 @@ export default function Game() {
     setSound(load("ec.sound", true))
     setSeen(load("ec.seen", {}))
     setProgress({ ...EMPTY, ...load<Progress>("ec.progress", EMPTY) })
-    setSplash(SPLASHES[Math.floor(Math.random() * SPLASHES.length)])
+    setSplash((cur) => pickSplash(cur))
     setScreen(screenFromHash())
     setLoaded(true)
     const onHash = () => {
@@ -166,8 +166,8 @@ export default function Game() {
   const onTitle = () => {
     setSpinning(false)
     requestAnimationFrame(() => setSpinning(true))
-    setTimeout(() => setSpinning(false), 950)
-    setSplash(SPLASHES[Math.floor(Math.random() * SPLASHES.length)])
+    setTimeout(() => setSpinning(false), 400)
+    setSplash((cur) => pickSplash(cur))
     achieve("egg")
   }
 
@@ -221,7 +221,7 @@ export default function Game() {
                   </button>
                 ) : (
                   <button type="button" className="mc-btn small" onClick={() => go("home")}>
-                    Back to Title Screen
+                    Back
                   </button>
                 )}
               </div>

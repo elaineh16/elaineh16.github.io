@@ -156,14 +156,26 @@ function ProjectDetail({ p }: { p: Project }) {
         <strong>Stack:</strong> <Todo text={p.stack} />
       </p>
       {p.result ? <div className="badge">★ {p.result}</div> : null}
-      {p.link ? (
-        <a className="join" style={{ alignSelf: "flex-start" }} href={p.link} target="_blank" rel="noreferrer">
-          {p.link.includes("github.com") ? "View on GitHub" : "Visit site"}
-        </a>
+      {p.link || p.github ? (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+          {p.link ? (
+            <a className="join" href={p.link} target="_blank" rel="noreferrer">
+              {p.link.includes("github.com") ? "View on GitHub" : "Visit site"}
+            </a>
+          ) : null}
+          {p.github ? (
+            <a className="join" href={p.github} target="_blank" rel="noreferrer">
+              View on GitHub
+            </a>
+          ) : null}
+        </div>
       ) : null}
     </article>
   )
 }
+
+// 2 rows of 9, so the grid never ends on a lone slot.
+const INVENTORY_SLOTS = 18
 
 export function Inventory({ selected, onSelect }: { selected: string; onSelect: (id: string) => void }) {
   const [tab, setTab] = useState<"items" | "skills">("items")
@@ -223,7 +235,7 @@ export function Inventory({ selected, onSelect }: { selected: string; onSelect: 
                       onClick={() => onSelect(pr.id)}
                     />
                   ))}
-                  {Array.from({ length: 12 }, (_, i) => (
+                  {Array.from({ length: Math.max(0, INVENTORY_SLOTS - PROJECTS.length) }, (_, i) => (
                     <div key={i} className="slot locked" aria-hidden="true">
                       ?
                     </div>

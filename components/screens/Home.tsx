@@ -35,7 +35,6 @@ export function Home({
         <figure className="player" aria-label={`${PROFILE.name}: ${PROFILE.classes.join(", ")}`}>
           <div className="nametag px">{PROFILE.name}</div>
           <SalutingSprite scale={7} sound={sound} />
-          <div className="pedestal" aria-hidden="true" />
         </figure>
 
         <nav className="menu" aria-label="Main menu">
