@@ -22,6 +22,8 @@ export interface Project {
   bullets: string[]
   stack: string
   result?: string
+  /** Source code on GitHub, shown next to `link`. */
+  github?: string
   /** A real accomplishment. Items with a badge get the enchanted glow. */
   badge?: string
   link?: string
@@ -119,10 +121,12 @@ export const PROJECTS: Project[] = [
     desc: "A date planner for Cornell and Ithaca. Tell it your vibe, budget and time, and it plans a little adventure with stops you can save and share with your partner.",
     bullets: [
       "Plans around a starting point, time window, budget for two, mood, dietary needs, and walking or driving.",
-      "Navi, a voice assistant, helps you talk through date ideas.",
+      "Builds a timed itinerary on a map from nearby places, then checks opening hours, budget, weather and walking routes.",
+      "Navi, a voice assistant, talks through ideas, and an iMessage agent texts you the plan and answers questions about it.",
     ],
-    stack: "Web app · voice assistant",
+    stack: "Gemini API · Grok Voice API · Google Maps & Places · iMessage agent · Vercel",
     link: "https://www.navidate.us/",
+    github: "https://github.com/elaineh16/NaviDate",
   },
   {
     id: "asset",
@@ -292,7 +296,7 @@ export interface Server {
 
 export const SERVERS: Server[] = [
   { name: "LinkedIn", desc: "elaine-hong-cornell · professional updates", icon: "sign", href: LINKEDIN_URL },
-  { name: "GitHub", desc: "elaineh16 · code, hackathons, side projects", icon: "stone", href: GITHUB_URL },
+  { name: "GitHub", desc: "elaineh16 · code, hackathons, side projects", icon: "git", href: GITHUB_URL },
   { name: "Email", desc: `${EMAIL} · fastest way to reach me`, icon: "mail", href: `mailto:${EMAIL}`, copy: true },
   { name: "Résumé", desc: "One-page PDF", icon: "paper", href: RESUME_URL },
 ]
@@ -307,7 +311,7 @@ export const MENU: { label: string; sub: string; screen: ScreenId }[] = [
 
 export const HOTBAR: { label: string; icon: IconName; href?: string; action?: "achievements" }[] = [
   { label: "Résumé", icon: "paper", href: RESUME_URL },
-  { label: "GitHub", icon: "stone", href: GITHUB_URL },
+  { label: "GitHub", icon: "git", href: GITHUB_URL },
   { label: "LinkedIn", icon: "sign", href: LINKEDIN_URL },
   { label: "Email", icon: "mail", href: `mailto:${EMAIL}` },
   { label: "Achievements", icon: "medal", action: "achievements" },
@@ -324,14 +328,30 @@ export const SCREEN_TITLES: Record<Exclude<ScreenId, "home">, string> = {
 }
 
 export const SPLASHES = [
-  "100% chance of side quests!",
-  "Powered by coffee and curiosity!",
-  "Professional side quest collector!",
-  "Currently debugging life!",
-  "Good ideas spawn here!",
-  "One more project before bed!",
-  "Now with épée!",
+  "En garde!",
+  "Touché!",
+  "Now with 100% more épée!",
+  "Spawned in Toronto!",
+  "Powered by matcha!",
+  "Also try Bloons TD 6!",
+  "Don't stop believin'!",
+  "Say my name!",
+  "Read Harry Potter 7 times!",
+  "Shin ramen enjoyer!",
+  "Now in 4 languages!",
+  "Works on my machine!",
+  "Gone fishing!",
+  "One more commit!",
 ]
+
+/** Hidden splash: shows up about 1 time in 25. */
+export const HIDDEN_SPLASH = "d1 trollstar"
+
+export function pickSplash(current?: string): string {
+  if (Math.random() < 0.04 && current !== HIDDEN_SPLASH) return HIDDEN_SPLASH
+  const pool = SPLASHES.filter((s) => s !== current)
+  return pool[Math.floor(Math.random() * pool.length)]
+}
 
 /* ---------- Visitor achievements (saved in the visitor's browser) ---------- */
 export interface Achievement {

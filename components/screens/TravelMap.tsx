@@ -79,63 +79,66 @@ export function TravelMap() {
         ))}
       </div>
 
-      <div className="mc-map">
-        <div className="mc-map-inner" style={{ aspectRatio: `${g.width} / ${g.height}` }}>
-          <canvas ref={ref} className="pixel" role="img" aria-label={`Pixel map of ${VIEW_LABEL[view]} with ${PLACES.length} places marked`} />
-          {PLACES.map((p) => {
-            const { x, y, inside } = project(g, p)
-            if (!inside) return null
+      <div className="travel-body">
+        <div className="travel-main">
+        <div className="mc-map">
+          <div className="mc-map-inner" style={{ aspectRatio: `${g.width} / ${g.height}` }}>
+            <canvas ref={ref} className="pixel" role="img" aria-label={`Pixel map of ${VIEW_LABEL[view]} with ${PLACES.length} places marked`} />
+            {PLACES.map((p) => {
+              const { x, y, inside } = project(g, p)
+              if (!inside) return null
+              return (
+                <button
+                  key={p.name}
+                  type="button"
+                  className={"pin " + (p.kind || "visited") + (picked === p.name ? " picked" : "")}
+                  style={{ left: `${x * 100}%`, top: `${y * 100}%` }}
+                  aria-label={`${p.name}, ${p.region}: ${kindLabel(p)}`}
+                  data-t1={p.name}
+                  data-t2={`${p.region} · ${p.country}`}
+                  data-t3={kindLabel(p)}
+                  onClick={() => setPicked(p.name)}
+                />
+              )
+            })}
+          </div>
+        </div>
+
+        <div className="map-legend vt">
+          <span>
+            <i className="pin spawn static" /> Spawn
+          </span>
+          <span>
+            <i className="pin base static" /> Base
+          </span>
+          <span>
+            <i className="pin visited static" /> Visited
+          </span>
+          <span className="map-total">
+            {PLACES.length} places · {countries.filter((c) => PLACES.some((p) => p.country === c)).length} countries
+          </span>
+        </div>
+        </div>
+        <aside className="place-log" aria-label="Places visited">
+          {countries.map((c) => {
+            const list = PLACES.filter((p) => p.country === c)
+            if (!list.length) return null
             return (
-              <button
-                key={p.name}
-                type="button"
-                className={"pin " + (p.kind || "visited") + (picked === p.name ? " picked" : "")}
-                style={{ left: `${x * 100}%`, top: `${y * 100}%` }}
-                aria-label={`${p.name}, ${p.region}: ${kindLabel(p)}`}
-                data-t1={p.name}
-                data-t2={`${p.region} · ${p.country}`}
-                data-t3={kindLabel(p)}
-                onClick={() => setPicked(p.name)}
-              />
+              <div key={c}>
+                <h4 className="px">
+                  {c} <span>({list.length})</span>
+                </h4>
+                <div className="place-chips">
+                  {list.map((p) => (
+                    <button key={p.name} type="button" className={"place-chip" + (picked === p.name ? " on" : "")} aria-pressed={picked === p.name} onClick={() => choose(p)}>
+                      {p.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
             )
           })}
-        </div>
-      </div>
-
-      <div className="map-legend vt">
-        <span>
-          <i className="pin spawn static" /> Spawn
-        </span>
-        <span>
-          <i className="pin base static" /> Base
-        </span>
-        <span>
-          <i className="pin visited static" /> Visited
-        </span>
-        <span className="map-total">
-          {PLACES.length} places · {countries.filter((c) => PLACES.some((p) => p.country === c)).length} countries
-        </span>
-      </div>
-
-      <div className="place-log">
-        {countries.map((c) => {
-          const list = PLACES.filter((p) => p.country === c)
-          if (!list.length) return null
-          return (
-            <div key={c}>
-              <h4 className="px">
-                {c} <span>({list.length})</span>
-              </h4>
-              <div className="place-chips">
-                {list.map((p) => (
-                  <button key={p.name} type="button" className={"place-chip" + (picked === p.name ? " on" : "")} aria-pressed={picked === p.name} onClick={() => choose(p)}>
-                    {p.name}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )
-        })}
+        </aside>
       </div>
     </div>
   )
