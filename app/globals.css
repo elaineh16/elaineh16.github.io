@@ -269,3 +269,16 @@ dl.currently dt { color: var(--pink); } dl.currently dd { margin: 0; }
 @media (prefers-reduced-motion: reduce) { .slot.enchanted::after { animation: none; background-position: 50% 0; } .dialog { animation: none; } }
 .mc-btn[disabled]:hover { background: var(--stone); box-shadow: inset 3px 3px 0 var(--stone-hi), inset -3px -3px 0 var(--stone-lo); color: #f4f4f4; }
 .profile-card { flex: 0 1 300px; }
+
+/* Minecraft-style: menu buttons centred on the page, character to the left of them */
+.stage { position: relative; display: flex; justify-content: center; align-items: flex-end; }
+.menu { flex: 0 1 420px; width: 420px; max-width: 100%; }
+.menu .mc-btn { justify-content: center; text-align: center; }
+.menu .mc-btn .sub { display: none; }
+.player { position: absolute; right: calc(50% + 250px); bottom: 0; }
+@media (max-width: 900px) {
+  .stage { flex-direction: column; align-items: center; gap: 20px; }
+  .player { position: static; }
+  .menu { width: 100%; }
+}
+.sub-inline { font-family: var(--f-term); font-size: 15px; color: #ece4e8; }

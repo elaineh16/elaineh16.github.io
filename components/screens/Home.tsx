@@ -39,8 +39,7 @@ export function Home({
         <nav className="menu" aria-label="Main menu">
           {MENU.map((m) => (
             <button key={m.screen} type="button" className="mc-btn" onClick={() => go(m.screen)}>
-              <span>{m.label}</span>
-              <span className="sub">{m.sub}</span>
+              {m.label} <span className="sub-inline">· {m.sub}</span>
             </button>
           ))}
           <button type="button" className="quick-link vt" onClick={() => go("quick")}>
