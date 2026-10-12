@@ -378,6 +378,7 @@ export const ACHIEVEMENTS: Achievement[] = [
   { id: "weather", title: "Weather Watcher", how: "Turn on the weather", icon: "map" },
   { id: "seasons", title: "Four Seasons", how: "Try all four seasons", icon: "map" },
   { id: "firstcookie", title: "Fortune Teller", how: "Crack your first fortune cookie", icon: "cookie" },
+  { id: "enchantedcookie", title: "Enchanted", how: "Land on an enchanted cookie", icon: "cookie" },
   { id: "goldencookie", title: "Golden Cookie", how: "Land on the golden cookie", icon: "cookie" },
   { id: "fortunejar", title: "Full Jar", how: "Collect every fortune", icon: "cookie" },
   { id: "firstcatch", title: "Gone Fishing", how: "Reel in your first catch", icon: "puffer" },

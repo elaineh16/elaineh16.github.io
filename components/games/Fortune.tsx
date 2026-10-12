@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { FORTUNES, GOLDEN, GOLDEN_CHANCE, WORDS, luckyNumbers, pickFortune, type Fortune, type Word } from "@/data/fortunes"
+import { ENCHANTED_CHANCE, FORTUNES, GOLDEN_CHANCE, WORDS, luckyNumbers, pickFortune, type Fortune, type Tier, type Word } from "@/data/fortunes"
 import { load, save } from "@/lib/storage"
 import { playCrunch, playJingle, playTick } from "@/lib/sound"
 
@@ -10,6 +10,8 @@ type Phase = "idle" | "spinning" | "cracking" | "open"
 const SLICES = 12
 const STEP = 360 / SLICES
 const GOLD_SLICE = 0
+const ENCHANTED_SLICES = [4, 8]
+const tierOfSlice = (i: number): Tier => (i === GOLD_SLICE ? "golden" : ENCHANTED_SLICES.includes(i) ? "enchanted" : "regular")
 const SPIN_MS = 4200
 
 interface Slip {
@@ -66,9 +68,11 @@ export function FortuneWheel({ sound, onFortune }: { sound: boolean; onFortune: 
   const spin = () => {
     if (phase === "spinning" || phase === "cracking") return
     setCopied(false)
-    const golden = Math.random() < GOLDEN_CHANCE
-    const slice = golden ? GOLD_SLICE : 1 + Math.floor(Math.random() * (SLICES - 1))
-    const fortune = golden ? GOLDEN[Math.floor(Math.random() * GOLDEN.length)] : pickFortune(foundRef.current)
+    const roll = Math.random()
+    const tier: Tier = roll < GOLDEN_CHANCE ? "golden" : roll < GOLDEN_CHANCE + ENCHANTED_CHANCE ? "enchanted" : "regular"
+    const choices = Array.from({ length: SLICES }, (_, i) => i).filter((i) => tierOfSlice(i) === tier)
+    const slice = choices[Math.floor(Math.random() * choices.length)]
+    const fortune = pickFortune(foundRef.current, tier)
     // Land the chosen slice under the top pointer, a little off-centre so it feels natural.
     const jitter = (Math.random() - 0.5) * STEP * 0.6
     const target = (((-slice * STEP + jitter - angle) % 360) + 360) % 360
@@ -89,7 +93,7 @@ export function FortuneWheel({ sound, onFortune }: { sound: boolean; onFortune: 
         foundRef.current = nextFound
         setFound(nextFound)
         save("ec.fortunes", nextFound)
-        if (soundRef.current && (fortune.golden || isNew)) setTimeout(playJingle, 80)
+        if (soundRef.current && (fortune.tier !== "regular" || isNew)) setTimeout(playJingle, 80)
         onFortune(fortune, nextFound.length, FORTUNES.length)
       })
     })
@@ -123,8 +127,10 @@ export function FortuneWheel({ sound, onFortune }: { sound: boolean; onFortune: 
         ? "Round and round it goes…"
         : phase === "cracking"
           ? "Crack!"
-          : slip?.fortune.golden
+          : slip?.fortune.tier === "golden"
             ? "✨ The golden cookie! ✨"
+            : slip?.fortune.tier === "enchanted"
+              ? "✦ An enchanted cookie! ✦"
             : isNew
               ? "A new fortune for your jar!"
               : "You've read this one before. Spin again?"
@@ -156,12 +162,13 @@ export function FortuneWheel({ sound, onFortune }: { sound: boolean; onFortune: 
                 const a1 = ((i * STEP + STEP / 2 - 90) * Math.PI) / 180
                 const r = 100
                 const d = `M0 0 L${r * Math.cos(a0)} ${r * Math.sin(a0)} A${r} ${r} 0 0 1 ${r * Math.cos(a1)} ${r * Math.sin(a1)} Z`
-                const gold = i === GOLD_SLICE
+                const t = tierOfSlice(i)
+                const gold = t === "golden"
                 return (
                   <g key={i}>
-                    <path d={d} fill={gold ? "#f2c94c" : i % 2 ? "var(--hv)" : "var(--hv-soft)"} stroke="#3a2a20" strokeWidth="2" shapeRendering="auto" />
+                    <path d={d} fill={gold ? "#f2c94c" : t === "enchanted" ? "#9a62e0" : i % 2 ? "var(--hv)" : "var(--hv-soft)"} stroke="#3a2a20" strokeWidth="2" shapeRendering="auto" />
                     <g transform={`rotate(${i * STEP}) translate(0 -70)`}>
-                      <Cookie gold={gold} />
+                      <Cookie gold={gold} enchanted={t === "enchanted"} />
                     </g>
                   </g>
                 )
@@ -184,14 +191,14 @@ export function FortuneWheel({ sound, onFortune }: { sound: boolean; onFortune: 
       </section>
 
       <div className="craft-side stack-16">
-        <article className={"paper craft-result show fortune-card" + (slip?.fortune.golden && phase !== "spinning" ? " golden" : "")} aria-live="polite">
+        <article className={"paper craft-result show fortune-card" + (slip && phase !== "spinning" && slip.fortune.tier !== "regular" ? " " + slip.fortune.tier : "")} aria-live="polite">
           {phase === "cracking" || phase === "open" ? (
             <div className={"cookie-crack " + phase} aria-hidden="true">
               <span className="half l">
-                <Cookie gold={!!slip?.fortune.golden} big />
+                <Cookie gold={slip?.fortune.tier === "golden"} enchanted={slip?.fortune.tier === "enchanted"} big />
               </span>
               <span className="half r">
-                <Cookie gold={!!slip?.fortune.golden} big />
+                <Cookie gold={slip?.fortune.tier === "golden"} enchanted={slip?.fortune.tier === "enchanted"} big />
               </span>
             </div>
           ) : null}
@@ -217,7 +224,7 @@ export function FortuneWheel({ sound, onFortune }: { sound: boolean; onFortune: 
             <>
               <span className="book-kicker">How to play</span>
               <p style={{ margin: 0 }}>
-                Spin the wheel and a fortune cookie cracks open with your fortune, lucky numbers and a word to learn. Collect them all in your jar, and watch out for the rare golden cookie.
+                Spin the wheel and a fortune cookie cracks open with your fortune, lucky numbers and a word to learn. Collect them all in your jar, and watch out for the rare enchanted and golden cookies.
               </p>
             </>
           ) : null}
@@ -236,8 +243,8 @@ export function FortuneWheel({ sound, onFortune }: { sound: boolean; onFortune: 
                 const f = FORTUNES.find((x) => x.id === id)
                 if (!f) return null
                 return (
-                  <li key={id} className={f.golden ? "golden" : ""}>
-                    {f.golden ? "✨ " : ""}
+                  <li key={id} className={f.tier === "regular" ? "" : f.tier}>
+                    {f.tier === "golden" ? "✨ " : f.tier === "enchanted" ? "✦ " : ""}
                     {f.text}
                   </li>
                 )
@@ -267,9 +274,9 @@ export function FortuneWheel({ sound, onFortune }: { sound: boolean; onFortune: 
 /* A blocky folded fortune cookie, drawn on a 10×8 grid centred on (0, 0). */
 const COOKIE = ["...TTTT...", ".TTttttTT.", "TttttttttT", "TttttWtttT", "TtttTTtttT", "TttT..TttT", ".TT....TT."]
 
-export function Cookie({ gold = false, big = false }: { gold?: boolean; big?: boolean }) {
-  const T = gold ? "#a8740f" : "#a8702e"
-  const t = gold ? "#ffe27a" : "#e0b26a"
+export function Cookie({ gold = false, enchanted = false, big = false }: { gold?: boolean; enchanted?: boolean; big?: boolean }) {
+  const T = gold ? "#a8740f" : enchanted ? "#5a2f9a" : "#a8702e"
+  const t = gold ? "#ffe27a" : enchanted ? "#d2b0ff" : "#e0b26a"
   const s = big ? 1 : 2.2
   const rects = COOKIE.flatMap((row, y) =>
     row.split("").flatMap((c, x) => (c === "." ? [] : [<rect key={`${x}-${y}`} x={(x - 5) * s} y={(y - 3.5) * s} width={s} height={s} fill={c === "T" ? T : c === "W" ? "#fffaf0" : t} />])),

@@ -238,7 +238,8 @@ export default function Game() {
                 sound={sound}
                 onFortune={(f, n, total) => {
                   achieve("firstcookie")
-                  if (f.golden) achieve("goldencookie")
+                  if (f.tier === "enchanted") achieve("enchantedcookie")
+                  if (f.tier === "golden") achieve("goldencookie")
                   if (n >= total) achieve("fortunejar")
                 }}
               />

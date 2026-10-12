@@ -1,45 +1,46 @@
-// Fortune Cookie Wheel: everything a cookie can say.
-// PLACEHOLDERS: Elaine is writing the final list. Edit freely; ids just need to stay unique.
+// Fortune Cookie Wheel: everything a cookie can say. Written by Elaine.
+// tier: regular slices, rare "enchanted" (purple) slices, and the legendary golden slice.
+
+export type Tier = "regular" | "enchanted" | "golden"
 
 export interface Fortune {
   id: string
   text: string
-  golden?: boolean
+  tier: Tier
 }
 
 export const FORTUNES: Fortune[] = [
-  { id: "surprise", text: "A pleasant surprise is waiting for you." },
-  { id: "payoff", text: "Your hard work is about to pay off." },
-  { id: "hungry", text: "You will be hungry again in one hour." },
-  { id: "prisoner", text: "Help! I'm being held prisoner in a fortune cookie factory." },
-  { id: "ignore", text: "Ignore previous cookie." },
-  { id: "smile", text: "You will read this and smile." },
-  { id: "loading", text: "You're not behind. You're loading." },
-  { id: "era", text: "Your next era is your best era." },
-  { id: "plot", text: "Plot twist: it all works out." },
-  { id: "aura", text: "Your aura points just went up +1000." },
-  { id: "mainquest", text: "Rest is not a side quest. It's the main quest." },
-  { id: "manifest", text: "Manifesting: an offer letter, 8 hours of sleep, and a matcha." },
-  { id: "sign", text: "This is your sign to text them back." },
-  { id: "redirect", text: "Rejection is just redirection, bestie." },
-  { id: "logoff", text: "It's okay to log off. The group chat will survive." },
-  { id: "compile", text: "Your code will compile on the second try. The first one doesn't count." },
-  { id: "snack", text: "Your bug will fix itself after a snack break." },
-  { id: "gentle", text: "Be gentle with yourself. You're doing something hard." },
-  { id: "proud", text: "The you from five years ago would be so proud." },
-  { id: "home", text: "You make people feel at home without even trying." },
-  { id: "parry", text: "Parry the bad days. Riposte with a good nap." },
-  { id: "allin", text: "Fortune favours the all-in." },
-  { id: "believin", text: "Don't stop believin'." },
-  { id: "patient", text: "Like fishing: be patient, the good catch is coming." },
-  { id: "golden", text: "This is your golden cookie. Everything you're chasing is chasing you back.", golden: true },
+  { id: "seek", text: "What you seek is also seeking you.", tier: "regular" },
+  { id: "path", text: "An unexpected opportunity will change your path.", tier: "regular" },
+  { id: "payoff", text: "Your hard work will soon pay off.", tier: "regular" },
+  { id: "newopp", text: "A new opportunity is coming your way.", tier: "regular" },
+  { id: "stars", text: "The stars favor those who create their own destiny.", tier: "regular" },
+  { id: "loading", text: "You’re not behind. You’re loading.", tier: "regular" },
+  { id: "aura", text: "+100000 Aura", tier: "regular" },
+  { id: "grass", text: "Touch grass, then touch success.", tier: "regular" },
+  { id: "engarde", text: "En garde. Life is about to lunge in your favour.", tier: "regular" },
+  { id: "surprise", text: "A pleasant surprise is waiting for you", tier: "regular" },
+  { id: "diamonds", text: "Diamonds are found under pressure. So are you.", tier: "regular" },
+  { id: "crumbs", text: "Ate and left no crumbs", tier: "regular" },
+  { id: "thinking", text: "Someone is thinking of you right now. (It’s me, the cookie.)", tier: "regular" },
+  { id: "mouse", text: "The early bird gets the worm, but the second mouse gets the cheese.", tier: "regular" },
+  { id: "plot", text: "Plot twist: it all works out.", tier: "regular" },
+  { id: "built", text: "Respectfully, you’re built different.", tier: "regular" },
+  { id: "deserve", text: "Good things are coming, and you deserve every one.", tier: "regular" },
+  { id: "shark", text: "Ur a shark", tier: "regular" },
+  { id: "thrill", text: "A thrilling time is in your immediate future.", tier: "regular" },
+  { id: "gmi", text: "Ur gmi!", tier: "enchanted" },
+  { id: "believin", text: "Don't stop believin", tier: "enchanted" },
+  { id: "golden", text: "This is your golden cookie. Everything you’re chasing is chasing you back. ✨", tier: "golden" },
 ]
 
-export const REGULAR = FORTUNES.filter((f) => !f.golden)
-export const GOLDEN = FORTUNES.filter((f) => f.golden)
+export const REGULAR = FORTUNES.filter((f) => f.tier === "regular")
+export const ENCHANTED = FORTUNES.filter((f) => f.tier === "enchanted")
+export const GOLDEN = FORTUNES.filter((f) => f.tier === "golden")
 
-/** Chance a spin lands on the golden cookie slice. */
-export const GOLDEN_CHANCE = 0.06
+/** Chance a spin lands on the golden slice, and on one of the enchanted slices. */
+export const GOLDEN_CHANCE = 0.05
+export const ENCHANTED_CHANCE = 0.12
 
 export interface Word {
   zh: string
@@ -66,9 +67,10 @@ export function luckyNumbers(rand = Math.random): number[] {
   return [...set].sort((a, b) => a - b)
 }
 
-/** Pick a regular fortune, favouring ones not found yet (like Gone Fishing). */
-export function pickFortune(found: string[], rand = Math.random): Fortune {
-  const fresh = REGULAR.filter((f) => !found.includes(f.id))
-  const pool = fresh.length && rand() < 0.75 ? fresh : REGULAR
+/** Pick a fortune from a tier, favouring ones not found yet (like Gone Fishing). */
+export function pickFortune(found: string[], tier: Tier = "regular", rand = Math.random): Fortune {
+  const all = FORTUNES.filter((f) => f.tier === tier)
+  const fresh = all.filter((f) => !found.includes(f.id))
+  const pool = fresh.length && rand() < 0.75 ? fresh : all
   return pool[Math.floor(rand() * pool.length)]
 }
