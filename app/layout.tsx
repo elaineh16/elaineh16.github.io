@@ -3,12 +3,12 @@ import type { Metadata, Viewport } from "next"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "Elaine Hong",
+  title: "Elaine Hong - Elaine's Craft",
   description:
     "Elaine Hong's portfolio as a Minecraft-inspired game: Cornell CS + Operations Research, software and ML engineering, research, and Division I fencing.",
   metadataBase: new URL("https://elaineh16.github.io"),
   openGraph: {
-    title: "Elaine Hong",
+    title: "Elaine Hong - Elaine's Craft",
     description: "Explore Elaine Hong's projects, journey, and links in a Minecraft-inspired portfolio.",
     url: "https://elaineh16.github.io",
     type: "website",

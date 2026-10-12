@@ -110,7 +110,7 @@ export default function Game() {
     if (!loaded) return
     if (screen !== "home") achieve(screen)
     if (screen === "inventory") collect("projects", selected)
-    document.title = screen === "home" ? "Elaine Hong" : `${SCREEN_TITLES[screen]} · Elaine Hong`
+    document.title = screen === "home" ? "Elaine Hong - Elaine's Craft" : `${SCREEN_TITLES[screen]} · Elaine Hong - Elaine's Craft`
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [screen, loaded])
 
