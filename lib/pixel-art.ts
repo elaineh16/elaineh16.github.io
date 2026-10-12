@@ -154,7 +154,7 @@ export function drawBlockLogo(canvas: HTMLCanvasElement, word: string) {
 }
 
 // ---- Salute animation frames (20×32: the 16-wide sprite with 2 columns of room each side) ----
-export type SpriteFrame = "idle" | "front" | "up" | "down" | "lookleft"
+export type SpriteFrame = "idle" | "front" | "up" | "down" | "lookleft" | "waveA" | "waveB"
 
 function frameRows(kind: SpriteFrame): string[] {
   // Start from the sprite without its épée (blade column and guard).
@@ -174,7 +174,31 @@ function frameRows(kind: SpriteFrame): string[] {
   if (kind === "lookleft") {
     "EESSEESS".split("").forEach((ch, k) => set(5, 4 + k, ch))
   }
-  if (kind === "idle" || kind === "front" || kind === "lookleft") {
+  if (kind === "waveA" || kind === "waveB") {
+    // Free arm (viewer's left) raised beside her head, hand tipping out (A) and in (B).
+    for (let r = 13; r <= 18; r++) {
+      set(r, 1, ".")
+      set(r, 2, ".")
+    }
+    set(12, 1, "R"); set(12, 2, "r")
+    for (let r = 7; r <= 11; r++) {
+      set(r, -1, "R")
+      set(r, 0, "r")
+    }
+    if (kind === "waveA") {
+      // Hand tipped outward.
+      set(6, -2, "W"); set(6, -1, "W")
+      set(5, -2, "S"); set(5, -1, "S")
+      set(4, -2, "S"); set(4, -1, "s")
+    } else {
+      // Hand tipped inward, a little higher.
+      set(6, -1, "W"); set(6, 0, "W")
+      set(5, 0, "S"); set(5, 1, "S")
+      set(4, 0, "S"); set(4, 1, "S")
+      set(3, 1, "s")
+    }
+  }
+  if (kind === "idle" || kind === "front" || kind === "lookleft" || kind === "waveA" || kind === "waveB") {
     for (let r = 1; r <= 16; r++) set(r, 15, "B")
     set(17, 15, "g")
     set(18, 15, "g")
@@ -212,4 +236,6 @@ export const SPRITE_FRAMES: Record<SpriteFrame, PixelMap> = {
   front: [frameRows("front"), SPRITE[1]],
   up: [frameRows("up"), SPRITE[1]],
   down: [frameRows("down"), SPRITE[1]],
+  waveA: [frameRows("waveA"), SPRITE[1]],
+  waveB: [frameRows("waveB"), SPRITE[1]],
 }
