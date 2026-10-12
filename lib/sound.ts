@@ -206,3 +206,56 @@ export function playSplash(strong = false) {
     // Audio is optional.
   }
 }
+
+// A metallic "clang" when blades meet on a parry.
+export function playClang() {
+  try {
+    const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
+    ctx = ctx || new AC()
+    if (ctx.state === "suspended") void ctx.resume()
+    const t = ctx.currentTime + 0.01
+    const g = ctx.createGain()
+    g.gain.setValueAtTime(0.0001, t)
+    g.gain.exponentialRampToValueAtTime(0.16, t + 0.005)
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.28)
+    g.connect(ctx.destination)
+    ;[1760, 2637, 3951].forEach((f, i) => {
+      const o = ctx!.createOscillator()
+      o.type = i ? "sine" : "triangle"
+      o.frequency.setValueAtTime(f, t)
+      o.connect(g)
+      o.start(t)
+      o.stop(t + 0.3)
+    })
+  } catch {
+    // Audio is optional.
+  }
+}
+
+// The scoring box buzzer when a touch lands.
+export function playBuzz() {
+  try {
+    const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
+    ctx = ctx || new AC()
+    if (ctx.state === "suspended") void ctx.resume()
+    const t = ctx.currentTime + 0.01
+    const o = ctx.createOscillator()
+    o.type = "square"
+    o.frequency.setValueAtTime(330, t)
+    const lp = ctx.createBiquadFilter()
+    lp.type = "lowpass"
+    lp.frequency.value = 1200
+    const g = ctx.createGain()
+    g.gain.setValueAtTime(0.0001, t)
+    g.gain.exponentialRampToValueAtTime(0.09, t + 0.01)
+    g.gain.setValueAtTime(0.09, t + 0.32)
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.38)
+    o.connect(lp)
+    lp.connect(g)
+    g.connect(ctx.destination)
+    o.start(t)
+    o.stop(t + 0.4)
+  } catch {
+    // Audio is optional.
+  }
+}

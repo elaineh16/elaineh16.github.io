@@ -4,7 +4,7 @@
 import type { IconName } from "@/lib/pixel-art"
 import { CATCHES } from "@/data/fishing"
 
-export type ScreenId = "home" | "about" | "inventory" | "arcade" | "crafting" | "fishing" | "multiplayer" | "quick"
+export type ScreenId = "home" | "about" | "inventory" | "arcade" | "crafting" | "fishing" | "fencing" | "multiplayer" | "quick"
 
 export type Category = "swe" | "ai" | "research" | "quant" | "hack"
 
@@ -113,7 +113,7 @@ export const PROJECTS: Project[] = [
   {
     id: "navidate",
     kind: "project",
-    icon: "map",
+    icon: "heart",
     name: "Navidate",
     type: "Hackathon",
     period: "BigRed//Hacks 2026",
@@ -281,7 +281,7 @@ export const STORIES: Story[] = [
 /* ---------- Mini-Games ---------- */
 export const ARCADE: { id: string; icon: IconName; name: string; blurb: string; status: "soon" | "locked" | "ready" }[] = [
   { id: "fishing", icon: "puffer", name: "Gone Fishing", blurb: `Cast, wait for the splash, reel it in. ${CATCHES.length} catches to collect, including one legendary.`, status: "ready" },
-  { id: "fencing", icon: "epee", name: "Fencing Duel", blurb: "Parry, riposte, first to 5 touches. How long can your streak go?", status: "soon" },
+  { id: "fencing", icon: "epee", name: "Fencing Duel", blurb: "Read the attack, parry, riposte. First to 5 touches. Climb from the pool to the final.", status: "ready" },
   { id: "crafting", icon: "book", name: "Crafting Elaine", blurb: "Combine items to unlock stories and fun facts. 6 recipes to find.", status: "ready" },
 ]
 
@@ -323,6 +323,7 @@ export const SCREEN_TITLES: Record<Exclude<ScreenId, "home">, string> = {
   arcade: "Mini-Games · Arcade",
   crafting: "Crafting Elaine",
   fishing: "Gone Fishing",
+  fencing: "Fencing Duel",
   multiplayer: "Multiplayer · Connect",
   quick: "Quick View",
 }
@@ -342,6 +343,12 @@ export const SPLASHES = [
   "Works on my machine!",
   "Gone fishing!",
   "One more commit!",
+  "Open sourcerer ✨",
+  "Eh?",
+  "Two twos my word",
+  "Task failed successfully",
+  "Hello World!",
+  "All in!!!",
 ]
 
 /** Hidden splash: shows up about 1 time in 25. */
@@ -377,8 +384,9 @@ export const ACHIEVEMENTS: Achievement[] = [
   { id: "firstcatch", title: "Gone Fishing", how: "Reel in your first catch", icon: "puffer" },
   { id: "goldcatch", title: "Gold Medal Catch", how: "Catch the legendary Golden Épée", icon: "goldepee" },
   { id: "fullbox", title: "Full Tackle Box", how: `Catch all ${CATCHES.length} items`, icon: "compass" },
-  { id: "engarde", title: "En Garde!", how: "Win a fencing bout (coming soon)", icon: "epee" },
-  { id: "hotstreak", title: "Hot Streak", how: "Win 3 bouts in a row (coming soon)", icon: "medal" },
+  { id: "engarde", title: "En Garde!", how: "Win a fencing bout", icon: "epee" },
+  { id: "hotstreak", title: "Hot Streak", how: "Win 3 bouts in a row", icon: "medal" },
+  { id: "champion", title: "Olympic Champion", how: "Win the Final in Fencing Duel", icon: "goldepee" },
 ]
 
 export const ACHIEVEMENT_BY_ID: Record<string, Achievement> = Object.fromEntries(ACHIEVEMENTS.map((a) => [a.id, a]))

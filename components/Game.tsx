@@ -7,11 +7,12 @@ import { Home } from "@/components/screens/Home"
 import { About, Arcade, Inventory, Multiplayer, QuickView } from "@/components/screens/Screens"
 import { Crafting } from "@/components/games/Crafting"
 import { Fishing } from "@/components/games/Fishing"
+import { Fencing } from "@/components/games/Fencing"
 import { SEASON_LIST, WEATHER, currentSeason, type Season } from "@/lib/seasons"
 import { playClick, playJingle } from "@/lib/sound"
 import { load, save } from "@/lib/storage"
 
-const SCREENS: ScreenId[] = ["home", "about", "inventory", "arcade", "crafting", "fishing", "multiplayer", "quick"]
+const SCREENS: ScreenId[] = ["home", "about", "inventory", "arcade", "crafting", "fishing", "fencing", "multiplayer", "quick"]
 
 function screenFromHash(): ScreenId {
   const h = window.location.hash.replace("#", "") as ScreenId
@@ -156,6 +157,7 @@ export default function Game() {
     save("ec.progress", EMPTY)
     save("ec.recipes", [])
     save("ec.fish", [])
+    save("ec.fence", { rung: 0, streak: 0, best: 0, defences: 0 })
   }
   const resetAchievements = () => {
     setSeen({})
@@ -215,7 +217,7 @@ export default function Game() {
                 <h1>{SCREEN_TITLES[screen]}</h1>
               </div>
               <div className="back-wrap">
-                {screen === "crafting" || screen === "fishing" ? (
+                {screen === "crafting" || screen === "fishing" || screen === "fencing" ? (
                   <button type="button" className="mc-btn small back-btn" onClick={() => go("arcade")}>
                     Back to Arcade
                   </button>
@@ -245,6 +247,16 @@ export default function Game() {
                   achieve("firstcatch")
                   if (c.rarity === "legendary") achieve("goldcatch")
                   if (n >= total) achieve("fullbox")
+                }}
+              />
+            ) : null}
+            {screen === "fencing" ? (
+              <Fencing
+                sound={sound}
+                onWin={({ streak, final }) => {
+                  achieve("engarde")
+                  if (streak >= 3) achieve("hotstreak")
+                  if (final) achieve("champion")
                 }}
               />
             ) : null}

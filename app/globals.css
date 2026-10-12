@@ -516,3 +516,29 @@ strong, b { font-weight: 400; color: inherit; text-decoration: underline; text-d
 .slot.rarity-legendary { box-shadow: inset 3px 3px 0 #8a5a1a, inset -3px -3px 0 #ffe27a; }
 .rar-rare { color: #2d6fb5; } .rar-legendary { color: #a8740f; }
 @media (prefers-reduced-motion: reduce) { .fp-clouds, .fp-glints, .fp-bobber, .fp-splash rect, .fp-bang, .fp-arm, .catch-pop { animation: none !important; } }
+
+/* ---- Fencing Duel ---- */
+.fencing { display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start; }
+.fence-board { display: grid; grid-template-columns: auto 1fr auto 1fr auto; align-items: center; gap: 10px; margin-bottom: 8px; padding: 8px 12px; background: #15151b; border: 3px solid #111; color: #f4f4f4; }
+.fence-board .fence-name { font-size: 13px; color: #c9c9d1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fence-board .fence-name.right { text-align: right; }
+.fence-score { font-size: 24px; color: #ffff55; text-shadow: 2px 2px 0 #3f3f00; min-width: 84px; text-align: center; }
+.fence-light { width: 22px; height: 22px; border: 3px solid #000; }
+.fence-light.red { background: #4a1414; } .fence-light.green { background: #143a1c; }
+.fence-light.red.on { background: #ff3b3b; box-shadow: 0 0 14px 4px rgba(255,59,59,.7); }
+.fence-light.green.on { background: #3bff6a; box-shadow: 0 0 14px 4px rgba(59,255,106,.6); }
+.piste-wrap { position: relative; aspect-ratio: 320 / 150; border: 3px solid #111; overflow: hidden; background: #2f3446; }
+.piste { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.fence-hint { animation: pulse .3s steps(2) infinite alternate; transform-box: fill-box; transform-origin: center; }
+.fence-controls { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.fence-controls .mc-btn { width: 100%; justify-content: center; min-width: 0; padding-left: 6px; padding-right: 6px; }
+.fence-keys { margin: 8px 0 0; text-align: center; font-size: 12px; color: #4a4a4a; }
+.ladder { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.ladder li { display: flex; align-items: center; gap: 10px; padding: 6px 8px; background: #a8a8a8; box-shadow: inset 2px 2px 0 #7a7a7a, inset -2px -2px 0 #d8d8d8; font-size: 14px; color: #3a3a3a; }
+.ladder li strong { font-weight: 400; font-size: 14px; color: #1f1f1f; }
+.ladder li .vt { font-size: 13px; }
+.ladder li.done { background: #9fc48a; }
+.ladder li.cur { background: var(--hv-soft); box-shadow: inset 2px 2px 0 var(--hv-lo), inset -2px -2px 0 #fff; }
+.ladder-mark { width: 16px; text-align: center; }
+@media (max-width: 520px) { .fence-controls .mc-btn { font-size: 13px; } .fence-score { font-size: 20px; min-width: 64px; } }
+@media (prefers-reduced-motion: reduce) { .fence-hint { animation: none; } }
