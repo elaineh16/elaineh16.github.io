@@ -430,3 +430,29 @@ strong, b { font-weight: 400; color: inherit; text-decoration: underline; text-d
 .rb-text strong { font-size: 13px; text-decoration: none; }
 @media (prefers-reduced-motion: reduce) { .craft-out.ready, .craft-result.show { animation: none; } }
 .craft-out:disabled:hover, .craft-out:disabled:focus-visible { background: var(--slot); }
+
+/* ---- Map tab: Minecraft-style map ---- */
+.travel { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+.map-tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+.mc-map { padding: 10px; background: #e7d7ad; border: 3px solid #5a4630; box-shadow: inset 0 0 0 3px #c9b383, inset 0 0 0 6px #e7d7ad, 4px 4px 0 rgba(0,0,0,.25); }
+.mc-map-inner { position: relative; width: 100%; }
+.mc-map-inner canvas { width: 100%; height: 100%; display: block; }
+.pin { position: absolute; width: 10px; height: 10px; padding: 0; border: 2px solid #1a1a1a; transform: translate(-50%, -50%); cursor: pointer; z-index: 1; }
+.pin.visited { background: #d93a3a; box-shadow: inset -2px -2px 0 #8f1414; }
+.pin.spawn { width: 14px; height: 14px; background: #ffff55; box-shadow: inset -2px -2px 0 #b5a51a; z-index: 3; }
+.pin.base { width: 14px; height: 14px; background: #ffffff; box-shadow: inset -3px -3px 0 var(--red); z-index: 2; }
+.pin:hover, .pin:focus-visible { transform: translate(-50%, -50%) scale(1.5); z-index: 4; outline: none; }
+.pin.picked { z-index: 4; animation: pinpulse .8s steps(2) infinite; }
+@keyframes pinpulse { 50% { transform: translate(-50%, -50%) scale(1.7); } }
+.pin.static { position: static; display: inline-block; transform: none; vertical-align: middle; cursor: default; }
+.map-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; font-size: 12px; color: #5a4a44; }
+.map-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.map-total { margin-left: auto; color: var(--wine); }
+.place-log { display: flex; flex-direction: column; gap: 10px; }
+.place-log h4 { margin: 0 0 6px; font-size: 13px; color: var(--ink); font-weight: 400; }
+.place-log h4 span { color: #6b5a50; }
+.place-chips { display: flex; flex-wrap: wrap; gap: 4px; }
+.place-chip { font: inherit; font-size: 11px; padding: 4px 8px; background: #fffaf0; color: var(--ink); border: 2px solid #8b7a5a; cursor: pointer; }
+.place-chip:hover, .place-chip:focus-visible { background: var(--hv-soft); }
+.place-chip.on { background: var(--hv); color: var(--hv-text); border-color: #111; }
+@media (prefers-reduced-motion: reduce) { .pin.picked { animation: none; transform: translate(-50%, -50%) scale(1.6); } }

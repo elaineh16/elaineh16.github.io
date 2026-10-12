@@ -183,7 +183,7 @@ export interface Story {
   title: string
   body: string[]
   /** Extra live content shown under the text. */
-  extra?: "gallery" | "music"
+  extra?: "gallery" | "music" | "map"
 }
 
 /* Photos live in public/photos (resized, location data removed). */
@@ -231,8 +231,9 @@ export const STORIES: Story[] = [
     title: "Spawn points",
     body: [
       "Born in Toronto, raised in Shanghai, now based in Ithaca for Cornell.",
-      "My favourite trips have been the ones for fencing competitions.",
+      "Fencing has taken me all over North America. Here's every place I've logged so far. Hover a marker or pick a city below.",
     ],
+    extra: "map",
   },
   {
     key: "disc",
