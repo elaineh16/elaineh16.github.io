@@ -42,7 +42,7 @@ export function About({ onStory, sound = true }: { onStory: (key: string) => voi
           </span>
         </div>
         <div className="sprite-box" style={{ padding: "12px 16px" }}>
-          <SalutingSprite scale={6} move="wave" sound={sound} outfit={tab === "epee" ? "fencing" : "casual"} />
+          <SalutingSprite scale={6} move="wave" sound={sound} outfit={tab === "epee" ? "fencing" : tab === "disc" ? "music" : "casual"} />
         </div>
         <span className="px" style={{ fontSize: 20, color: "var(--ink)" }}>
           {PROFILE.name}
@@ -93,16 +93,6 @@ export function About({ onStory, sound = true }: { onStory: (key: string) => voi
                   <Todo text={b} />
                 </p>
               ))}
-              {story.stats ? (
-                <dl className="side-stats">
-                  {story.stats.map(([k, v]) => (
-                    <div key={k}>
-                      <dt>{k}</dt>
-                      <dd>{v}</dd>
-                    </div>
-                  ))}
-                </dl>
-              ) : null}
               {story.link ? (
                 <a className="join" style={{ alignSelf: "flex-start" }} href={story.link.href} target="_blank" rel="noreferrer">
                   {story.link.label}

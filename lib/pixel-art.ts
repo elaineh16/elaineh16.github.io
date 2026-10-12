@@ -158,7 +158,7 @@ export function drawBlockLogo(canvas: HTMLCanvasElement, word: string) {
 // ---- Salute animation frames (20×32: the 16-wide sprite with 2 columns of room each side) ----
 export type SpriteFrame = "idle" | "front" | "up" | "down" | "lookleft" | "waveA" | "waveB"
 
-function frameRows(kind: SpriteFrame, base: string[] = spriteRows): string[] {
+function frameRows(kind: SpriteFrame, base: string[] = spriteRows, headphones = false): string[] {
   // Start from the sprite without its épée (blade column and guard).
   const g = base.map((row, i) => {
     let r = row.split("")
@@ -168,7 +168,18 @@ function frameRows(kind: SpriteFrame, base: string[] = spriteRows): string[] {
   const set = (row: number, col: number, ch: string) => {
     if (row >= 0 && row < g.length && col + 2 >= 0 && col + 2 < 20) g[row][col + 2] = ch
   }
-  // Eyes: glancing sideways while idle, looking at you otherwise.
+  // Headphones (Music Disc tab): a band over her head and red ear cups. Drawn first so a waving hand goes on top.
+  if (headphones) {
+    for (let c = 4; c <= 11; c++) set(0, c, "A")
+    set(1, 3, "A"); set(1, 12, "A")
+    set(2, 2, "A"); set(2, 13, "A")
+    set(3, 2, "A"); set(3, 13, "A")
+    for (let r = 4; r <= 6; r++) {
+      set(r, 1, "a"); set(r, 2, "a")
+      set(r, 13, "a"); set(r, 14, "a")
+    }
+    set(4, 1, "q"); set(4, 14, "q")
+  }
   // Eyes: "idle" glances right, "lookleft" glances left, the rest look at you.
   if (kind === "idle") {
     "SSEESSEE".split("").forEach((ch, k) => set(5, 4 + k, ch))
@@ -248,9 +259,11 @@ const fencingRows = [
   "...OOOO.OOOOO...", "...KKKKkKKKKK...", "..KKKKKkKKKKKK..", "..kkkkk.kkkkkk..", "................",
 ].map((row, i) => (i >= 1 && i <= 16 ? row.slice(0, 15) + "B" : i === 17 || i === 18 ? row.slice(0, 15) + "g" : row))
 
-export type Outfit = "casual" | "fencing"
+export type Outfit = "casual" | "fencing" | "music"
 const FENCING_PALETTE = { ...SPRITE[1], J: "#f4f4f4", j: "#d0d0d6", X: "#2b2b33", x: "#55555f", L: "#e4e4e8", O: "#B31B1B" }
 const FRAME_KINDS: SpriteFrame[] = ["idle", "lookleft", "front", "up", "down", "waveA", "waveB"]
+const MUSIC_PALETTE = { ...SPRITE[1], A: "#3d3d48", a: "#1f1f26", q: "#6a6a78" }
+export const SPRITE_FRAMES_MUSIC = Object.fromEntries(FRAME_KINDS.map((k) => [k, [frameRows(k, spriteRows, true), MUSIC_PALETTE] as PixelMap])) as unknown as Record<SpriteFrame, PixelMap>
 export const SPRITE_FRAMES_FENCING = Object.fromEntries(FRAME_KINDS.map((k) => [k, [frameRows(k, fencingRows), FENCING_PALETTE] as PixelMap])) as unknown as Record<SpriteFrame, PixelMap>
 
 export const SPRITE_FRAMES: Record<SpriteFrame, PixelMap> = {
