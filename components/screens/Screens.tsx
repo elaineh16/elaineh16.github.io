@@ -19,6 +19,7 @@ import {
 } from "@/data/content"
 import { PixelIcon, Slot, Sprite, StaticSlot, Todo } from "@/components/game/primitives"
 import { Gallery, TopTracks } from "@/components/screens/Extras"
+import { TravelMap } from "@/components/screens/TravelMap"
 
 const projectById: Record<string, Project> = Object.fromEntries(PROJECTS.map((p) => [p.id, p]))
 
@@ -94,6 +95,7 @@ export function About({ onStory }: { onStory: (key: string) => void }) {
               ))}
               {story.extra === "gallery" ? <Gallery /> : null}
               {story.extra === "music" ? <TopTracks /> : null}
+              {story.extra === "map" ? <TravelMap /> : null}
             </>
           ) : (
             <>
