@@ -271,7 +271,7 @@ export const STORIES: Story[] = [
     type: "Travel & places",
     title: "Spawn points",
     body: [
-      "Fencing has taken me all over North America. Here's every place I've logged so far. Hover a marker or pick a city below.",
+      "Fencing has taken me all over North America. Here's every place I've logged so far. Hover a marker or pick a city from the list.",
     ],
     extra: "map",
   },
