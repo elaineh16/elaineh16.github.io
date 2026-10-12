@@ -120,7 +120,8 @@ function ProjectDetail({ p }: { p: Project }) {
             {p.name}
           </h2>
           <span className="vt" style={{ fontSize: 15, color: "var(--wine)" }}>
-            {p.type} · <Todo text={p.period} />
+            {p.type}
+            {p.period ? <> · <Todo text={p.period} /></> : null}
           </span>
         </div>
       </div>

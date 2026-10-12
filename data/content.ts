@@ -85,7 +85,7 @@ export const PROJECTS: Project[] = [
       "Benchmarked 5+ frontier models across 10,000+ chess positions.",
       "Designed ablation studies across 20+ prompting strategies over 200+ games to identify recurring failure modes.",
     ],
-    stack: "[TODO: add stack]",
+    stack: "Python · Stockfish · python-chess · OpenAI / Anthropic / Gemini APIs",
     result: "10,000+ positions evaluated",
   },
   {
@@ -113,7 +113,7 @@ export const PROJECTS: Project[] = [
     icon: "redstone",
     name: "AI Asset Generation Platform",
     type: "Full-stack build",
-    period: "[TODO: date]",
+    period: "",
     cats: ["swe", "ai"],
     desc: "A full-stack Stable Diffusion platform that automates art-production workflows with task batching, caching, and asynchronous request handling.",
     bullets: [],
@@ -140,11 +140,14 @@ export const PROJECTS: Project[] = [
     icon: "chart",
     name: "Trading Backtester",
     type: "Side project",
-    period: "[TODO: date]",
+    period: "2025",
     cats: ["quant"],
-    desc: "[TODO: one-line description from the trading_backtester README]",
-    bullets: [],
-    stack: "[TODO: add stack]",
+    desc: "A Python framework for backtesting and comparing algorithmic trading strategies on historical market data.",
+    bullets: [
+      "Pluggable strategy interface with moving-average, RSI and MACD strategies built in.",
+      "Reports Sharpe ratio, drawdown and win rate, with charts and a performance dashboard.",
+    ],
+    stack: "Python · pandas · NumPy · yfinance · Matplotlib / Plotly",
     link: "https://github.com/elaineh16/trading_backtester",
   },
 ]
@@ -189,8 +192,9 @@ export const STORIES: Story[] = [
     type: "Fencing story",
     title: "En garde",
     body: [
-      "I fence épée on Cornell's NCAA Division I varsity team, and I've competed for the Canadian National Team.",
-      "[TODO: how you started fencing, your favourite bout, what the sport taught you]",
+      "I started fencing because my brother's friend invited us along: he got a discount if we signed up. I stayed long after the discount ran out.",
+      "Making the Canadian National Team is still my proudest moment. Now I compete on Cornell's NCAA Division I varsity team.",
+      "Fencing taught me to read people, stay calm under pressure, adjust fast after a mistake, and manage my time. It turns out that's most of engineering too.",
     ],
   },
   {
@@ -199,7 +203,7 @@ export const STORIES: Story[] = [
     name: "Camera",
     type: "Photos",
     title: "Snapshots",
-    body: ["[TODO: add a few of your own photos and a line about each]"],
+    body: ["Photo album loading… Fencing, travel, Cornell and coffee shops, coming soon."],
   },
   {
     key: "map",
@@ -208,8 +212,8 @@ export const STORIES: Story[] = [
     type: "Travel & places",
     title: "Spawn points",
     body: [
-      "Spawned in Toronto and Shanghai. Current base: Ithaca, New York.",
-      "[TODO: favourite places and trips]",
+      "Born in Toronto, raised in Shanghai, now based in Ithaca for Cornell.",
+      "My favourite trips have been the ones for fencing competitions.",
     ],
   },
   {
@@ -218,7 +222,7 @@ export const STORIES: Story[] = [
     name: "Music Disc",
     type: "Favourite music",
     title: "On repeat",
-    body: ["[TODO: artists, albums or songs you love]"],
+    body: ["Mostly indie, R&B and EDM."],
   },
   {
     key: "coffee",
@@ -227,8 +231,9 @@ export const STORIES: Story[] = [
     type: "Fun facts & hobbies",
     title: "Side quests",
     body: [
-      "Outside class and practice I'm Conference Director for the Society of Women Engineers at Cornell and Publicity Chair for the Cornell ORIE Club.",
-      "[TODO: hobbies like poker and chess, a few fun facts, what you're working on now]",
+      "When I'm not fencing or in class, I'm usually playing poker, trying a new coffee shop, or playing Minecraft or Bloons TD 6.",
+      "I'm also Conference Director for the Society of Women Engineers at Cornell and Publicity Chair for the Cornell ORIE Club.",
+      "Fun fact: I was born in Toronto but grew up in Shanghai.",
     ],
   },
 ]
