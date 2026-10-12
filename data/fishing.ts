@@ -26,7 +26,6 @@ export const CATCHES: Catch[] = [
   { id: "salmon", icon: "salmon", name: "Raw Salmon", rarity: "common", fact: "Cats love these. I can't pick between cats and dogs, so I love both." },
   { id: "boot", icon: "boot", name: "Old Boot", rarity: "common", fact: "Just an old boot. Even the best anglers catch these." },
   { id: "believin", icon: "disc2", name: "Music Disc: Don't Stop Believin'", rarity: "rare", fact: "I listened to \"Don't Stop Believin'\" before my most important tournament, and I won." },
-  { id: "maple", icon: "maple", name: "Maple Leaf", rarity: "rare", fact: "I've fenced for the Canadian National Team." },
   { id: "goldepee", icon: "goldepee", name: "Golden Épée", rarity: "legendary", fact: "LEGENDARY CATCH! Only 1 in 20 casts. En garde, champion." },
 ]
 

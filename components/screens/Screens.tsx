@@ -158,7 +158,7 @@ function ProjectDetail({ p }: { p: Project }) {
       {p.result ? <div className="badge">★ {p.result}</div> : null}
       {p.link ? (
         <a className="join" style={{ alignSelf: "flex-start" }} href={p.link} target="_blank" rel="noreferrer">
-          View on GitHub
+          {p.link.includes("github.com") ? "View on GitHub" : "Visit site"}
         </a>
       ) : null}
     </article>
