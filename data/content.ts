@@ -3,20 +3,13 @@
 
 import type { IconName } from "@/lib/pixel-art"
 
-export type ScreenId =
-  | "home"
-  | "about"
-  | "inventory"
-  | "advancements"
-  | "realms"
-  | "multiplayer"
-  | "options"
-  | "quick"
+export type ScreenId = "home" | "about" | "inventory" | "arcade" | "multiplayer" | "quick"
 
 export type Category = "swe" | "ai" | "research" | "quant" | "hack"
 
 export interface Project {
   id: string
+  kind: "experience" | "project"
   icon: IconName
   name: string
   type: string
@@ -28,6 +21,8 @@ export interface Project {
   bullets: string[]
   stack: string
   result?: string
+  /** A real accomplishment. Items with a badge get the enchanted glow. */
+  badge?: string
   link?: string
 }
 
@@ -57,6 +52,8 @@ export const PROFILE = {
 export const PROJECTS: Project[] = [
   {
     id: "finmd",
+    kind: "experience",
+    badge: "Shipped to production",
     icon: "laptop",
     name: "FinMD Analytics & Identity",
     type: "Internship · Production",
@@ -74,6 +71,8 @@ export const PROJECTS: Project[] = [
   },
   {
     id: "chess",
+    kind: "experience",
+    badge: "10,000+ positions benchmarked",
     icon: "knight",
     name: "LLM Chess Reasoning",
     type: "Research",
@@ -91,6 +90,8 @@ export const PROJECTS: Project[] = [
   },
   {
     id: "rag",
+    kind: "experience",
+    badge: "Kept weak pipelines out of production",
     icon: "book",
     name: "Financial RAG Evaluation",
     type: "Internship · ML",
@@ -108,6 +109,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: "asset",
+    kind: "project",
     icon: "redstone",
     name: "AI Asset Generation Platform",
     type: "Full-stack build",
@@ -120,6 +122,8 @@ export const PROJECTS: Project[] = [
   },
   {
     id: "bear",
+    kind: "project",
+    badge: "BigRed//Hacks winner",
     icon: "disc",
     name: "Bear Escape",
     type: "Hackathon · Winner",
@@ -132,6 +136,7 @@ export const PROJECTS: Project[] = [
   },
   {
     id: "trade",
+    kind: "project",
     icon: "chart",
     name: "Trading Backtester",
     type: "Side project",
@@ -146,12 +151,6 @@ export const PROJECTS: Project[] = [
 
 export const EXPERIENCE_ORDER = ["finmd", "rag", "chess"]
 
-export const FEATURED = [
-  ["FinMD", "−60% p50 latency"],
-  ["LLM Chess", "10,000+ positions"],
-  ["Bear Escape", "Hackathon win"],
-]
-
 export const QUICK_PROJECTS = [
   ["AI Asset Generation Platform", "full-stack Stable Diffusion platform with task batching, caching, and async request handling (40% higher throughput)."],
   ["Bear Escape", "BigRed//Hacks winner. AI-powered multiplayer rhythm game with Gemini-generated beatmaps and OpenCV motion controls."],
@@ -162,102 +161,8 @@ export const CATEGORIES: [Category | "all", string][] = [
   ["swe", "Software Eng"],
   ["ai", "AI / ML"],
   ["research", "Research"],
-  ["quant", "Quant"],
   ["hack", "Hackathons"],
-]
-
-export type HomeAction = "project" | "epee" | "coffee" | "passport"
-
-export interface HomeItem {
-  key: string
-  icon: IconName
-  name: string
-  type: string
-  line: string
-  action: HomeAction
-}
-
-export const HOME_ITEMS: HomeItem[] = [
-  { key: "finmd", icon: "laptop", name: "FinMD Dashboard", type: "Production build", line: "PostgreSQL · Row-level security", action: "project" },
-  { key: "chess", icon: "knight", name: "LLM Chess Reasoning", type: "Research", line: "10,000+ positions evaluated", action: "project" },
-  { key: "rag", icon: "book", name: "Financial RAG Eval", type: "ML internship", line: "34.8% numerical Exact Match", action: "project" },
-  { key: "asset", icon: "redstone", name: "AI Asset Generation", type: "Full-stack build", line: "Stable Diffusion · Next.js", action: "project" },
-  { key: "bear", icon: "disc", name: "Bear Escape", type: "Hackathon winner", line: "Gemini · OpenCV · SpaceTimeDB", action: "project" },
-  { key: "trade", icon: "chart", name: "Trading Backtester", type: "Quant side project", line: "Details coming soon", action: "project" },
-  { key: "epee", icon: "epee", name: "Competitive Épée", type: "Main questline", line: "Cornell NCAA Division I", action: "epee" },
-  { key: "coffee", icon: "coffee", name: "Mystery Coffee", type: "Hidden item", line: "Click to drink…", action: "coffee" },
-  { key: "pass", icon: "passport", name: "Passport", type: "Spawn: Toronto / Shanghai", line: "Base: Cornell University", action: "passport" },
-]
-
-export interface PersonalItem {
-  key: string
-  icon: IconName
-  name: string
-  type: string
-  line: string
-}
-
-export const PERSONAL_ITEMS: PersonalItem[] = [
-  { key: "epee", icon: "epee", name: "Épée", type: "Fencing story", line: "Varsity fencer on Cornell's NCAA Division I team. [TODO: your fencing story]" },
-  { key: "knight", icon: "knight", name: "Chess Knight", type: "AI + chess research", line: "Researching how frontier language models reason about chess against Stockfish." },
-  { key: "laptop", icon: "laptop", name: "Laptop", type: "Programming journey", line: "[TODO: how you got into programming]" },
-  { key: "camera", icon: "camera", name: "Camera", type: "Photo gallery", line: "[TODO: add photos]" },
-  { key: "disc", icon: "disc", name: "Music Disc", type: "Favourite music", line: "[TODO: what you listen to]" },
-  { key: "map", icon: "map", name: "Map", type: "Travel & places", line: "Spawned in Toronto / Shanghai. Base camp: Ithaca. [TODO: favourite places]" },
-  { key: "coffee", icon: "coffee", name: "Coffee", type: "Fun facts", line: "[TODO: a few fun facts]" },
-  { key: "cards", icon: "cards", name: "Playing Cards", type: "Poker & strategy", line: "[TODO: poker and strategy games]" },
-  { key: "book", icon: "book", name: "Journal", type: "Personal thoughts", line: "[TODO: notes and reflections]" },
-]
-
-export interface AdvNode {
-  id: string
-  icon: IconName
-  title: string
-  date: string
-  desc: string
-  learned?: string
-  rel?: string
-}
-
-export interface AdvPath {
-  label: string
-  color: string
-  blurb: string
-  nodes: AdvNode[]
-}
-
-export const PATHS: AdvPath[] = [
-  {
-    label: "Builder",
-    color: "#E6A4B4",
-    blurb: "Code → production",
-    nodes: [
-      { id: "b1", icon: "laptop", title: "Hello, World", date: "[TODO: year]", desc: "[TODO: how you started coding]" },
-      { id: "b2", icon: "disc", title: "Hackathon Champion", date: "BigRed//Hacks", desc: "2× BigRed//Hacks winner, including Bear Escape: an AI-powered multiplayer rhythm game with Gemini-generated beatmaps and OpenCV motion controls.", rel: "bear" },
-      { id: "b3", icon: "book", title: "ML in the Wild", date: "Jun – Aug 2025", desc: "Machine Learning Engineer Intern at Anote AI. Evaluated RAG systems for financial question answering.", rel: "rag" },
-      { id: "b4", icon: "redstone", title: "Shipped to Production", date: "Jun – Aug 2026", desc: "Software Engineer Intern at FinMD. Architected production analytics and identity infrastructure across SCOPE, PRISM, and RADAR.", rel: "finmd" },
-    ],
-  },
-  {
-    label: "Scholar",
-    color: "#ffff55",
-    blurb: "Cornell & research",
-    nodes: [
-      { id: "s1", icon: "book", title: "Big Red", date: "Class of '28", desc: "Cornell Engineering, dual B.S. in Computer Science and Operations Research." },
-      { id: "s2", icon: "knight", title: "Research Rabbit Hole", date: "Aug 2025 – Jun 2026", desc: "Built infrastructure to evaluate how frontier language models reason about chess against Stockfish: 5+ models, 10,000+ positions.", rel: "chess" },
-      { id: "s3", icon: "coffee", title: "Community Builder", date: "[TODO: dates]", desc: "Conference Director for the Society of Women Engineers at Cornell, and Publicity Chair for the Cornell ORIE Club." },
-    ],
-  },
-  {
-    label: "Athlete",
-    color: "#9cc27f",
-    blurb: "Épée",
-    nodes: [
-      { id: "a1", icon: "epee", title: "En Garde", date: "[TODO: year]", desc: "[TODO: when and where you started fencing]" },
-      { id: "a2", icon: "medal", title: "Team Canada", date: "[TODO: years]", desc: "Canadian National Team. [TODO: events and results]" },
-      { id: "a3", icon: "medal", title: "Division I", date: "Cornell", desc: "Varsity fencer on Cornell's NCAA Division I team." },
-    ],
-  },
+  ["quant", "Quant"],
 ]
 
 export const SKILLS: { label: string; items: string[] }[] = [
@@ -266,13 +171,82 @@ export const SKILLS: { label: string; items: string[] }[] = [
   { label: "Data & infrastructure", items: ["PostgreSQL", "MySQL", "Supabase", "Docker", "AWS EC2", "REST APIs", "WebSockets", "OAuth", "Linux"] },
 ]
 
+/* ---------- Singleplayer: personal items, each opens a story card ---------- */
+export interface Story {
+  key: string
+  icon: IconName
+  name: string
+  type: string
+  title: string
+  body: string[]
+}
+
+export const STORIES: Story[] = [
+  {
+    key: "epee",
+    icon: "epee",
+    name: "Épée",
+    type: "Fencing story",
+    title: "En garde",
+    body: [
+      "I fence épée on Cornell's NCAA Division I varsity team, and I've competed for the Canadian National Team.",
+      "[TODO: how you started fencing, your favourite bout, what the sport taught you]",
+    ],
+  },
+  {
+    key: "camera",
+    icon: "camera",
+    name: "Camera",
+    type: "Photos",
+    title: "Snapshots",
+    body: ["[TODO: add a few of your own photos and a line about each]"],
+  },
+  {
+    key: "map",
+    icon: "map",
+    name: "Map",
+    type: "Travel & places",
+    title: "Spawn points",
+    body: [
+      "Spawned in Toronto and Shanghai. Current base: Ithaca, New York.",
+      "[TODO: favourite places and trips]",
+    ],
+  },
+  {
+    key: "disc",
+    icon: "disc",
+    name: "Music Disc",
+    type: "Favourite music",
+    title: "On repeat",
+    body: ["[TODO: artists, albums or songs you love]"],
+  },
+  {
+    key: "coffee",
+    icon: "coffee",
+    name: "Coffee",
+    type: "Fun facts & hobbies",
+    title: "Side quests",
+    body: [
+      "Outside class and practice I'm Conference Director for the Society of Women Engineers at Cornell and Publicity Chair for the Cornell ORIE Club.",
+      "[TODO: hobbies like poker and chess, a few fun facts, what you're working on now]",
+    ],
+  },
+]
+
+/* ---------- Mini-Games ---------- */
+export const ARCADE: { id: string; icon: IconName; name: string; blurb: string; status: "soon" | "locked" | "ready" }[] = [
+  { id: "crafting", icon: "book", name: "Crafting Elaine", blurb: "Combine items to unlock stories and fun facts.", status: "soon" },
+  { id: "fencing", icon: "epee", name: "Fencing Duel", blurb: "Parry, riposte, first to 5 touches. How long can your streak go?", status: "soon" },
+  { id: "poker", icon: "cards", name: "Poker Challenge", blurb: "Fold, call or raise? Coming later.", status: "locked" },
+]
+
+/* ---------- Multiplayer ---------- */
 export interface Server {
   name: string
   desc: string
   icon: IconName
-  href?: string
+  href: string
   copy?: boolean
-  offline?: boolean
 }
 
 export const SERVERS: Server[] = [
@@ -280,25 +254,31 @@ export const SERVERS: Server[] = [
   { name: "GitHub", desc: "elaineh16 · code, hackathons, side projects", icon: "stone", href: GITHUB_URL },
   { name: "Email", desc: `${EMAIL} · fastest way to reach me`, icon: "mail", href: `mailto:${EMAIL}`, copy: true },
   { name: "Résumé", desc: "One-page PDF", icon: "paper", href: RESUME_URL },
-  { name: "Guestbook", desc: "Leave a message in chat", icon: "book", offline: true },
 ]
 
-export const HOTBAR: { label: string; icon: IconName; href?: string; screen?: ScreenId }[] = [
+/* ---------- Navigation ---------- */
+export const MENU: { label: string; sub: string; screen: ScreenId }[] = [
+  { label: "Singleplayer", sub: "About Me", screen: "about" },
+  { label: "Inventory", sub: "Projects & Experience", screen: "inventory" },
+  { label: "Mini-Games", sub: "Arcade", screen: "arcade" },
+  { label: "Multiplayer", sub: "Connect", screen: "multiplayer" },
+]
+
+export const HOTBAR: { label: string; icon: IconName; href?: string; action?: "achievements" }[] = [
   { label: "Résumé", icon: "paper", href: RESUME_URL },
   { label: "GitHub", icon: "stone", href: GITHUB_URL },
   { label: "LinkedIn", icon: "sign", href: LINKEDIN_URL },
-  { label: "Email", icon: "mail", screen: "multiplayer" },
-  { label: "Quick View", icon: "map", screen: "quick" },
+  { label: "Email", icon: "mail", href: `mailto:${EMAIL}` },
+  { label: "Achievements", icon: "medal", action: "achievements" },
 ]
 
-export const SCRAPBOOK = ["Fencing memories", "Travel", "Cornell", "Hackathons", "Music", "Books"]
-
-export const CURRENTLY: [string, string][] = [
-  ["Building", "[TODO]"],
-  ["Learning", "[TODO]"],
-  ["Reading", "[TODO]"],
-  ["On repeat", "[TODO]"],
-]
+export const SCREEN_TITLES: Record<Exclude<ScreenId, "home">, string> = {
+  about: "Singleplayer · About Me",
+  inventory: "Inventory · Projects & Experience",
+  arcade: "Mini-Games · Arcade",
+  multiplayer: "Multiplayer · Connect",
+  quick: "Quick View",
+}
 
 export const SPLASHES = [
   "100% chance of side quests!",
@@ -310,31 +290,29 @@ export const SPLASHES = [
   "Now with épée!",
 ]
 
-export const SCREEN_TITLES: Record<Exclude<ScreenId, "home">, string> = {
-  about: "Singleplayer · About Me",
-  inventory: "Inventory · Projects & Skills",
-  advancements: "Advancements · My Journey",
-  realms: "Realms · Adventure Log",
-  multiplayer: "Multiplayer · Connect",
-  options: "Options",
-  quick: "Quick View",
+/* ---------- Visitor achievements (saved in the visitor's browser) ---------- */
+export interface Achievement {
+  id: string
+  title: string
+  how: string
+  icon: IconName
 }
 
-export const MENU: { label: string; sub: string; screen: ScreenId }[] = [
-  { label: "Singleplayer", sub: "About Me", screen: "about" },
-  { label: "Inventory", sub: "Projects & Skills", screen: "inventory" },
-  { label: "Advancements", sub: "My Journey", screen: "advancements" },
-  { label: "Realms", sub: "Adventure Log", screen: "realms" },
-  { label: "Multiplayer", sub: "Connect", screen: "multiplayer" },
+export const ACHIEVEMENTS: Achievement[] = [
+  { id: "about", title: "Getting to Know Elaine", how: "Open Singleplayer", icon: "epee" },
+  { id: "inventory", title: "The Builder", how: "Open the Inventory", icon: "laptop" },
+  { id: "arcade", title: "Insert Coin", how: "Visit the arcade", icon: "disc" },
+  { id: "multiplayer", title: "Party Up", how: "Open Multiplayer", icon: "sign" },
+  { id: "quick", title: "Recruiter Mode", how: "Open Quick View", icon: "paper" },
+  { id: "stories", title: "Story Time", how: "Read all five personal stories", icon: "book" },
+  { id: "projects", title: "Window Shopping", how: "Open every project", icon: "redstone" },
+  { id: "egg", title: "Easter Egg Hunter", how: "Click the title", icon: "medal" },
+  { id: "weather", title: "Weather Watcher", how: "Turn on the weather", icon: "map" },
+  { id: "seasons", title: "Four Seasons", how: "Try all four seasons", icon: "map" },
+  { id: "firstcraft", title: "First Craft", how: "Craft your first recipe (coming soon)", icon: "book" },
+  { id: "mastercrafter", title: "Master Crafter", how: "Find every recipe (coming soon)", icon: "book" },
+  { id: "engarde", title: "En Garde!", how: "Win a fencing bout (coming soon)", icon: "epee" },
+  { id: "hotstreak", title: "Hot Streak", how: "Win 3 bouts in a row (coming soon)", icon: "medal" },
 ]
 
-export const ACHIEVEMENTS: Record<string, [string, IconName]> = {
-  about: ["Getting to Know Elaine", "epee"],
-  inventory: ["The Builder", "laptop"],
-  advancements: ["The Long Road", "medal"],
-  multiplayer: ["Party Up", "sign"],
-  realms: ["Side Quest Discovered", "map"],
-  coffee: ["Powered by Coffee", "coffee"],
-  egg: ["Easter Egg Hunter", "medal"],
-  weather: ["Weather Watcher", "map"],
-}
+export const ACHIEVEMENT_BY_ID: Record<string, Achievement> = Object.fromEntries(ACHIEVEMENTS.map((a) => [a.id, a]))
