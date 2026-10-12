@@ -192,7 +192,7 @@ export function FortuneWheel({ sound, onFortune }: { sound: boolean; onFortune: 
           ) : null}
           {phase === "open" && slip ? (
             <div className="slip" key={spins}>
-              <p className="slip-text">{slip.fortune.text}</p>
+              <p className={"slip-text" + (slip.fortune.text.length > 44 ? " long" : "")}>{slip.fortune.text}</p>
               <p className="slip-nums vt">
                 Lucky numbers <b>{slip.numbers.join(" · ")}</b>
               </p>
