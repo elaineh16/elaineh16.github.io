@@ -329,6 +329,7 @@ export const SCREEN_TITLES: Record<Exclude<ScreenId, "home">, string> = {
 
 export const SPLASHES = [
   "En garde!",
+  "Currently side questing...",
   "Touché!",
   "Now with 100% more épée!",
   "Spawned in Toronto!",
