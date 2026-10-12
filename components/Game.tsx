@@ -5,11 +5,12 @@ import { ACHIEVEMENTS, ACHIEVEMENT_BY_ID, HOTBAR, PROJECTS, SCREEN_TITLES, SPLAS
 import { Background, Dialog, PixelIcon, Toast, Tooltip, ViewCount, Weather } from "@/components/game/primitives"
 import { Home } from "@/components/screens/Home"
 import { About, Arcade, Inventory, Multiplayer, QuickView } from "@/components/screens/Screens"
+import { Crafting } from "@/components/games/Crafting"
 import { SEASON_LIST, WEATHER, currentSeason, type Season } from "@/lib/seasons"
 import { playClick, playJingle } from "@/lib/sound"
 import { load, save } from "@/lib/storage"
 
-const SCREENS: ScreenId[] = ["home", "about", "inventory", "arcade", "multiplayer", "quick"]
+const SCREENS: ScreenId[] = ["home", "about", "inventory", "arcade", "crafting", "multiplayer", "quick"]
 
 function screenFromHash(): ScreenId {
   const h = window.location.hash.replace("#", "") as ScreenId
@@ -152,6 +153,7 @@ export default function Game() {
     setProgress(EMPTY)
     save("ec.seen", {})
     save("ec.progress", EMPTY)
+    save("ec.recipes", [])
   }
   const onTitle = () => {
     setSpinning(false)
@@ -205,14 +207,29 @@ export default function Game() {
                 <h1>{SCREEN_TITLES[screen]}</h1>
               </div>
               <div style={{ width: 240, maxWidth: "100%" }}>
-                <button type="button" className="mc-btn small" onClick={() => go("home")}>
-                  Back to Title Screen
-                </button>
+                {screen === "crafting" ? (
+                  <button type="button" className="mc-btn small" onClick={() => go("arcade")}>
+                    Back to Arcade
+                  </button>
+                ) : (
+                  <button type="button" className="mc-btn small" onClick={() => go("home")}>
+                    Back to Title Screen
+                  </button>
+                )}
               </div>
             </div>
             {screen === "about" ? <About onStory={(k) => collect("stories", k)} /> : null}
             {screen === "inventory" ? <Inventory selected={selected} onSelect={selectProject} /> : null}
-            {screen === "arcade" ? <Arcade /> : null}
+            {screen === "arcade" ? <Arcade play={(id) => go(id as ScreenId)} /> : null}
+            {screen === "crafting" ? (
+              <Crafting
+                sound={sound}
+                onCraft={(n, total) => {
+                  achieve("firstcraft")
+                  if (n >= total) achieve("mastercrafter")
+                }}
+              />
+            ) : null}
             {screen === "multiplayer" ? <Multiplayer /> : null}
             {screen === "quick" ? <QuickView /> : null}
           </>

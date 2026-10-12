@@ -279,7 +279,7 @@ export function Inventory({ selected, onSelect }: { selected: string; onSelect: 
 }
 
 /* ---------------- Mini-Games ---------------- */
-export function Arcade() {
+export function Arcade({ play }: { play: (id: string) => void }) {
   return (
     <div className="stack-16">
       <div className="arcade">
@@ -292,14 +292,20 @@ export function Arcade() {
               {g.name}
             </h2>
             <p className="vt">{g.blurb}</p>
-            <button type="button" className="mc-btn small" disabled>
-              {g.status === "locked" ? "Locked" : "Coming soon"}
-            </button>
+            {g.status === "ready" ? (
+              <button type="button" className="mc-btn small" onClick={() => play(g.id)}>
+                Play
+              </button>
+            ) : (
+              <button type="button" className="mc-btn small" disabled>
+                {g.status === "locked" ? "Locked" : "Coming soon"}
+              </button>
+            )}
           </section>
         ))}
       </div>
       <p className="chatlog" style={{ margin: 0 }}>
-        [Arcade] Crafting Elaine and Fencing Duel are being built. Check back soon!
+        [Arcade] Crafting Elaine is open! Fencing Duel is being built. Check back soon.
       </p>
     </div>
   )

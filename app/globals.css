@@ -390,3 +390,43 @@ strong, b { font-weight: 400; color: inherit; text-decoration: underline; text-d
 .q-skill { margin-bottom: 8px; }
 .quick > .q-head { align-items: flex-start; }
 .q-links { margin-top: 2px; }
+
+/* ---- Crafting Elaine ---- */
+.crafting { display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start; }
+.craft-table { flex: 1 1 420px; min-width: 0; padding: 18px 20px 20px; }
+.craft-headrow { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 14px; }
+.craft-headrow h2 { margin: 0; font-size: 18px; color: var(--ink); }
+.craft-count { font-size: 13px; color: #3a3a3a; }
+.craft-area { display: flex; align-items: center; justify-content: center; gap: 22px; padding: 18px 0 8px; }
+.craft-grid { display: grid; grid-template-columns: repeat(2, 64px); gap: 4px; }
+.craft-slot, .craft-out { width: 64px; height: 64px; }
+.craft-slot.over { background: var(--hv-soft); }
+.craft-arrow { font-size: 34px; color: #5a5a5a; line-height: 1; }
+.craft-out { width: 80px; height: 80px; }
+.craft-out.ready { background: var(--hv-soft); animation: ready 1s steps(2) infinite; }
+.craft-out.miss { background: #c99; }
+.craft-out:disabled { cursor: default; }
+.craft-q { font-size: 30px; color: #4a2e5a; }
+.craft-x { font-size: 30px; color: #7a1c1c; }
+@keyframes ready { 50% { box-shadow: inset 3px 3px 0 var(--hv-lo), inset -3px -3px 0 #fff, 0 0 0 3px var(--hv); } }
+.craft-msg { text-align: center; font-size: 13px; color: #3a3a3a; min-height: 2.6em; margin: 6px 0 4px; }
+.craft-actions { display: flex; justify-content: center; margin-bottom: 14px; }
+.craft-sub { margin: 0 0 8px; font-size: 15px; color: var(--ink); border-top: 2px solid var(--slot); padding-top: 12px; }
+.craft-inv { display: grid; grid-template-columns: repeat(auto-fill, 58px); gap: 6px; justify-content: center; }
+.craft-inv .slot:disabled { opacity: .45; cursor: not-allowed; }
+.tab:disabled { opacity: .5; cursor: not-allowed; }
+.craft-side { flex: 1 1 320px; min-width: 0; }
+.craft-result { padding: 18px 20px; }
+.craft-result p { margin: 10px 0 0; font-size: 14px; line-height: 1.6; }
+.craft-result.show { animation: pop .2s steps(3); }
+.recipe-book { padding: 16px 18px; }
+.recipe-book h2 { margin: 0 0 10px; font-size: 17px; color: var(--ink); }
+.recipe-book ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.recipe-book li > button, .rb-locked { width: 100%; display: flex; align-items: center; gap: 10px; padding: 4px 8px; border: 2px solid #111; background: #a9a9a9; font: inherit; text-align: left; color: #2b2b2b; }
+.recipe-book li.got > button { background: #e9dcc0; cursor: pointer; }
+.recipe-book li.got > button:hover, .recipe-book li.got > button:focus-visible { background: var(--hv-soft); }
+.recipe-book .slot { width: 36px; height: 36px; }
+.rb-text { display: flex; flex-direction: column; font-size: 12px; min-width: 0; }
+.rb-text strong { font-size: 13px; text-decoration: none; }
+@media (prefers-reduced-motion: reduce) { .craft-out.ready, .craft-result.show { animation: none; } }
+.craft-out:disabled:hover, .craft-out:disabled:focus-visible { background: var(--slot); }
