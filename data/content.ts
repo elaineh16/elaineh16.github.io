@@ -329,11 +329,11 @@ export const SCREEN_TITLES: Record<Exclude<ScreenId, "home">, string> = {
 
 export const SPLASHES = [
   "En garde!",
+  "Currently side questing...",
   "Touché!",
   "Now with 100% more épée!",
   "Spawned in Toronto!",
   "Powered by matcha!",
-  "Also try Bloons TD 6!",
   "Don't stop believin'!",
   "Say my name!",
   "Read Harry Potter 7 times!",
@@ -345,7 +345,7 @@ export const SPLASHES = [
 ]
 
 /** Hidden splash: shows up about 1 time in 25. */
-export const HIDDEN_SPLASH = "d1 trollstar"
+export const HIDDEN_SPLASH = "D1 Trollstar"
 
 export function pickSplash(current?: string): string {
   if (Math.random() < 0.04 && current !== HIDDEN_SPLASH) return HIDDEN_SPLASH

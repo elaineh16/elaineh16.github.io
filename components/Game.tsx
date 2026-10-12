@@ -214,13 +214,13 @@ export default function Game() {
                 </span>
                 <h1>{SCREEN_TITLES[screen]}</h1>
               </div>
-              <div style={{ width: 240, maxWidth: "100%" }}>
+              <div className="back-wrap">
                 {screen === "crafting" || screen === "fishing" ? (
-                  <button type="button" className="mc-btn small" onClick={() => go("arcade")}>
+                  <button type="button" className="mc-btn small back-btn" onClick={() => go("arcade")}>
                     Back to Arcade
                   </button>
                 ) : (
-                  <button type="button" className="mc-btn small" onClick={() => go("home")}>
+                  <button type="button" className="mc-btn small back-btn" onClick={() => go("home")}>
                     Back
                   </button>
                 )}

@@ -275,17 +275,6 @@ function Scene({ phase, casts }: { phase: Phase; casts: number }) {
         <rect x="190" y="150" width="22" height="3" fill="#8fb4ee" />
       </g>
 
-      {/* line + bobber */}
-      {lineOut ? (
-        <>
-          <path d={`M${TIP.x} ${TIP.y} Q ${(TIP.x + BOB.x) / 2} ${by - 18} ${BOB.x + 2} ${by}`} fill="none" stroke="#2b2b2b" strokeWidth="1" shapeRendering="auto" />
-          <g className={"fp-bobber" + (phase === "bite" ? " bite" : "")}>
-            <rect x={BOB.x - 2} y={by - 2} width="8" height="4" fill="#d93a3a" />
-            <rect x={BOB.x - 2} y={by + 2} width="8" height="3" fill="#f4f4f4" />
-            <rect x={BOB.x - 4} y={by + 5} width="12" height="1" fill="#2c4f94" />
-          </g>
-        </>
-      ) : null}
       {phase === "bite" ? (
         <g className="fp-splash">
           <rect className="d1" x={BOB.x - 8} y={by} width="3" height="3" fill="#e8f3ff" />
@@ -297,8 +286,19 @@ function Scene({ phase, casts }: { phase: Phase; casts: number }) {
         </g>
       ) : null}
 
-      {/* rod + arm, swings on each cast */}
+      {/* rod + arm, swings on each cast; the line and bobber ride along so they stay attached */}
       <g key={casts} className={"fp-arm" + (phase === "waiting" ? " cast" : phase === "caught" ? " reel" : "")}>
+        {/* line + bobber */}
+        {lineOut ? (
+          <>
+            <path d={`M${TIP.x} ${TIP.y} Q ${(TIP.x + BOB.x) / 2} ${by - 18} ${BOB.x + 2} ${by}`} fill="none" stroke="#2b2b2b" strokeWidth="1" shapeRendering="auto" />
+            <g className={"fp-bobber" + (phase === "bite" ? " bite" : "")}>
+              <rect x={BOB.x - 2} y={by - 2} width="8" height="4" fill="#d93a3a" />
+              <rect x={BOB.x - 2} y={by + 2} width="8" height="3" fill="#f4f4f4" />
+              <rect x={BOB.x - 4} y={by + 5} width="12" height="1" fill="#2c4f94" />
+            </g>
+          </>
+        ) : null}
         {ROD.map((p, i) => (
           <rect key={i} x={p.x - 2} y={p.y - 2} width="5" height="5" fill={i % 3 === 0 ? "#4a3420" : "#6b4f2a"} />
         ))}
