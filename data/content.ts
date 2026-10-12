@@ -199,7 +199,7 @@ export const PHOTOS: { src: string; thumb: string; alt: string; caption: string 
  * Fill in your Last.fm username and API key (https://www.last.fm/api/account/create).
  * The key is read-only, so it is fine to keep it in the site.
  */
-export const LASTFM = { user: "", apiKey: "" }
+export const LASTFM = { user: "elegantmaus", apiKey: "680b7006ac7a11c7ccc4158e8d6d5efe" }
 
 export const STORIES: Story[] = [
   {

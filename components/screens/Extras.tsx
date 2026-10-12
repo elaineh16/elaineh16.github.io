@@ -74,7 +74,7 @@ export function TopTracks() {
   if (state.kind === "off") return <p className="jukebox-note">Live top tracks coming soon.</p>
   if (state.kind === "loading") return <p className="jukebox-note">Loading this week's tracks…</p>
   if (state.kind === "error") return <p className="jukebox-note">Couldn't reach Last.fm right now. Try again later.</p>
-  if (!state.tracks.length) return <p className="jukebox-note">Nothing played yet this week.</p>
+  if (!state.tracks.length) return <p className="jukebox-note">Nothing played yet this week. Check back soon!</p>
   return (
     <ol className="jukebox">
       {state.tracks.map((t, i) => (
