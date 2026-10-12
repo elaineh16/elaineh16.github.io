@@ -58,6 +58,11 @@ export default function Game() {
     }
   }, [])
 
+  // Hover and selection colours follow the season.
+  useEffect(() => {
+    document.documentElement.dataset.season = season
+  }, [season])
+
   // Click sound for every button and link.
   useEffect(() => {
     const onClick = (e: MouseEvent) => {

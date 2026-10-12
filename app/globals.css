@@ -310,3 +310,24 @@ strong, b { font-weight: 400; color: inherit; text-decoration: underline; text-d
 .book-hint { color: #6b5a50; font-size: 13px; }
 @media (max-width: 600px) { .book-tab span { display: none; } .book-tab { padding: 6px 10px; } }
 @media (max-width: 600px) { .splash { position: static; display: inline-block; margin-top: 14px; transform: rotate(-6deg); transform-origin: center; } .head { padding-top: 56px; } }
+
+/* ---- hover colours follow the season (set on <html data-season>) ---- */
+:root { --hv: #a5582b; --hv-hi: #e0a33a; --hv-lo: #6a3417; --hv-text: #fff1d6; --hv-soft: #e6b98d; --hv-dark: #4a2e22; }
+:root[data-season="spring"] { --hv: #b7798a; --hv-hi: #f2bfcc; --hv-lo: #7a4b58; --hv-text: #fff6f8; --hv-soft: #e9bfcb; --hv-dark: #4a3040; }
+:root[data-season="summer"] { --hv: #5f8f45; --hv-hi: #9cc27f; --hv-lo: #3d5e2b; --hv-text: #f6ffe8; --hv-soft: #b9d79e; --hv-dark: #2c4022; }
+:root[data-season="fall"]   { --hv: #a5582b; --hv-hi: #e0a33a; --hv-lo: #6a3417; --hv-text: #fff1d6; --hv-soft: #e6b98d; --hv-dark: #4a2e22; }
+:root[data-season="winter"] { --hv: #6f86a3; --hv-hi: #c9d8ea; --hv-lo: #45576d; --hv-text: #f4f8ff; --hv-soft: #c8d5e4; --hv-dark: #2e3a4a; }
+
+.mc-btn:hover, .mc-btn:focus-visible, .join:hover, .join:focus-visible, .dialog-x:hover, .dialog-x:focus-visible {
+  background: var(--hv); box-shadow: inset 3px 3px 0 var(--hv-hi), inset -3px -3px 0 var(--hv-lo); color: var(--hv-text);
+}
+.mc-btn:hover .sub, .mc-btn:hover .sub-inline, .mc-btn:focus-visible .sub-inline { color: var(--hv-text); }
+.mc-btn[disabled]:hover { background: var(--stone); box-shadow: inset 3px 3px 0 var(--stone-hi), inset -3px -3px 0 var(--stone-lo); color: #f4f4f4; }
+.tab:hover, .book-tab:hover { background: var(--hv); }
+.tab.on:hover, .book-tab.on:hover { background: var(--parchment); }
+.slot:hover, .slot:focus-visible, .hot:hover .slot, .hot:focus-visible .slot, .node:hover, .inv-list button:hover, .inv-list button:focus-visible { background: var(--hv-soft); }
+.slot.static:hover { background: var(--slot); }
+.corner-btn:hover, .corner-btn:focus-visible { background: var(--hv-dark); }
+.corner-btn.wx[aria-pressed="true"] { background: var(--hv-dark); box-shadow: inset 3px 3px 0 var(--hv-hi), inset -3px -3px 0 var(--hv-lo); }
+.slot.sel, .node.on, .inv-list button.on { background: var(--hv-soft); box-shadow: inset 3px 3px 0 var(--hv-lo), inset -3px -3px 0 #fff; }
+.mc-btn.on { background: var(--hv); box-shadow: inset 3px 3px 0 var(--hv-hi), inset -3px -3px 0 var(--hv-lo); }
