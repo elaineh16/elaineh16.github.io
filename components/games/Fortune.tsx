@@ -26,7 +26,6 @@ export function FortuneWheel({ sound, onFortune }: { sound: boolean; onFortune: 
   const [slip, setSlip] = useState<Slip | null>(null)
   const [found, setFound] = useState<string[]>([])
   const [spins, setSpins] = useState(0)
-  const [copied, setCopied] = useState(false)
   const [reduce, setReduce] = useState(false)
   const discRef = useRef<HTMLDivElement>(null)
   const timers = useRef<ReturnType<typeof setTimeout>[]>([])
@@ -67,7 +66,6 @@ export function FortuneWheel({ sound, onFortune }: { sound: boolean; onFortune: 
 
   const spin = () => {
     if (phase === "spinning" || phase === "cracking") return
-    setCopied(false)
     const roll = Math.random()
     const tier: Tier = roll < GOLDEN_CHANCE ? "golden" : roll < GOLDEN_CHANCE + ENCHANTED_CHANCE ? "enchanted" : "regular"
     const choices = Array.from({ length: SLICES }, (_, i) => i).filter((i) => tierOfSlice(i) === tier)
@@ -97,16 +95,6 @@ export function FortuneWheel({ sound, onFortune }: { sound: boolean; onFortune: 
         onFortune(fortune, nextFound.length, FORTUNES.length)
       })
     })
-  }
-
-  const copy = async () => {
-    if (!slip) return
-    try {
-      await navigator.clipboard.writeText(`🥠 ${slip.fortune.text}\nLucky numbers: ${slip.numbers.join(" ")}\n— from elaineh16.github.io`)
-      setCopied(true)
-    } catch {
-      setCopied(false)
-    }
   }
 
   const resetJar = () => {
@@ -211,9 +199,6 @@ export function FortuneWheel({ sound, onFortune }: { sound: boolean; onFortune: 
               <p className="slip-learn vt">
                 Learn Chinese: <b lang="zh">{slip.word.zh}</b> {slip.word.pinyin} · “{slip.word.en}”
               </p>
-              <button type="button" className="tab small" onClick={copy}>
-                {copied ? "Copied!" : "Copy fortune"}
-              </button>
             </div>
           ) : phase === "spinning" ? (
             <div className="cookie-wait" aria-hidden="true">
