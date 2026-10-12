@@ -45,9 +45,9 @@ export const PROFILE = {
   ] as [string, string][],
   headline: "Analytical by training. Competitive by nature.",
   about: [
-    "I'm Elaine Hong, a Cornell Computer Science and Operations Research dual-degree student working across full-stack engineering, machine learning, and quantitative systems.",
+    "Hi! I'm Elaine Hong, a Computer Science and ORIE (Operations Research and Information Engineering) student at Cornell working across full-stack engineering, machine learning, and quantitative systems.",
     "I like problems where software, models, and people meet. Whether I'm improving a production workflow, evaluating a retrieval system, or designing production analytics, I care about building the right thing and proving that it performs.",
-    "Outside the terminal, I compete on Cornell's Division I fencing team and serve as Conference Director for the Society of Women Engineers at Cornell and Publicity Chair for the Cornell ORIE Club.",
+    "Outside the terminal, I compete on Cornell's Division I fencing team and serve as Conference Director for the Society of Women Engineers at Cornell and Publicity Chair for the Cornell ORIE Club :)",
   ],
   summaryLine: "Cornell Engineering '28 · B.S. Computer Science + Operations Research · NCAA Division I fencer",
 }
