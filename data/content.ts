@@ -260,7 +260,7 @@ export const STORIES: Story[] = [
 
 /* ---------- Mini-Games ---------- */
 export const ARCADE: { id: string; icon: IconName; name: string; blurb: string; status: "soon" | "locked" | "ready" }[] = [
-  { id: "crafting", icon: "book", name: "Crafting Elaine", blurb: "Combine items to unlock stories and fun facts. 10 recipes to find.", status: "ready" },
+  { id: "crafting", icon: "book", name: "Crafting Elaine", blurb: "Combine items to unlock stories and fun facts. 6 recipes to find.", status: "ready" },
   { id: "fencing", icon: "epee", name: "Fencing Duel", blurb: "Parry, riposte, first to 5 touches. How long can your streak go?", status: "soon" },
   { id: "poker", icon: "cards", name: "Poker Challenge", blurb: "Fold, call or raise? Coming later.", status: "locked" },
 ]
@@ -336,7 +336,7 @@ export const ACHIEVEMENTS: Achievement[] = [
   { id: "weather", title: "Weather Watcher", how: "Turn on the weather", icon: "map" },
   { id: "seasons", title: "Four Seasons", how: "Try all four seasons", icon: "map" },
   { id: "firstcraft", title: "First Craft", how: "Craft your first recipe", icon: "book" },
-  { id: "mastercrafter", title: "Master Crafter", how: "Find all 10 recipes", icon: "book" },
+  { id: "mastercrafter", title: "Master Crafter", how: "Find all 6 recipes", icon: "book" },
   { id: "engarde", title: "En Garde!", how: "Win a fencing bout (coming soon)", icon: "epee" },
   { id: "hotstreak", title: "Hot Streak", how: "Win 3 bouts in a row (coming soon)", icon: "medal" },
 ]
