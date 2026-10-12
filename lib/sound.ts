@@ -93,3 +93,59 @@ export function playJingle() {
     // Audio is optional.
   }
 }
+
+// A bright two-note "pop" when a recipe crafts.
+export function playCraft() {
+  try {
+    const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
+    ctx = ctx || new AC()
+    if (ctx.state === "suspended") void ctx.resume()
+    const t0 = ctx.currentTime + 0.01
+    const out = ctx.createGain()
+    out.gain.value = 0.16
+    out.connect(ctx.destination)
+    ;[523.25, 783.99].forEach((f, i) => {
+      const t = t0 + i * 0.07
+      const o = ctx!.createOscillator()
+      o.type = "triangle"
+      o.frequency.value = f
+      const g = ctx!.createGain()
+      g.gain.setValueAtTime(0.0001, t)
+      g.gain.exponentialRampToValueAtTime(0.9, t + 0.008)
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.18)
+      o.connect(g)
+      g.connect(out)
+      o.start(t)
+      o.stop(t + 0.2)
+    })
+  } catch {
+    // Audio is optional.
+  }
+}
+
+// A low "thunk" when a combination doesn't craft anything.
+export function playNope() {
+  try {
+    const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
+    ctx = ctx || new AC()
+    const t = ctx.currentTime + 0.01
+    const o = ctx.createOscillator()
+    o.type = "square"
+    o.frequency.setValueAtTime(180, t)
+    o.frequency.exponentialRampToValueAtTime(110, t + 0.12)
+    const lp = ctx.createBiquadFilter()
+    lp.type = "lowpass"
+    lp.frequency.value = 900
+    const g = ctx.createGain()
+    g.gain.setValueAtTime(0.0001, t)
+    g.gain.exponentialRampToValueAtTime(0.08, t + 0.01)
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.14)
+    o.connect(lp)
+    lp.connect(g)
+    g.connect(ctx.destination)
+    o.start(t)
+    o.stop(t + 0.16)
+  } catch {
+    // Audio is optional.
+  }
+}
