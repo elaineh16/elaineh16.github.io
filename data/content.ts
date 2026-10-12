@@ -35,7 +35,7 @@ export const PROFILE = {
   name: "Elaine Hong",
   classes: ["Engineer", "Fencer", "Builder"],
   stats: [
-    ["Spawn", "Toronto / Shanghai"],
+    ["Spawn", "Toronto"],
     ["Base", "Cornell University"],
     ["Class", "ORIE + CS, '28"],
     ["Main quest", "Build cool things"],

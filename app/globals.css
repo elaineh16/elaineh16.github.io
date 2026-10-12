@@ -282,3 +282,31 @@ dl.currently dt { color: var(--pink); } dl.currently dd { margin: 0; }
   .menu { width: 100%; }
 }
 .sub-inline { font-family: var(--f-term); font-size: 15px; color: #ece4e8; }
+.foot { left: 10px; bottom: calc(8px + env(safe-area-inset-bottom, 0px)); max-width: none; font-size: 11px; color: rgba(230,224,228,.75); white-space: nowrap; }
+@media (max-width: 1100px) { .foot { font-size: 11px; } }
+
+/* ---- everything in the Minecraft-style font ---- */
+:root { --f-body: 'Monocraft', 'Courier New', monospace; }
+body { font-size: 14px; }
+strong, b { font-weight: 400; color: inherit; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; text-decoration-color: rgba(0,0,0,.25); }
+.prose { font-size: 15px; line-height: 1.7; }
+.bullets, .quick { font-size: 14px; line-height: 1.65; }
+.project-card p, .project-card li { font-size: 14px !important; }
+.featured, .inv-list-main, .ach-text { font-size: 13px; }
+
+/* ---- weather button sits left of the settings gear ---- */
+.corner-btn.wx { right: 76px; }
+.corner-btn.wx[aria-pressed="true"] { background: #4a3a46; box-shadow: inset 3px 3px 0 var(--pink), inset -3px -3px 0 #5a4450; }
+
+/* ---- About: one window with book-style tabs ---- */
+.about-book { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 0; min-width: 0; }
+.book-tabs { display: flex; flex-wrap: wrap; gap: 4px; }
+.book-tab { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px 8px; min-height: 44px; font-family: var(--f-pixel); font-size: 13px; color: #fff; text-shadow: 1px 1px 0 #3a3a3a; background: var(--slot); border: 2px solid #111; border-bottom: 0; box-shadow: inset 2px 2px 0 #b5b5b5; cursor: pointer; }
+.book-tab:hover { background: #9a8a92; }
+.book-tab:focus-visible { outline: 3px solid var(--red); outline-offset: 1px; }
+.book-tab.on { background: var(--parchment); color: var(--ink); text-shadow: none; box-shadow: inset 2px 2px 0 #fff; position: relative; top: 3px; z-index: 1; }
+.book-page { max-width: none; min-height: 280px; border-top-width: 3px; }
+.book-kicker { display: block; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--wine); margin-bottom: 4px; }
+.book-hint { color: #6b5a50; font-size: 13px; }
+@media (max-width: 600px) { .book-tab span { display: none; } .book-tab { padding: 6px 10px; } }
+@media (max-width: 600px) { .splash { position: static; display: inline-block; margin-top: 14px; transform: rotate(-6deg); transform-origin: center; } .head { padding-top: 56px; } }

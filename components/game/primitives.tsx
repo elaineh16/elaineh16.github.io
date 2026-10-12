@@ -131,6 +131,7 @@ export function Tooltip() {
     document.addEventListener("mouseout", out)
     document.addEventListener("focusin", over)
     document.addEventListener("focusout", hide)
+    document.addEventListener("click", hide)
     window.addEventListener("scroll", hide, { passive: true })
     window.addEventListener("hashchange", hide)
     return () => {
@@ -138,6 +139,7 @@ export function Tooltip() {
       document.removeEventListener("mouseout", out)
       document.removeEventListener("focusin", over)
       document.removeEventListener("focusout", hide)
+      document.removeEventListener("click", hide)
       window.removeEventListener("scroll", hide)
       window.removeEventListener("hashchange", hide)
     }
