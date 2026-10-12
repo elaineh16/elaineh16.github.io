@@ -343,6 +343,12 @@ export const SPLASHES = [
   "Works on my machine!",
   "Gone fishing!",
   "One more commit!",
+  "Open sourcerer ✨",
+  "Eh?",
+  "Two twos my word",
+  "Task failed successfully",
+  "Hello World!",
+  "All in!!!",
 ]
 
 /** Hidden splash: shows up about 1 time in 25. */
