@@ -56,7 +56,7 @@ export function TopTracks() {
   useEffect(() => {
     if (!LASTFM.user || !LASTFM.apiKey) return
     const url =
-      "https://ws.audioscrobbler.com/2.0/?method=user.gettoptracks&period=7day&limit=5&format=json" +
+      "https://ws.audioscrobbler.com/2.0/?method=user.gettoptracks&period=7day&limit=3&format=json" +
       `&user=${encodeURIComponent(LASTFM.user)}&api_key=${encodeURIComponent(LASTFM.apiKey)}`
     let alive = true
     fetch(url)
