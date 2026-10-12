@@ -262,7 +262,7 @@ const fencingRows = [
 export type Outfit = "casual" | "fencing" | "music"
 const FENCING_PALETTE = { ...SPRITE[1], J: "#f4f4f4", j: "#d0d0d6", X: "#2b2b33", x: "#55555f", L: "#e4e4e8", O: "#B31B1B" }
 const FRAME_KINDS: SpriteFrame[] = ["idle", "lookleft", "front", "up", "down", "waveA", "waveB"]
-const MUSIC_PALETTE = { ...SPRITE[1], A: "#a0a0ae", a: "#B31B1B", q: "#e8505a" }
+const MUSIC_PALETTE = { ...SPRITE[1], A: "#3d3d48", a: "#1f1f26", q: "#6a6a78" }
 export const SPRITE_FRAMES_MUSIC = Object.fromEntries(FRAME_KINDS.map((k) => [k, [frameRows(k, spriteRows, true), MUSIC_PALETTE] as PixelMap])) as unknown as Record<SpriteFrame, PixelMap>
 export const SPRITE_FRAMES_FENCING = Object.fromEntries(FRAME_KINDS.map((k) => [k, [frameRows(k, fencingRows), FENCING_PALETTE] as PixelMap])) as unknown as Record<SpriteFrame, PixelMap>
 
