@@ -30,25 +30,30 @@ export function Crafting({ sound, onCraft }: { sound: boolean; onCraft: (found: 
 
   const filled = grid.filter(Boolean).length
 
-  // Craft automatically as soon as two items are in the grid.
-  useEffect(() => {
-    if (filled < 2) return
-    const match = matchRecipe(grid)
+  const match = matchRecipe(grid)
+  const isNew = match ? !found.includes(match.id) : false
+
+  // Click the output slot to craft a matching pair.
+  const craft = () => {
+    if (!match) return
     if (timer.current) clearTimeout(timer.current)
-    if (match) {
-      timer.current = setTimeout(() => {
-        if (sound) playCraft()
-        const prev = foundRef.current
-        const next = prev.includes(match.id) ? prev : [...prev, match.id]
-        setFound(next)
-        save("ec.recipes", next)
-        setLast(match)
-        setJustCrafted(match)
-        setGrid(EMPTY)
-        onCraft(next.length, RECIPES.length)
-        timer.current = setTimeout(() => setJustCrafted(null), 1200)
-      }, 280)
-    } else {
+    if (sound) playCraft()
+    const prev = foundRef.current
+    const next = prev.includes(match.id) ? prev : [...prev, match.id]
+    setFound(next)
+    save("ec.recipes", next)
+    setLast(match)
+    setJustCrafted(match)
+    setGrid(EMPTY)
+    onCraft(next.length, RECIPES.length)
+    timer.current = setTimeout(() => setJustCrafted(null), 1200)
+  }
+
+  // A wrong pair shakes and clears itself.
+  useEffect(() => {
+    if (filled < 2 || matchRecipe(grid)) return
+    if (timer.current) clearTimeout(timer.current)
+    {
       setMiss(true)
       if (sound) playNope()
       timer.current = setTimeout(() => {
@@ -63,9 +68,9 @@ export function Crafting({ sound, onCraft }: { sound: boolean; onCraft: (found: 
     if (timer.current && miss) clearTimeout(timer.current)
     setJustCrafted(null)
     setGrid((g) => {
-      const base = miss ? [...EMPTY] : [...g]
+      const base = miss || g.filter(Boolean).length >= 2 ? [...EMPTY] : [...g]
       const i = at !== undefined && base[at] === null ? at : base.findIndex((x) => x === null)
-      if (i < 0 || base.filter(Boolean).length >= 2) return g
+      if (i < 0) return g
       base[i] = item
       return base
     })
@@ -89,9 +94,13 @@ export function Crafting({ sound, onCraft }: { sound: boolean; onCraft: (found: 
     ? "Those two don't make anything. Check the recipe book for hints!"
     : justCrafted
       ? `Crafted ${justCrafted.result}!`
-      : filled === 1
-        ? "Add one more item."
-        : "Pick two items. A matching pair crafts on its own."
+      : match
+        ? isNew
+          ? "Something new! Click the output slot to craft it."
+          : `Makes ${match.result}. Click the output to craft it again.`
+        : filled === 1
+          ? "Add one more item."
+          : "Pick two items, then click the output to craft."
 
   return (
     <div className="crafting">
@@ -137,9 +146,27 @@ export function Crafting({ sound, onCraft }: { sound: boolean; onCraft: (found: 
             →
           </span>
 
-          <div className={"slot static craft-out" + (justCrafted ? " ready enchanted" : "") + (miss ? " miss" : "")} aria-hidden="true">
-            {justCrafted ? <PixelIcon name={justCrafted.icon} /> : miss ? <span className="px craft-x">×</span> : null}
-          </div>
+          <button
+            type="button"
+            className={"slot craft-out" + (match ? " ready" : "") + (justCrafted ? " enchanted" : "") + (miss ? " miss" : "")}
+            onClick={craft}
+            disabled={!match}
+            aria-label={match ? (isNew ? "Craft a new recipe" : `Craft ${match.result}`) : "Output slot"}
+            data-t1={match ? (isNew ? "???" : match.result) : undefined}
+            data-t2={match ? "Click to craft" : undefined}
+          >
+            {match ? (
+              isNew ? (
+                <span className="px craft-q">?</span>
+              ) : (
+                <PixelIcon name={match.icon} />
+              )
+            ) : justCrafted ? (
+              <PixelIcon name={justCrafted.icon} />
+            ) : miss ? (
+              <span className="px craft-x">×</span>
+            ) : null}
+          </button>
         </div>
 
         <p className="vt craft-msg" aria-live="polite">
@@ -187,7 +214,7 @@ export function Crafting({ sound, onCraft }: { sound: boolean; onCraft: (found: 
             <>
               <span className="book-kicker">How to play</span>
               <p>
-                Put two items in the grid. If they make a recipe, it crafts on its own and unlocks a story about me. The recipe book shows the shapes of both
+                Put two items in the grid. If they make a recipe, the output slot lights up: click it to craft and unlock a story about me. The recipe book shows the shapes of both
                 ingredients for every recipe.
               </p>
             </>
@@ -207,7 +234,7 @@ export function Crafting({ sound, onCraft }: { sound: boolean; onCraft: (found: 
               return (
                 <li key={r.id} className={got ? "got" : ""}>
                   {got ? (
-                    <button type="button" onClick={() => recraft(r)} aria-label={`Craft ${r.result} again`} data-t1={r.result} data-t2="Click to craft again">
+                    <button type="button" onClick={() => recraft(r)} aria-label={`Put ${r.result} in the grid`} data-t1={r.result} data-t2="Click to put it in the grid">
                       <span className="rb-ings">
                         <span className="slot static">
                           <PixelIcon name={r.inputs[0]} size={26} />
