@@ -157,6 +157,12 @@ export default function Game() {
     save("ec.recipes", [])
     save("ec.fish", [])
   }
+  const resetAchievements = () => {
+    setSeen({})
+    setProgress(EMPTY)
+    save("ec.seen", {})
+    save("ec.progress", EMPTY)
+  }
   const onTitle = () => {
     setSpinning(false)
     requestAnimationFrame(() => setSpinning(true))
@@ -324,6 +330,11 @@ export default function Game() {
               </li>
             ))}
           </ul>
+          {found ? (
+            <button type="button" className="tab small" onClick={resetAchievements} style={{ marginTop: 12 }}>
+              Reset achievements
+            </button>
+          ) : null}
         </Dialog>
       ) : null}
     </>
