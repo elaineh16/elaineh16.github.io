@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react"
 import { ACHIEVEMENTS, ACHIEVEMENT_BY_ID, HOTBAR, PROJECTS, SCREEN_TITLES, SPLASHES, STORIES, type ScreenId } from "@/data/content"
-import { Background, Dialog, PixelIcon, Toast, Tooltip, Weather } from "@/components/game/primitives"
+import { Background, Dialog, PixelIcon, Toast, Tooltip, ViewCount, Weather } from "@/components/game/primitives"
 import { Home } from "@/components/screens/Home"
 import { About, Arcade, Inventory, Multiplayer, QuickView } from "@/components/screens/Screens"
 import { SEASON_LIST, WEATHER, currentSeason, type Season } from "@/lib/seasons"
@@ -110,7 +110,7 @@ export default function Game() {
     if (!loaded) return
     if (screen !== "home") achieve(screen)
     if (screen === "inventory") collect("projects", selected)
-    document.title = screen === "home" ? "ELAINECRAFT · Elaine Hong" : `${SCREEN_TITLES[screen]} · ELAINECRAFT`
+    document.title = screen === "home" ? "Elaine Hong - Elaine's Craft" : `${SCREEN_TITLES[screen]} · Elaine Hong - Elaine's Craft`
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [screen, loaded])
 
@@ -200,7 +200,7 @@ export default function Game() {
             <div className="sub-head">
               <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
                 <span className="vt" style={{ fontSize: 15, color: "var(--pink)" }}>
-                  ELAINECRAFT
+                  ELAINE HONG
                 </span>
                 <h1>{SCREEN_TITLES[screen]}</h1>
               </div>
@@ -217,6 +217,7 @@ export default function Game() {
             {screen === "quick" ? <QuickView /> : null}
           </>
         )}
+        <ViewCount />
         <p className="foot">Fan-made · not affiliated with Mojang</p>
       </main>
 

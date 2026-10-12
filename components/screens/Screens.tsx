@@ -10,7 +10,6 @@ import {
   LINKEDIN_URL,
   PROFILE,
   PROJECTS,
-  QUICK_PROJECTS,
   RESUME_URL,
   SERVERS,
   SKILLS,
@@ -307,12 +306,12 @@ export function Arcade() {
 }
 
 /* ---------------- Multiplayer ---------------- */
-function CopyButton({ label = "Copy Address" }: { label?: string }) {
+function CopyButton({ label = "Copy Address", tiny }: { label?: string; tiny?: boolean }) {
   const [text, setText] = useState(label)
   return (
     <button
       type="button"
-      className="join"
+      className={"join" + (tiny ? " tiny" : "")}
       onClick={() => {
         const done = () => {
           setText("Copied")
@@ -366,72 +365,100 @@ export function Multiplayer() {
 
 /* ---------------- Quick View ---------------- */
 export function QuickView() {
+  const experience = EXPERIENCE_ORDER.map((id) => projectById[id])
+  const projects = PROJECTS.filter((p) => p.kind === "project")
   return (
     <article className="paper quick">
-      <header>
-        <div style={{ minWidth: 0 }}>
-          <h2 className="px" style={{ margin: 0, fontSize: 30, color: "var(--ink)" }}>
-            {PROFILE.name}
-          </h2>
-          <p style={{ margin: "4px 0 0" }}>{PROFILE.summaryLine}</p>
-          <p style={{ margin: "4px 0 0", display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-            <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
-            <CopyButton label="Copy" />
+      <header className="q-head">
+        <div className="q-id">
+          <h2 className="px">{PROFILE.name}</h2>
+          <p>{PROFILE.summaryLine}</p>
+          <p className="q-contact">
+            <a href={`mailto:${EMAIL}`}>{EMAIL}</a> · Toronto · Ithaca, NY
           </p>
         </div>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-          <a className="join" href={RESUME_URL} target="_blank" rel="noreferrer">
-            Résumé PDF
+        <nav className="q-links" aria-label="Résumé and profiles">
+          <a className="join tiny" href={RESUME_URL} target="_blank" rel="noreferrer">
+            Résumé
           </a>
-          <a className="join" href={LINKEDIN_URL} target="_blank" rel="noreferrer">
+          <a className="join tiny" href={LINKEDIN_URL} target="_blank" rel="noreferrer">
             LinkedIn
           </a>
-          <a className="join" href={GITHUB_URL} target="_blank" rel="noreferrer">
+          <a className="join tiny" href={GITHUB_URL} target="_blank" rel="noreferrer">
             GitHub
           </a>
-        </div>
+          <CopyButton label="Copy email" tiny />
+        </nav>
       </header>
-      <section>
-        <h3 className="px">Experience</h3>
-        <div className="stack-14">
-          {EXPERIENCE_ORDER.map((id) => {
-            const p = projectById[id]
-            return (
-              <div key={id}>
-                <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", gap: 8 }}>
-                  <strong>
-                    {p.role}, {p.org}
-                  </strong>
-                  <span style={{ color: "#6b5a50" }}>{p.period}</span>
+
+      <div className="q-cols">
+        <div className="q-main">
+          <section>
+            <h3 className="q-h">Experience</h3>
+            {experience.map((p) => (
+              <div key={p.id} className="q-item">
+                <div className="q-row">
+                  <strong>{p.org}</strong>
+                  <span className="q-date">{p.period}</span>
                 </div>
-                <ul style={{ margin: "4px 0 0", paddingLeft: 20 }}>
+                <div className="q-sub">{p.role}</div>
+                <ul>
                   {p.bullets.map((b) => (
                     <li key={b}>{b}</li>
                   ))}
                 </ul>
               </div>
-            )
-          })}
+            ))}
+          </section>
+          <section>
+            <h3 className="q-h">Projects</h3>
+            {projects.map((p) => (
+              <div key={p.id} className="q-item">
+                <div className="q-row">
+                  <strong>{p.name}</strong>
+                  {p.badge ? <span className="q-date">{p.badge}</span> : p.period ? <span className="q-date">{p.period}</span> : null}
+                </div>
+                <p>{p.desc}</p>
+                <div className="q-stack">{p.stack}</div>
+              </div>
+            ))}
+          </section>
         </div>
-      </section>
-      <section>
-        <h3 className="px">Projects</h3>
-        <ul style={{ margin: 0, paddingLeft: 20, display: "flex", flexDirection: "column", gap: 6 }}>
-          {QUICK_PROJECTS.map(([n, d]) => (
-            <li key={n}>
-              <strong>{n}</strong>: {d}
-            </li>
-          ))}
-        </ul>
-      </section>
-      <section>
-        <h3 className="px">Skills</h3>
-        {SKILLS.map((g) => (
-          <p key={g.label} style={{ margin: "0 0 4px" }}>
-            <strong>{g.label}:</strong> {g.items.join(", ")}
-          </p>
-        ))}
-      </section>
+
+        <aside className="q-side">
+          <section>
+            <h3 className="q-h">Education</h3>
+            <div className="q-item">
+              <strong>Cornell University</strong>
+              <div className="q-sub">Cornell Engineering, Class of 2028</div>
+              <p>Dual B.S. in Computer Science and Operations Research</p>
+            </div>
+          </section>
+          <section>
+            <h3 className="q-h">Athletics</h3>
+            <ul className="q-plain">
+              <li>NCAA Division I varsity fencing, Cornell</li>
+              <li>Canadian National Team</li>
+            </ul>
+          </section>
+          <section>
+            <h3 className="q-h">Leadership</h3>
+            <ul className="q-plain">
+              <li>Conference Director, Society of Women Engineers at Cornell</li>
+              <li>Publicity Chair, Cornell ORIE Club</li>
+            </ul>
+          </section>
+          <section>
+            <h3 className="q-h">Skills</h3>
+            {SKILLS.map((g) => (
+              <div key={g.label} className="q-skill">
+                <div className="q-sub">{g.label}</div>
+                <p>{g.items.join(", ")}</p>
+              </div>
+            ))}
+          </section>
+        </aside>
+      </div>
     </article>
   )
 }
