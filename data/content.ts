@@ -329,6 +329,7 @@ export const SCREEN_TITLES: Record<Exclude<ScreenId, "home">, string> = {
 }
 
 export const SPLASHES = [
+  "Now open to 2027 summer roles!",
   "En garde!",
   "Currently side questing...",
   "Touché!",
