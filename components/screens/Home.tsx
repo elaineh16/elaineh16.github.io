@@ -1,18 +1,20 @@
 "use client"
 
 import { MENU, PROFILE, type ScreenId } from "@/data/content"
-import { Logo, Sprite } from "@/components/game/primitives"
+import { Logo, SalutingSprite } from "@/components/game/primitives"
 
 export function Home({
   go,
   splash,
   spinning,
   onTitle,
+  sound,
 }: {
   go: (s: ScreenId) => void
   splash: string
   spinning: boolean
   onTitle: () => void
+  sound: boolean
 }) {
   return (
     <section aria-label="Title screen" className="stack-32">
@@ -32,7 +34,7 @@ export function Home({
       <div className="stage">
         <figure className="player" aria-label={`${PROFILE.name}: ${PROFILE.classes.join(", ")}`}>
           <div className="nametag px">{PROFILE.name}</div>
-          <Sprite scale={7} />
+          <SalutingSprite scale={7} sound={sound} />
           <div className="pedestal" aria-hidden="true" />
         </figure>
 

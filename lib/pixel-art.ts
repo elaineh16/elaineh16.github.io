@@ -132,3 +132,54 @@ export function drawBlockLogo(canvas: HTMLCanvasElement, word: string) {
     }
   })
 }
+
+// ---- Salute animation frames (20×32: the 16-wide sprite with 2 columns of room each side) ----
+export type SpriteFrame = "idle" | "front" | "up" | "down"
+
+function frameRows(kind: SpriteFrame): string[] {
+  // Start from the sprite without its épée (blade column and guard).
+  const g = spriteRows.map((row, i) => {
+    let r = row.split("")
+    if (i >= 1 && i <= 18) r[15] = "."
+    return ".." + r.join("") + ".."
+  }).map((r) => r.split(""))
+  const set = (row: number, col: number, ch: string) => {
+    if (row >= 0 && row < g.length && col + 2 >= 0 && col + 2 < 20) g[row][col + 2] = ch
+  }
+  // Eyes: glancing sideways while idle, looking at you otherwise.
+  if (kind === "idle") {
+    "SSEESSEE".split("").forEach((ch, k) => set(5, 4 + k, ch))
+  }
+  if (kind === "idle" || kind === "front") {
+    for (let r = 1; r <= 16; r++) set(r, 15, "B")
+    set(17, 15, "g")
+    set(18, 15, "g")
+  }
+  if (kind === "up") {
+    // Guard to the chin, blade straight up in front of the face.
+    for (let r = 13; r <= 18; r++) {
+      set(r, 13, ".")
+      set(r, 14, ".")
+    }
+    set(12, 13, "R"); set(12, 14, "r")
+    set(11, 12, "R"); set(11, 13, "R")
+    set(10, 11, "R"); set(10, 12, "R")
+    set(9, 10, "W"); set(9, 11, "W")
+    set(9, 9, "S"); set(8, 9, "S")
+    set(8, 7, "g"); set(8, 8, "g"); set(8, 10, "g")
+    for (let r = 0; r <= 7; r++) set(r, 8, "B")
+  }
+  if (kind === "down") {
+    // Arm out, blade swept down towards the floor.
+    set(18, 15, "g"); set(19, 15, "g"); set(19, 14, "g")
+    ;[[20, 16], [21, 16], [22, 16], [23, 17], [24, 17], [25, 17]].forEach(([r, c]) => set(r, c, "B"))
+  }
+  return g.map((r) => r.join(""))
+}
+
+export const SPRITE_FRAMES: Record<SpriteFrame, PixelMap> = {
+  idle: [frameRows("idle"), SPRITE[1]],
+  front: [frameRows("front"), SPRITE[1]],
+  up: [frameRows("up"), SPRITE[1]],
+  down: [frameRows("down"), SPRITE[1]],
+}
