@@ -19,8 +19,8 @@ export function Home({
       <header className="head">
         <div className="title-wrap">
           <h1 style={{ margin: 0 }}>
-            <button type="button" className={"title" + (spinning ? " spin" : "")} onClick={onTitle} aria-label="ELAINECRAFT">
-              <Logo word="ELAINECRAFT" />
+            <button type="button" className={"title" + (spinning ? " spin" : "")} onClick={onTitle} aria-label="Elaine Hong">
+              <Logo word="ELAINE HONG" />
             </button>
           </h1>
           <span className="splash" aria-hidden="true">
