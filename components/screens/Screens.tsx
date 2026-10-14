@@ -109,7 +109,7 @@ export function About({ onStory, sound = true }: { onStory: (key: string) => voi
               {PROFILE.about.map((p) => (
                 <p key={p.slice(0, 24)}>{p}</p>
               ))}
-              <p className="book-hint">Pick a tab above to read more: fencing, photos, places, music and side quests.</p>
+              <p className="book-hint">Pick a tab above to read more: fencing, photos, music and places.</p>
             </>
           )}
         </article>

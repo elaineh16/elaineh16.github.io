@@ -205,6 +205,8 @@ export interface Story {
   body: string[]
   /** Extra live content shown under the text. */
   extra?: "gallery" | "music" | "map"
+  /** Hidden stories keep their text but don't get a tab (easy to bring back). */
+  hidden?: boolean
   /** A button at the end of the story. */
   link?: { href: string; label: string }
 }
@@ -224,7 +226,7 @@ export const PHOTOS: { src: string; thumb: string; alt: string; caption: string 
  */
 export const LASTFM = { user: "elegantmaus", apiKey: "680b7006ac7a11c7ccc4158e8d6d5efe" }
 
-export const STORIES: Story[] = [
+const ALL_STORIES: Story[] = [
   {
     key: "epee",
     icon: "epee",
@@ -259,6 +261,7 @@ export const STORIES: Story[] = [
   },
   {
     key: "coffee",
+    hidden: true, // Side quests tab is hidden for now; delete this line to show it again.
     icon: "coffee",
     name: "Coffee",
     type: "Fun facts & hobbies",
@@ -282,6 +285,9 @@ export const STORIES: Story[] = [
     extra: "map",
   },
 ]
+
+/** Stories that get a tab in Singleplayer. */
+export const STORIES: Story[] = ALL_STORIES.filter((s) => !s.hidden)
 
 /* ---------- Mini-Games ---------- */
 export const ARCADE: { id: string; icon: IconName; name: string; blurb: string; status: "soon" | "locked" | "ready" }[] = [
