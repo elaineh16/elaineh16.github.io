@@ -269,7 +269,7 @@ export default function Game() {
           </>
         )}
         <ViewCount />
-        <p className="foot">Fan-made · not affiliated with Mojang</p>
+        <p className="foot">Inspired by Minecraft · not affiliated with Mojang</p>
       </main>
 
       <nav className="hotbar" aria-label="Quick access">
