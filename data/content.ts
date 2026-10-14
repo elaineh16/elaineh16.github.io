@@ -6,7 +6,7 @@ import { CATCHES } from "@/data/fishing"
 
 export type ScreenId = "home" | "about" | "inventory" | "arcade" | "fortune" | "fishing" | "fencing" | "multiplayer" | "quick"
 
-export type Category = "swe" | "ai" | "research" | "quant" | "hack"
+export type Category = "swe" | "ai" | "research" | "hack"
 
 export interface Project {
   id: string
@@ -124,22 +124,6 @@ export const PROJECTS: Project[] = [
     result: "BigRed//Hacks winner",
   },
   {
-    id: "trade",
-    kind: "project",
-    icon: "chart",
-    name: "Trading Backtester",
-    type: "Side project",
-    period: "2025",
-    cats: ["quant"],
-    desc: "A Python framework for backtesting and comparing algorithmic trading strategies on historical market data.",
-    bullets: [
-      "Pluggable strategy interface with moving-average, RSI and MACD strategies built in.",
-      "Reports Sharpe ratio, drawdown and win rate, with charts and a performance dashboard.",
-    ],
-    stack: "Python · pandas · NumPy · yfinance · Matplotlib / Plotly",
-    link: "https://github.com/elaineh16/trading_backtester",
-  },
-  {
     id: "rag",
     kind: "experience",
     badge: "Kept weak pipelines out of production",
@@ -186,7 +170,6 @@ export const CATEGORIES: [Category | "all", string][] = [
   ["ai", "AI / ML"],
   ["research", "Research"],
   ["hack", "Hackathons"],
-  ["quant", "Quant"],
 ]
 
 export const SKILLS: { label: string; items: string[] }[] = [
