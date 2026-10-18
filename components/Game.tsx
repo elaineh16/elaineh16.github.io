@@ -13,6 +13,8 @@ import { playClick, playJingle } from "@/lib/sound"
 import { load, save } from "@/lib/storage"
 
 const SCREENS: ScreenId[] = ["home", "about", "inventory", "arcade", "fortune", "fishing", "fencing", "multiplayer", "quick"]
+/** Screens people read: achievements unlock silently here (no pop-up, no jingle) and show in the corner panel. */
+const QUIET: ScreenId[] = ["home", "about", "inventory", "multiplayer", "quick"]
 
 function screenFromHash(): ScreenId {
   const raw = window.location.hash.replace("#", "")
@@ -39,6 +41,8 @@ export default function Game() {
   const [loaded, setLoaded] = useState(false)
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const soundRef = useRef(sound)
+  const screenRef = useRef<ScreenId>("home")
+  screenRef.current = screen
   soundRef.current = sound
 
   // Load saved settings and progress on the client.
@@ -83,6 +87,7 @@ export default function Game() {
       if (prev[id] || !ACHIEVEMENT_BY_ID[id]) return prev
       const next = { ...prev, [id]: true }
       save("ec.seen", next)
+      if (QUIET.includes(screenRef.current)) return next
       setToast(id)
       if (soundRef.current) setTimeout(playJingle, 60)
       if (toastTimer.current) clearTimeout(toastTimer.current)
@@ -183,7 +188,7 @@ export default function Game() {
       <div id="shade" />
       {screen !== "home" ? <div id="dim" /> : null}
       <Weather season={season} on={weather} />
-      {toast ? <Toast title={ACHIEVEMENT_BY_ID[toast].title} icon={ACHIEVEMENT_BY_ID[toast].icon} /> : null}
+      {toast && !QUIET.includes(screen) ? <Toast title={ACHIEVEMENT_BY_ID[toast].title} icon={ACHIEVEMENT_BY_ID[toast].icon} /> : null}
       <Tooltip />
 
       <button
