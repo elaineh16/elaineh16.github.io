@@ -367,7 +367,7 @@ export const ACHIEVEMENTS: Achievement[] = [
   { id: "arcade", title: "Insert Coin", how: "Open Mini-Games", icon: "disc" },
   { id: "multiplayer", title: "Party Up", how: "Open Connect", icon: "sign" },
   { id: "quick", title: "Recruiter Mode", how: "Open Quick View", icon: "paper" },
-  { id: "stories", title: "Story Time", how: "Read all five personal stories", icon: "book" },
+  { id: "stories", title: "Story Time", how: "Read every About Me tab", icon: "book" },
   { id: "projects", title: "Window Shopping", how: "Open every project", icon: "redstone" },
   { id: "egg", title: "Easter Egg Hunter", how: "Click the title", icon: "medal" },
   { id: "weather", title: "Weather Watcher", how: "Turn on the weather", icon: "map" },
