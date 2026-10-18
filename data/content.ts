@@ -299,8 +299,8 @@ export const SERVERS: Server[] = [
 export const MENU: { label: string; screen: ScreenId }[] = [
   { label: "About Me", screen: "about" },
   { label: "Projects & Experience", screen: "inventory" },
-  { label: "Mini-Games", screen: "arcade" },
   { label: "Connect", screen: "multiplayer" },
+  { label: "Mini-Games", screen: "arcade" },
 ]
 
 export const HOTBAR: { label: string; icon: IconName; href?: string; action?: "achievements" }[] = [
