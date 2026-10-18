@@ -221,7 +221,7 @@ export default function Game() {
               <div className="back-wrap">
                 {screen === "fortune" || screen === "fishing" || screen === "fencing" ? (
                   <button type="button" className="mc-btn small back-btn" onClick={() => go("arcade")}>
-                    Back to Arcade
+                    Back to Mini-Games
                   </button>
                 ) : (
                   <button type="button" className="mc-btn small back-btn" onClick={() => go("home")}>

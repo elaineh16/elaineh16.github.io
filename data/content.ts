@@ -296,11 +296,11 @@ export const SERVERS: Server[] = [
 ]
 
 /* ---------- Navigation ---------- */
-export const MENU: { label: string; sub: string; screen: ScreenId }[] = [
-  { label: "Singleplayer", sub: "About Me", screen: "about" },
-  { label: "Inventory", sub: "Projects & Experience", screen: "inventory" },
-  { label: "Mini-Games", sub: "Arcade", screen: "arcade" },
-  { label: "Multiplayer", sub: "Connect", screen: "multiplayer" },
+export const MENU: { label: string; screen: ScreenId }[] = [
+  { label: "About Me", screen: "about" },
+  { label: "Projects & Experience", screen: "inventory" },
+  { label: "Mini-Games", screen: "arcade" },
+  { label: "Connect", screen: "multiplayer" },
 ]
 
 export const HOTBAR: { label: string; icon: IconName; href?: string; action?: "achievements" }[] = [
@@ -312,13 +312,13 @@ export const HOTBAR: { label: string; icon: IconName; href?: string; action?: "a
 ]
 
 export const SCREEN_TITLES: Record<Exclude<ScreenId, "home">, string> = {
-  about: "Singleplayer · About Me",
-  inventory: "Inventory · Projects & Experience",
-  arcade: "Mini-Games · Arcade",
+  about: "About Me",
+  inventory: "Projects & Experience",
+  arcade: "Mini-Games",
   fortune: "Fortune Cookie Wheel",
   fishing: "Gone Fishing",
   fencing: "Fencing Duel",
-  multiplayer: "Multiplayer · Connect",
+  multiplayer: "Connect",
   quick: "Quick View",
 }
 
@@ -362,10 +362,10 @@ export interface Achievement {
 }
 
 export const ACHIEVEMENTS: Achievement[] = [
-  { id: "about", title: "Getting to Know Elaine", how: "Open Singleplayer", icon: "epee" },
-  { id: "inventory", title: "The Builder", how: "Open the Inventory", icon: "laptop" },
-  { id: "arcade", title: "Insert Coin", how: "Visit the arcade", icon: "disc" },
-  { id: "multiplayer", title: "Party Up", how: "Open Multiplayer", icon: "sign" },
+  { id: "about", title: "Getting to Know Elaine", how: "Open About Me", icon: "epee" },
+  { id: "inventory", title: "The Builder", how: "Open Projects & Experience", icon: "laptop" },
+  { id: "arcade", title: "Insert Coin", how: "Open Mini-Games", icon: "disc" },
+  { id: "multiplayer", title: "Party Up", how: "Open Connect", icon: "sign" },
   { id: "quick", title: "Recruiter Mode", how: "Open Quick View", icon: "paper" },
   { id: "stories", title: "Story Time", how: "Read all five personal stories", icon: "book" },
   { id: "projects", title: "Window Shopping", how: "Open every project", icon: "redstone" },
