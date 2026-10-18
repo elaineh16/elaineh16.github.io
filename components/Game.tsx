@@ -206,6 +206,18 @@ export default function Game() {
         </svg>
       </button>
 
+      <button
+        type="button"
+        className="corner-btn ach"
+        onClick={() => setDialog("achievements")}
+        aria-label={`Achievements: ${found} of ${ACHIEVEMENTS.length}`}
+        data-t1="Achievements"
+        data-t2={`${found} / ${ACHIEVEMENTS.length}`}
+      >
+        <PixelIcon name="medal" size={28} />
+        {found ? <span className="corner-count">{found}</span> : null}
+      </button>
+
       <main className="wrap">
         {screen === "home" ? (
           <Home go={go} splash={splash} spinning={spinning} onTitle={onTitle} sound={sound} />

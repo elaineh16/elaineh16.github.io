@@ -308,7 +308,6 @@ export const HOTBAR: { label: string; icon: IconName; href?: string; action?: "a
   { label: "GitHub", icon: "git", href: GITHUB_URL },
   { label: "LinkedIn", icon: "sign", href: LINKEDIN_URL },
   { label: "Email", icon: "mail", href: `mailto:${EMAIL}` },
-  { label: "Achievements", icon: "medal", action: "achievements" },
 ]
 
 export const SCREEN_TITLES: Record<Exclude<ScreenId, "home">, string> = {
