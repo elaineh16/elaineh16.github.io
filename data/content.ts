@@ -318,7 +318,7 @@ export const SCREEN_TITLES: Record<Exclude<ScreenId, "home">, string> = {
   fishing: "Gone Fishing",
   fencing: "Fencing Duel",
   multiplayer: "Connect",
-  quick: "Quick View",
+  quick: "Plain View",
 }
 
 export const SPLASHES = [
@@ -365,7 +365,7 @@ export const ACHIEVEMENTS: Achievement[] = [
   { id: "inventory", title: "The Builder", how: "Open Projects & Experience", icon: "laptop" },
   { id: "arcade", title: "Insert Coin", how: "Open Mini-Games", icon: "disc" },
   { id: "multiplayer", title: "Party Up", how: "Open Connect", icon: "sign" },
-  { id: "quick", title: "Recruiter Mode", how: "Open Quick View", icon: "paper" },
+  { id: "quick", title: "Recruiter Mode", how: "Open Plain View", icon: "paper" },
   { id: "stories", title: "Story Time", how: "Read every About Me tab", icon: "book" },
   { id: "projects", title: "Window Shopping", how: "Open every project", icon: "redstone" },
   { id: "egg", title: "Easter Egg Hunter", how: "Click the title", icon: "medal" },

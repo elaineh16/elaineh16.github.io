@@ -43,9 +43,6 @@ export function Home({
               {m.label}
             </button>
           ))}
-          <button type="button" className="quick-link vt" onClick={() => go("quick")}>
-            In a hurry? Open Quick View →
-          </button>
         </nav>
       </div>
     </section>

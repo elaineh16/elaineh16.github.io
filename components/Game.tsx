@@ -5,6 +5,7 @@ import { ACHIEVEMENTS, ACHIEVEMENT_BY_ID, HOTBAR, PROJECTS, SCREEN_TITLES, SPLAS
 import { Background, Dialog, PixelIcon, Toast, Tooltip, ViewCount, Weather } from "@/components/game/primitives"
 import { Home } from "@/components/screens/Home"
 import { About, Arcade, Inventory, Multiplayer, QuickView } from "@/components/screens/Screens"
+import { SiteHeader } from "@/components/game/SiteHeader"
 import { FortuneWheel } from "@/components/games/Fortune"
 import { Fishing } from "@/components/games/Fishing"
 import { Fencing } from "@/components/games/Fencing"
@@ -185,6 +186,7 @@ export default function Game() {
       <Weather season={season} on={weather} />
       {toast ? <Toast title={ACHIEVEMENT_BY_ID[toast].title} icon={ACHIEVEMENT_BY_ID[toast].icon} /> : null}
       <Tooltip />
+      <SiteHeader screen={screen} go={go} />
 
       <button
         type="button"
