@@ -4,52 +4,56 @@ import { useEffect, useState } from "react"
 
 const STEPS = ["Generating terrain…", "Spawning Elaine…", "Sharpening épée…", "Brewing matcha…", "Casting fishing lines…", "Loading chunks…"]
 const MIN_MS = 1300
-const MAX_MS = 4500
+
+/** Fire this to replay the intro (the Arcade's "Play intro" button does). */
+export const INTRO_EVENT = "ec:intro"
 
 /**
- * A Minecraft-style "Loading world" screen. It's in the static HTML so it covers the page
- * before scripts run. It shows once per browser session and leaves when the page has loaded
- * (or on any click or key press).
+ * A Minecraft-style "Loading world" screen. It no longer shows on arrival, so visitors see the
+ * site straight away. It plays only on request, and leaves after a moment or on any click or key press.
  */
 export function Loader() {
   const [step, setStep] = useState(0)
-  const [state, setState] = useState<"on" | "done" | "gone">("on")
+  const [state, setState] = useState<"on" | "done" | "gone">("gone")
+  const [run, setRun] = useState(0)
 
   useEffect(() => {
-    if (document.documentElement.classList.contains("skip-loader")) {
-      setState("gone")
-      return
+    const play = () => {
+      setStep(0)
+      setState("on")
+      setRun((n) => n + 1)
     }
+    window.addEventListener(INTRO_EVENT, play)
+    return () => window.removeEventListener(INTRO_EVENT, play)
+  }, [])
+
+  useEffect(() => {
+    if (!run) return
     const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
-    const start = performance.now()
     let finished = false
+    let fade: ReturnType<typeof setTimeout> | undefined
     const finish = () => {
       if (finished) return
       finished = true
-      try {
-        sessionStorage.setItem("ec.loaded", "1")
-      } catch {
-        // Storage can be blocked; the loader just shows again next time.
-      }
       setState("done")
-      setTimeout(() => setState("gone"), reduce ? 0 : 450)
+      fade = setTimeout(() => setState("gone"), reduce ? 0 : 450)
     }
-    const whenReady = () => setTimeout(finish, Math.max(0, (reduce ? 400 : MIN_MS) - (performance.now() - start)))
-    if (document.readyState === "complete") whenReady()
-    else window.addEventListener("load", whenReady, { once: true })
-    const cap = setTimeout(finish, MAX_MS)
+    const end = setTimeout(finish, reduce ? 400 : MIN_MS + 1100)
     const tick = setInterval(() => setStep((s) => (s + 1) % STEPS.length), 380)
-    const skip = () => finish()
-    window.addEventListener("pointerdown", skip, { once: true })
-    window.addEventListener("keydown", skip, { once: true })
+    // Wait a beat so the click that started the intro doesn't also skip it.
+    const arm = setTimeout(() => {
+      window.addEventListener("pointerdown", finish, { once: true })
+      window.addEventListener("keydown", finish, { once: true })
+    }, 50)
     return () => {
-      clearTimeout(cap)
+      clearTimeout(end)
+      clearTimeout(arm)
+      if (fade) clearTimeout(fade)
       clearInterval(tick)
-      window.removeEventListener("load", whenReady)
-      window.removeEventListener("pointerdown", skip)
-      window.removeEventListener("keydown", skip)
+      window.removeEventListener("pointerdown", finish)
+      window.removeEventListener("keydown", finish)
     }
-  }, [])
+  }, [run])
 
   if (state === "gone") return null
   return (
@@ -60,7 +64,7 @@ export function Loader() {
         <p className="loader-title px">ELAINE HONG</p>
         <p className="loader-sub px">Loading world</p>
         <div className="loader-bar" aria-hidden="true">
-          <span className={state === "done" ? "full" : ""} />
+          <span key={run} className={state === "done" ? "full" : ""} />
         </div>
         <p className="loader-step vt">{STEPS[step]}</p>
         <p className="loader-skip vt">Click anywhere to skip</p>

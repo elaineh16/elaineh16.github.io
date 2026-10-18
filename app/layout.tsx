@@ -28,12 +28,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preload" href="/fonts/monocraft.woff2" as="font" type="font/woff2" crossOrigin="" />
-        {/* Skip the loading screen if it was already shown this session (runs before paint). */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: 'try{if(sessionStorage.getItem("ec.loaded"))document.documentElement.classList.add("skip-loader")}catch(e){}',
-          }}
-        />
       </head>
       <body>
         <Loader />
