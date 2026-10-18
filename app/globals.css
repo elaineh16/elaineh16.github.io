@@ -626,3 +626,7 @@ strong, b { font-weight: 400; color: inherit; text-decoration: underline; text-d
 .book-page.long p { margin-bottom: 10px; }
 .book-page.long h2 { margin-bottom: 8px; }
 
+
+/* Achievements live in the right-hand column under settings and weather. */
+.corner-btn.ach { right: 16px; top: calc(136px + env(safe-area-inset-top, 0px)); display: grid; place-items: center; }
+.corner-count { position: absolute; right: -6px; bottom: -6px; min-width: 20px; height: 20px; padding: 0 4px; display: grid; place-items: center; font-family: var(--f-term); font-size: 12px; color: #fff; background: var(--hv, #B31B1B); border: 2px solid #111; }
