@@ -122,6 +122,7 @@ export const PROJECTS: Project[] = [
     bullets: [],
     stack: "React · TypeScript · Python · Gemini API · OpenCV · SpaceTimeDB",
     result: "BigRed//Hacks winner",
+    github: "https://github.com/elaineh16/BigRedHack25",
   },
   {
     id: "rag",
