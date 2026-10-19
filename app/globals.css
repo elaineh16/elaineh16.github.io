@@ -37,6 +37,7 @@ a { color: inherit; }
 
 .wrap { position: relative; z-index: 2; max-width: 1280px; min-height: 100vh; margin: 0 auto; padding-inline: 24px; padding-block: 56px 150px; display: flex; flex-direction: column; justify-content: center; gap: 32px; }
 @media (max-width: 600px) { .wrap { padding-inline: 16px; padding-block: 28px 140px; justify-content: flex-start; } }
+.wrap.no-hotbar { padding-bottom: 56px; }
 
 .px { font-family: var(--f-pixel); }
 .vt { font-family: var(--f-term); }
