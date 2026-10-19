@@ -140,7 +140,7 @@ dl.stats dt { color: #5a5a5a; } dl.stats dd { margin: 0; }
 .wx-btn:focus-visible { outline: 3px solid #fff6c2; outline-offset: 2px; }
 .wx-btn[aria-pressed="true"] { background: #4a3a46; box-shadow: inset 3px 3px 0 var(--pink), inset -3px -3px 0 #5a4450; }
 
-#toast { position: fixed; top: calc(16px + env(safe-area-inset-top, 0px)); left: 50%; transform: translateX(-50%); z-index: 60; display: flex; align-items: center; gap: 12px; padding: 10px 16px 10px 10px; background: var(--ink); border: 3px solid #0c0b10; box-shadow: inset 0 0 0 3px #555; max-width: calc(100vw - 32px); animation: slidein .35s steps(5); }
+#toast { position: fixed; top: calc(64px + env(safe-area-inset-top, 0px)); left: 50%; transform: translateX(-50%); z-index: 60; display: flex; align-items: center; gap: 12px; padding: 10px 16px 10px 10px; background: var(--ink); border: 3px solid #0c0b10; box-shadow: inset 0 0 0 3px #555; max-width: calc(100vw - 32px); animation: slidein .35s steps(5); }
 #toast .slot { width: 48px; height: 48px; }
 @keyframes slidein { from { transform: translate(-50%, -140%); } to { transform: translate(-50%, 0); } }
 
