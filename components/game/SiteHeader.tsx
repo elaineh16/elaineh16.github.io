@@ -1,7 +1,6 @@
 "use client"
 
 import { MENU, PROFILE, RESUME_URL, type ScreenId } from "@/data/content"
-import { Sprite } from "@/components/game/primitives"
 
 const GAMES: ScreenId[] = ["fortune", "fishing", "fencing"]
 
@@ -14,8 +13,7 @@ export function SiteHeader({ screen, go }: { screen: ScreenId; go: (s: ScreenId)
   return (
     <header className="site-head">
       <button type="button" className="sh-brand px" onClick={() => go("home")} aria-label={`${PROFILE.name}, back to the title screen`}>
-        <Sprite scale={1} />
-        <span>{PROFILE.name}</span>
+        {PROFILE.name}
       </button>
       <nav className="sh-nav" aria-label="Pages">
         {MENU.map((m) => (
