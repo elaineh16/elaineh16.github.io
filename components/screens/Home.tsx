@@ -1,6 +1,6 @@
 "use client"
 
-import { MENU, PROFILE, type ScreenId } from "@/data/content"
+import { MENU, PROFILE, RESUME_URL, type ScreenId } from "@/data/content"
 import { Logo, SalutingSprite } from "@/components/game/primitives"
 
 export function Home({
@@ -43,6 +43,14 @@ export function Home({
               {m.label}
             </button>
           ))}
+          <div className="menu-extra">
+            <a className="mc-btn" href={RESUME_URL} target="_blank" rel="noreferrer">
+              Résumé
+            </a>
+            <button type="button" className="mc-btn" onClick={() => go("quick")}>
+              Plain View
+            </button>
+          </div>
         </nav>
       </div>
     </section>

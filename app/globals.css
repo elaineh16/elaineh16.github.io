@@ -96,28 +96,6 @@ dl.stats dt { color: #5a5a5a; } dl.stats dd { margin: 0; }
 .inv3 { display: grid; grid-template-columns: repeat(3, 58px); gap: 6px; justify-content: center; }
 
 /* sub screens */
-/* ---- Site header: fixed slim bar on every screen ---- */
-.site-head { position: fixed; top: 0; left: 0; right: 0; z-index: 35; height: calc(48px + env(safe-area-inset-top, 0px)); padding: env(safe-area-inset-top, 0px) 84px 0 max(16px, env(safe-area-inset-left, 0px)); display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 16px; background: rgba(14, 11, 13, .82); border-bottom: 3px solid #111; backdrop-filter: blur(2px); }
-.site-head button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
-.sh-brand { justify-self: start; font-size: 15px; color: #fff; white-space: nowrap; }
-/* Centred on the page: shifted by half the difference between the right padding (84px, clears the corner buttons) and the left (16px). */
-.sh-nav { display: flex; gap: 2px; position: relative; left: 34px; }
-.sh-nav button { font-family: var(--f-pixel); font-size: 14px; color: #e8e2ea; padding: 6px 10px; border: 2px solid transparent; white-space: nowrap; }
-.sh-nav button:hover, .sh-nav button:focus-visible { border-color: #111; background: var(--stone); }
-.sh-nav button.on { border-color: #111; background: var(--hv); color: var(--hv-text); }
-.sh-right { grid-column: 3; justify-self: end; display: flex; align-items: center; gap: 12px; }
-.sh-plain { font-family: var(--f-body); font-size: 14px; color: #d8d0dc; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
-.sh-plain:hover, .sh-plain.on { color: #fff; }
-.sh-resume { font-size: 14px; color: #f4f4f4; text-decoration: none; text-shadow: 2px 2px 0 #1f3a19; background: #3d7a33; border: 3px solid #111; box-shadow: inset 2px 2px 0 #7fc06a, inset -2px -2px 0 #24501d; padding: 4px 12px; white-space: nowrap; }
-.sh-resume:hover, .sh-resume:focus-visible { background: #4a8f3e; }
-.site-head :focus-visible { outline: 3px solid #fff6c2; outline-offset: 2px; }
-@media (max-width: 1180px) { .sh-nav { display: none; } }
-@media (max-width: 600px) {
-  .wrap { padding-top: calc(72px + env(safe-area-inset-top, 0px)); }
-  .site-head { gap: 10px; }
-  .sh-right { gap: 10px; }
-}
-
 .sub-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
 .sub-head h1 { margin: 0; font-family: var(--f-pixel); font-size: clamp(26px, 4vw, 44px); color: var(--parchment); text-shadow: 3px 3px 0 var(--title-shadow, var(--red)); text-wrap: balance; }
 .row { display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start; }
@@ -162,7 +140,7 @@ dl.stats dt { color: #5a5a5a; } dl.stats dd { margin: 0; }
 .wx-btn:focus-visible { outline: 3px solid #fff6c2; outline-offset: 2px; }
 .wx-btn[aria-pressed="true"] { background: #4a3a46; box-shadow: inset 3px 3px 0 var(--pink), inset -3px -3px 0 #5a4450; }
 
-#toast { position: fixed; top: calc(64px + env(safe-area-inset-top, 0px)); left: 50%; transform: translateX(-50%); z-index: 60; display: flex; align-items: center; gap: 12px; padding: 10px 16px 10px 10px; background: var(--ink); border: 3px solid #0c0b10; box-shadow: inset 0 0 0 3px #555; max-width: calc(100vw - 32px); animation: slidein .35s steps(5); }
+#toast { position: fixed; top: calc(16px + env(safe-area-inset-top, 0px)); left: 50%; transform: translateX(-50%); z-index: 60; display: flex; align-items: center; gap: 12px; padding: 10px 16px 10px 10px; background: var(--ink); border: 3px solid #0c0b10; box-shadow: inset 0 0 0 3px #555; max-width: calc(100vw - 32px); animation: slidein .35s steps(5); }
 #toast .slot { width: 48px; height: 48px; }
 @keyframes slidein { from { transform: translate(-50%, -140%); } to { transform: translate(-50%, 0); } }
 
@@ -295,6 +273,10 @@ dl.currently dt { color: var(--pink); } dl.currently dd { margin: 0; }
 .menu { flex: 0 1 420px; width: 420px; max-width: 100%; }
 .menu .mc-btn { justify-content: center; text-align: center; }
 .menu .mc-btn .sub { display: none; }
+/* Résumé and Plain View: a smaller pair to the right of the menu, mirroring the avatar on the left */
+.menu-extra { position: absolute; left: calc(50% + 250px); bottom: 0; width: 180px; display: grid; gap: 12px; }
+.menu-extra .mc-btn { min-height: 54px; font-size: 15px; padding: 6px 12px; justify-content: center; text-align: center; }
+@media (max-width: 900px) { .menu-extra { position: static; width: auto; grid-template-columns: 1fr 1fr; } }
 .player { position: absolute; right: calc(50% + 250px); bottom: -28px; }
 @media (max-width: 900px) {
   .stage { flex-direction: column; align-items: center; gap: 20px; }
