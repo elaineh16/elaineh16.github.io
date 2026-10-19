@@ -324,8 +324,7 @@ export function Arcade({ play }: { play: (id: string) => void }) {
           </section>
         ))}
       </div>
-      <div className="win-dark intro-row">
-        <p className="vt">Miss the loading screen? It lives here now.</p>
+      <div className="intro-row">
         <button type="button" className="mc-btn small" onClick={() => window.dispatchEvent(new Event(INTRO_EVENT))}>
           Play intro
         </button>
