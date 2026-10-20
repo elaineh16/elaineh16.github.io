@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { INTRO_EVENT } from "@/components/game/Loader"
 import {
   ARCADE,
   CATEGORIES,
@@ -323,11 +322,6 @@ export function Arcade({ play }: { play: (id: string) => void }) {
             )}
           </section>
         ))}
-      </div>
-      <div className="intro-row">
-        <button type="button" className="mc-btn small" onClick={() => window.dispatchEvent(new Event(INTRO_EVENT))}>
-          Play intro
-        </button>
       </div>
     </div>
   )

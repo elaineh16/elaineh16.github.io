@@ -1,7 +1,6 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
 import "./globals.css"
-import { Loader } from "@/components/game/Loader"
 
 export const metadata: Metadata = {
   title: "Elaine Hong - Elaine's Craft",
@@ -30,7 +29,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <link rel="preload" href="/fonts/monocraft.woff2" as="font" type="font/woff2" crossOrigin="" />
       </head>
       <body>
-        <Loader />
         {children}
       </body>
     </html>
