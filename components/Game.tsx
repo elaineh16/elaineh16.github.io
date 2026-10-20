@@ -225,7 +225,7 @@ export default function Game() {
         {found ? <span className="corner-count">{found}</span> : null}
       </button>
 
-      <main className="wrap">
+      <main className={"wrap" + (screen === "quick" ? " no-hotbar" : "")}>
         {screen === "home" ? (
           <Home go={go} splash={splash} spinning={spinning} onTitle={onTitle} sound={sound} />
         ) : (
@@ -291,28 +291,31 @@ export default function Game() {
         <p className="foot">Inspired by Minecraft · not affiliated with Mojang</p>
       </main>
 
-      <nav className="hotbar" aria-label="Quick access">
-        {HOTBAR.map((h) => {
-          const inner = (
-            <>
-              <span className="slot">
-                <PixelIcon name={h.icon} />
-                {h.action === "achievements" ? <span className="count">{found}</span> : null}
-              </span>
-              <span className="lbl">{h.label}</span>
-            </>
-          )
-          return h.href ? (
-            <a key={h.label} className="hot" href={h.href} target={h.href.startsWith("mailto:") ? undefined : "_blank"} rel="noreferrer" aria-label={h.label}>
-              {inner}
-            </a>
-          ) : (
-            <button key={h.label} type="button" className="hot" aria-label={`${h.label}: ${found} of ${ACHIEVEMENTS.length}`} onClick={() => setDialog("achievements")}>
-              {inner}
-            </button>
-          )
-        })}
-      </nav>
+      {/* Plain View has its own Résumé, LinkedIn, GitHub and email buttons, so the hotbar steps aside there. */}
+      {screen !== "quick" ? (
+        <nav className="hotbar" aria-label="Quick access">
+          {HOTBAR.map((h) => {
+            const inner = (
+              <>
+                <span className="slot">
+                  <PixelIcon name={h.icon} />
+                  {h.action === "achievements" ? <span className="count">{found}</span> : null}
+                </span>
+                <span className="lbl">{h.label}</span>
+              </>
+            )
+            return h.href ? (
+              <a key={h.label} className="hot" href={h.href} target={h.href.startsWith("mailto:") ? undefined : "_blank"} rel="noreferrer" aria-label={h.label}>
+                {inner}
+              </a>
+            ) : (
+              <button key={h.label} type="button" className="hot" aria-label={`${h.label}: ${found} of ${ACHIEVEMENTS.length}`} onClick={() => setDialog("achievements")}>
+                {inner}
+              </button>
+            )
+          })}
+        </nav>
+      ) : null}
 
       {dialog === "settings" ? (
         <Dialog title="Settings" onClose={() => setDialog(null)}>
