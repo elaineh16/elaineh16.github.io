@@ -4,7 +4,7 @@
 import type { IconName } from "@/lib/pixel-art"
 import { CATCHES } from "@/data/fishing"
 
-export type ScreenId = "home" | "about" | "inventory" | "arcade" | "fortune" | "fishing" | "fencing" | "multiplayer" | "quick"
+export type ScreenId = "home" | "about" | "inventory" | "arcade" | "fortune" | "fishing" | "fencing" | "multiplayer" | "quick" | "blog"
 
 export type Category = "swe" | "ai" | "research" | "hack"
 
@@ -297,9 +297,10 @@ export const SERVERS: Server[] = [
 ]
 
 /* ---------- Navigation ---------- */
-export const MENU: { label: string; screen: ScreenId }[] = [
+export const MENU: { label: string; screen: ScreenId; icon?: IconName }[] = [
   { label: "About Me", screen: "about" },
   { label: "Projects & Experience", screen: "inventory" },
+  { label: "Blog", screen: "blog", icon: "openbook" },
   { label: "Connect", screen: "multiplayer" },
   { label: "Mini-Games", screen: "arcade" },
 ]
@@ -320,6 +321,7 @@ export const SCREEN_TITLES: Record<Exclude<ScreenId, "home">, string> = {
   fencing: "Fencing Duel",
   multiplayer: "Connect",
   quick: "Plain View",
+  blog: "Blog",
 }
 
 export const SPLASHES = [
@@ -367,6 +369,7 @@ export const ACHIEVEMENTS: Achievement[] = [
   { id: "arcade", title: "Insert Coin", how: "Open Mini-Games", icon: "disc" },
   { id: "multiplayer", title: "Party Up", how: "Open Connect", icon: "sign" },
   { id: "quick", title: "Recruiter Mode", how: "Open Plain View", icon: "paper" },
+  { id: "blog", title: "Bookworm", how: "Open the Blog", icon: "openbook" },
   { id: "stories", title: "Story Time", how: "Read every About Me tab", icon: "book" },
   { id: "projects", title: "Window Shopping", how: "Open every project", icon: "redstone" },
   { id: "egg", title: "Easter Egg Hunter", how: "Click the title", icon: "medal" },

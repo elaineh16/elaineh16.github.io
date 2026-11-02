@@ -1,7 +1,7 @@
 "use client"
 
 import { MENU, PROFILE, type ScreenId } from "@/data/content"
-import { Logo, SalutingSprite } from "@/components/game/primitives"
+import { Logo, PixelIcon, SalutingSprite } from "@/components/game/primitives"
 
 export function Home({
   go,
@@ -38,11 +38,21 @@ export function Home({
         </figure>
 
         <nav className="menu" aria-label="Main menu">
-          {MENU.map((m) => (
+          {MENU.slice(0, 3).map((m) => (
             <button key={m.screen} type="button" className="mc-btn" onClick={() => go(m.screen)}>
+              {m.icon ? <PixelIcon name={m.icon} size={26} /> : null}
               {m.label}
             </button>
           ))}
+          {/* Like Minecraft's Options / Quit row: the last two share a line, so the menu stays four rows tall. */}
+          <div className="menu-pair">
+            {MENU.slice(3).map((m) => (
+              <button key={m.screen} type="button" className="mc-btn" onClick={() => go(m.screen)}>
+                {m.icon ? <PixelIcon name={m.icon} size={26} /> : null}
+                {m.label}
+              </button>
+            ))}
+          </div>
         </nav>
       </div>
     </section>

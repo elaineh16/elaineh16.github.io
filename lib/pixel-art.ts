@@ -2,7 +2,7 @@
 // Each map row is a string; each character is a colour key in its palette ('.' = transparent).
 
 export type IconName =
-  | "laptop" | "knight" | "redstone" | "disc" | "book" | "chart" | "epee" | "coffee" | "passport"
+  | "laptop" | "knight" | "redstone" | "disc" | "book" | "openbook" | "chart" | "epee" | "coffee" | "passport"
   | "medal" | "paper" | "mail" | "stone" | "sign" | "map" | "camera" | "cards"
   | "cod" | "salmon" | "matcha" | "banana" | "nametag" | "banner" | "chip" | "compass" | "stew" | "violin" | "boot" | "disc2" | "maple" | "goldepee" | "puffer" | "hat" | "ramen" | "git" | "heart" | "cookie" | "blackcoffee"
 
@@ -13,6 +13,7 @@ export const ICONS: Record<IconName, PixelMap> = {
   knight: [["..........", "...KK.....", "..KKKK....", ".KKWKKK...", ".KKKKKKK..", "....KKKK..", "...KKKK...", "..KKKKKK..", ".KKKKKKKK.", ".kkkkkkkk."], { K: "#2b2b33", W: "#e6e6e6", k: "#55555f" }],
   redstone: [["..........", "....R.....", "...RrR..R.", "..RRRRR.r.", ".R.RrRR...", "...RRRR.R.", "..R.rRR...", ".....R..R.", "..R.......", ".........."], { R: "#e02a2a", r: "#8f1010" }],
   disc: [["...DDDD...", ".DDDDDDDD.", ".DDLLLLDD.", "DDLLPPLLDD", "DDLPOOPLDD", "DDLPOOPLDD", "DDLLPPLLDD", ".DDLLLLDD.", ".DDDDDDDD.", "...DDDD..."], { D: "#1f1f26", L: "#3a3a46", P: "#E6A4B4", O: "#F5E9D4" }],
+  openbook: [["..........", ".PPP..PPP.", "PlllPPlllP", "PPPPpPPPPP", "PlllpPlllP", "PPPPpPPPPP", "PlllpPlllP", "PPPPpPPPPP", "BBBBbBBBBB", ".BBB..BBB."], { B: "#7a4a2a", b: "#5a3318", P: "#F5E9D4", p: "#d9c8a8", l: "#8b8b8b" }],
   book: [["..........", ".BBBBBBBB.", ".BbPPPPPB.", ".BbPPPPPB.", ".BbPllPPB.", ".BbPPPPPB.", ".BbPllPPB.", ".BbPPPPPB.", ".BBBBBBBB.", ".........."], { B: "#7a4a2a", b: "#5a3318", P: "#F5E9D4", l: "#8b8b8b" }],
   chart: [["..........", "........Y.", ".......YY.", "......Y...", "..Y..Y....", ".Y.YY.....", "Y.........", "GGGGGGGGGG", "G.G.G.G.G.", ".........."], { Y: "#f2c94c", G: "#4f7342" }],
   epee: [[".........S", "........S.", ".......S..", "......S...", ".....S....", "..ggS.....", "..gGg.....", ".H.gg.....", "H.........", ".........."], { S: "#e8edf3", G: "#b5862a", g: "#d6a531", H: "#4a2f1f" }],
