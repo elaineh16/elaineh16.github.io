@@ -235,8 +235,18 @@ export default function Game({ posts }: { posts: Post[] }) {
         <PixelIcon name="medal" size={28} />
         {found ? <span className="corner-count">{found}</span> : null}
       </button>
+      <button
+        type="button"
+        className="corner-btn blog"
+        onClick={() => go("blog")}
+        aria-label="Blog"
+        aria-current={screen === "blog" ? "page" : undefined}
+        data-t1="Blog"
+      >
+        <PixelIcon name="openbook" size={28} />
+      </button>
 
-      <main className={"wrap" + (screen === "quick" ? " no-hotbar" : "")}>
+      <main className={"wrap" + (screen === "home" ? "" : " sub") + (screen === "quick" ? " no-hotbar" : "")}>
         {screen === "home" ? (
           <Home go={go} splash={splash} spinning={spinning} onTitle={onTitle} sound={sound} />
         ) : (

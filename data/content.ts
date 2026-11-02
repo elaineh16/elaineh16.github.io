@@ -300,7 +300,6 @@ export const SERVERS: Server[] = [
 export const MENU: { label: string; screen: ScreenId; icon?: IconName }[] = [
   { label: "About Me", screen: "about" },
   { label: "Projects & Experience", screen: "inventory" },
-  { label: "Blog", screen: "blog", icon: "openbook" },
   { label: "Connect", screen: "multiplayer" },
   { label: "Mini-Games", screen: "arcade" },
 ]

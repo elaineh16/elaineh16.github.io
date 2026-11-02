@@ -112,7 +112,7 @@ dl.stats dt { color: #5a5a5a; } dl.stats dd { margin: 0; }
 .sh-resume { font-size: 14px; color: #f4f4f4; text-decoration: none; text-shadow: 2px 2px 0 #1f3a19; background: #3d7a33; border: 3px solid #111; box-shadow: inset 2px 2px 0 #7fc06a, inset -2px -2px 0 #24501d; padding: 4px 12px; white-space: nowrap; }
 .sh-resume:hover, .sh-resume:focus-visible { background: #4a8f3e; }
 .site-head :focus-visible { outline: 3px solid #fff6c2; outline-offset: 2px; }
-@media (max-width: 1260px) { .sh-nav { display: none; } }
+@media (max-width: 1180px) { .sh-nav { display: none; } }
 @media (max-width: 600px) {
   .wrap { padding-top: calc(72px + env(safe-area-inset-top, 0px)); }
   .site-head { gap: 10px; grid-template-columns: auto minmax(0, 1fr); }
@@ -299,8 +299,6 @@ dl.currently dt { color: var(--pink); } dl.currently dd { margin: 0; }
 .menu { flex: 0 1 420px; width: 420px; max-width: 100%; }
 .menu .mc-btn { justify-content: center; text-align: center; }
 .menu .mc-btn .sub { display: none; }
-.menu .mc-btn canvas { flex: none; margin-right: -2px; }
-.menu-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .player { position: absolute; right: calc(50% + 250px); bottom: -28px; }
 @media (max-width: 900px) {
   .stage { flex-direction: column; align-items: center; gap: 20px; }
@@ -676,7 +674,8 @@ strong, b { font-weight: 400; color: inherit; text-decoration: underline; text-d
 /* Shorter laptop screens: a slightly smaller About avatar so the page fits without scrolling. */
 @media (min-width: 761px) and (max-height: 860px) { .profile-card .salute-btn canvas { width: 100px !important; height: 160px !important; } }
 /* Keep the Back button clear of the fixed corner buttons on narrower screens. */
-@media (max-width: 1400px) { .sub-head { padding-right: 64px; } }
+/* Below 1400px the corner buttons (settings, weather, achievements, blog) would sit on the page, so keep a lane clear for them. */
+@media (max-width: 1400px) and (min-width: 601px) { .wrap.sub { padding-right: 88px; } }
 /* Long stories (like Épée) stay on one screen: slightly tighter lines and spacing. */
 .book-page.long { font-size: 14.5px; line-height: 1.55; padding-top: 20px; padding-bottom: 20px; }
 .book-page.long p { margin-bottom: 10px; }
@@ -685,6 +684,9 @@ strong, b { font-weight: 400; color: inherit; text-decoration: underline; text-d
 
 /* Achievements live in the right-hand column under settings and weather. */
 .corner-btn.ach { right: 16px; top: calc(136px + env(safe-area-inset-top, 0px)); display: grid; place-items: center; }
+/* Blog: an open book under the achievements. Lit while you are reading it. */
+.corner-btn.blog { right: 16px; top: calc(196px + env(safe-area-inset-top, 0px)); }
+.corner-btn.blog[aria-current="page"] { background: var(--hv-dark); box-shadow: inset 3px 3px 0 var(--hv-hi), inset -3px -3px 0 var(--hv-lo); }
 .corner-count { position: absolute; right: -6px; bottom: -6px; min-width: 20px; height: 20px; padding: 0 4px; display: grid; place-items: center; font-family: var(--f-term); font-size: 12px; color: #fff; background: var(--hv, #B31B1B); border: 2px solid #111; }
 
 /* Arcade: replay the old loading screen on request */
