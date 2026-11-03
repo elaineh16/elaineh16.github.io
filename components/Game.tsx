@@ -6,6 +6,8 @@ import { Background, Dialog, PixelIcon, Toast, Tooltip, ViewCount, Weather } fro
 import { Home } from "@/components/screens/Home"
 import { About, Arcade, Inventory, Multiplayer, QuickView } from "@/components/screens/Screens"
 import { SiteHeader } from "@/components/game/SiteHeader"
+import { Blog } from "@/components/screens/Blog"
+import type { Post } from "@/lib/blog"
 import { FortuneWheel } from "@/components/games/Fortune"
 import { Fishing } from "@/components/games/Fishing"
 import { Fencing } from "@/components/games/Fencing"
@@ -13,22 +15,29 @@ import { SEASON_LIST, WEATHER, currentSeason, type Season } from "@/lib/seasons"
 import { playClick, playJingle } from "@/lib/sound"
 import { load, save } from "@/lib/storage"
 
-const SCREENS: ScreenId[] = ["home", "about", "inventory", "arcade", "fortune", "fishing", "fencing", "multiplayer", "quick"]
+const SCREENS: ScreenId[] = ["home", "about", "inventory", "arcade", "fortune", "fishing", "fencing", "multiplayer", "quick", "blog"]
 /** Screens people read: achievements unlock silently here (no pop-up, no jingle) and show in the corner panel. */
-const QUIET: ScreenId[] = ["home", "about", "inventory", "multiplayer", "quick"]
+const QUIET: ScreenId[] = ["home", "about", "inventory", "multiplayer", "quick", "blog"]
 
 function screenFromHash(): ScreenId {
-  const raw = window.location.hash.replace("#", "")
+  const raw = window.location.hash.replace("#", "").split("/")[0]
   // Old links to the retired crafting game open the fortune wheel instead.
   const h = (raw === "crafting" ? "fortune" : raw) as ScreenId
   return SCREENS.includes(h) ? h : "home"
 }
 
+/** A blog post opens at #blog/<slug>. */
+function postFromHash(): string | null {
+  const [head, slug] = window.location.hash.replace("#", "").split("/")
+  return head === "blog" && slug ? decodeURIComponent(slug) : null
+}
+
 type Progress = { stories: string[]; projects: string[]; seasons: string[] }
 const EMPTY: Progress = { stories: [], projects: [], seasons: [] }
 
-export default function Game() {
+export default function Game({ posts }: { posts: Post[] }) {
   const [screen, setScreen] = useState<ScreenId>("home")
+  const [postSlug, setPostSlug] = useState<string | null>(null)
   const [season, setSeasonState] = useState<Season>("fall")
   const [weather, setWeather] = useState(false)
   const [sound, setSound] = useState(true)
@@ -55,9 +64,11 @@ export default function Game() {
     setProgress({ ...EMPTY, ...load<Progress>("ec.progress", EMPTY) })
     setSplash((cur) => pickSplash(cur))
     setScreen(screenFromHash())
+    setPostSlug(postFromHash())
     setLoaded(true)
     const onHash = () => {
       setScreen(screenFromHash())
+      setPostSlug(postFromHash())
       window.scrollTo(0, 0)
     }
     window.addEventListener("hashchange", onHash)
@@ -224,8 +235,18 @@ export default function Game() {
         <PixelIcon name="medal" size={28} />
         {found ? <span className="corner-count">{found}</span> : null}
       </button>
+      <button
+        type="button"
+        className="corner-btn blog"
+        onClick={() => go("blog")}
+        aria-label="Blog"
+        aria-current={screen === "blog" ? "page" : undefined}
+        data-t1="Blog"
+      >
+        <PixelIcon name="openbook" size={28} />
+      </button>
 
-      <main className={"wrap" + (screen === "quick" ? " no-hotbar" : "")}>
+      <main className={"wrap" + (screen === "home" ? "" : " sub") + (screen === "quick" ? " no-hotbar" : "")}>
         {screen === "home" ? (
           <Home go={go} splash={splash} spinning={spinning} onTitle={onTitle} sound={sound} />
         ) : (
@@ -238,7 +259,11 @@ export default function Game() {
                 <h1>{SCREEN_TITLES[screen]}</h1>
               </div>
               <div className="back-wrap">
-                {screen === "fortune" || screen === "fishing" || screen === "fencing" ? (
+                {screen === "blog" && postSlug ? (
+                  <button type="button" className="mc-btn small back-btn" onClick={() => go("blog")}>
+                    Back to Blog
+                  </button>
+                ) : screen === "fortune" || screen === "fishing" || screen === "fencing" ? (
                   <button type="button" className="mc-btn small back-btn" onClick={() => go("arcade")}>
                     Back to Mini-Games
                   </button>
@@ -285,6 +310,7 @@ export default function Game() {
             ) : null}
             {screen === "multiplayer" ? <Multiplayer /> : null}
             {screen === "quick" ? <QuickView /> : null}
+            {screen === "blog" ? <Blog posts={posts} slug={postSlug} open={(s) => (window.location.hash = s ? `blog/${encodeURIComponent(s)}` : "blog")} /> : null}
           </>
         )}
         <ViewCount />
