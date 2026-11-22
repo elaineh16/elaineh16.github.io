@@ -68,6 +68,7 @@ export const PROJECTS: Project[] = [
       "Navi, a voice assistant, talks through ideas, and an iMessage agent texts you the plan and answers questions about it.",
     ],
     stack: "Gemini API · Grok Voice API · Google Maps & Places · iMessage agent · Vercel",
+    result: "One planner behind web, voice and iMessage",
     link: "https://www.navidate.us/",
     github: "https://github.com/elaineh16/NaviDate",
   },
@@ -110,6 +111,24 @@ export const PROJECTS: Project[] = [
     result: "34.8% numerical Exact Match",
   },
   {
+    id: "combopt",
+    kind: "experience",
+    icon: "chart",
+    name: "AI for Combinatorial Optimization",
+    type: "Research · In progress",
+    period: "Aug 2026 – Present",
+    cats: ["ai", "research"],
+    role: "Undergraduate Researcher",
+    org: "Cornell Engineering Undergraduate Research",
+    desc: "Research at the meeting point of large language models and combinatorial optimization.",
+    bullets: [
+      "Applying LLM reasoning to open problems in antimatroid convexity and exploring structural conjectures.",
+      "Analyzing large-scale mixed-integer programming datasets to identify drivers of solver runtime variability.",
+    ],
+    stack: "LLMs · Mixed-integer programming · Data analysis",
+    result: "What drives MIP solver runtime variability?",
+  },
+  {
     id: "chess",
     kind: "experience",
     badge: "10,000+ positions benchmarked",
@@ -131,7 +150,7 @@ export const PROJECTS: Project[] = [
   {
     id: "bear",
     kind: "project",
-    badge: "BigRed//Hacks winner",
+    badge: "Best Use of Gemini + Best UI",
     icon: "disc",
     name: "Bear Escape",
     type: "Hackathon · Winner",
@@ -140,7 +159,7 @@ export const PROJECTS: Project[] = [
     desc: "An AI-powered multiplayer rhythm game with Gemini-generated beatmaps, OpenCV motion controls, and synchronized gameplay.",
     bullets: [],
     stack: "React · TypeScript · Python · Gemini API · OpenCV · SpaceTimeDB",
-    result: "BigRed//Hacks winner",
+    result: "Best Use of Gemini + Best UI, out of 200+ participants",
     github: "https://github.com/elaineh16/BigRedHack25",
   },
   {
@@ -158,7 +177,14 @@ export const PROJECTS: Project[] = [
   },
 ]
 
-export const EXPERIENCE_ORDER = ["finmd", "rag", "chess"]
+export const EXPERIENCE_ORDER = ["finmd", "rag", "combopt", "chess"]
+
+/** How the Projects & Experience page groups its cards, newest first within each group. */
+export const PROJECT_GROUPS: { label: string; ids: string[] }[] = [
+  { label: "Experience", ids: ["finmd", "rag"] },
+  { label: "Research", ids: ["combopt", "chess"] },
+  { label: "Projects", ids: ["navidate", "bear", "asset"] },
+]
 
 export const QUICK_PROJECTS = [
   ["AI Asset Generation Platform", "full-stack Stable Diffusion platform with task batching, caching, and async request handling (40% higher throughput)."],

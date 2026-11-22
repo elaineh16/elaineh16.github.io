@@ -251,6 +251,18 @@ dl.currently dt { color: var(--pink); } dl.currently dd { margin: 0; }
 .inv-list-main span { color: #4a4a4a; }
 .inv-list-date { font-family: var(--f-term); font-size: 13px; color: #5a4a44; white-space: nowrap; }
 @media (max-width: 520px) { .inv-list-date { display: none; } }
+/* Projects & Experience: grouped cards, each with its one-line result */
+.work-groups { display: flex; flex-direction: column; gap: 8px; }
+.work-group { margin: 0 0 4px; font-size: 12px; font-weight: 400; letter-spacing: .06em; text-transform: uppercase; color: #4a3f38; }
+.work-list button { padding: 6px 10px; }
+.work-list .inv-list-main { gap: 2px; line-height: 1.3; }
+.work-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0 10px; color: var(--ink) !important; }
+.work-top strong { text-decoration: none; }
+.inv-list-main .work-date { font-family: var(--f-term); font-size: 12px; color: #5a4a44; white-space: nowrap; }
+.inv-list-main .work-sub { color: #4a4a4a; }
+.inv-list-main .work-org { color: #4a4a4a; }
+.inv-list-main .work-result { color: var(--wine); font-weight: 700; }
+@media (max-height: 820px) and (min-width: 601px) { .work-list button { padding: 3px 10px; } .work-list .slot { width: 34px; height: 34px; } .work-groups { gap: 5px; } .work-group { margin-bottom: 2px; } .win:has(.work-groups) .inv-top { margin-bottom: 8px; } }
 
 /* ---- singleplayer story card ---- */
 .story { margin-top: 14px; padding: 16px 20px; box-shadow: none; }

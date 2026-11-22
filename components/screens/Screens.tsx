@@ -3,21 +3,20 @@
 import { useState } from "react"
 import {
   ARCADE,
-  CATEGORIES,
   EMAIL,
   EXPERIENCE_ORDER,
   GITHUB_URL,
   LINKEDIN_URL,
   PROFILE,
+  PROJECT_GROUPS,
   PROJECTS,
   RESUME_URL,
   SERVERS,
   SKILLS,
   STORIES,
-  type Category,
   type Project,
 } from "@/data/content"
-import { SalutingSprite, PixelIcon, Slot, StaticSlot, Todo } from "@/components/game/primitives"
+import { SalutingSprite, PixelIcon, StaticSlot, Todo } from "@/components/game/primitives"
 import { Gallery, TopTracks } from "@/components/screens/Extras"
 import { TravelMap } from "@/components/screens/TravelMap"
 
@@ -179,18 +178,15 @@ function ProjectDetail({ p }: { p: Project }) {
   )
 }
 
-// 2 rows of 9, so the grid never ends on a lone slot.
-const INVENTORY_SLOTS = 18
+/** Long org names shortened for the cards; the detail panel shows the full name. */
+const shortOrg = (org: string) => org.replace("Cornell Engineering Undergraduate Research", "Cornell")
 
 export function Inventory({ selected, onSelect }: { selected: string; onSelect: (id: string) => void }) {
   const [tab, setTab] = useState<"items" | "skills">("items")
-  const [view, setView] = useState<"grid" | "list">("grid")
-  const [filter, setFilter] = useState<Category | "all">("all")
   const p = projectById[selected] || PROJECTS[0]
-  const visible = (pr: Project) => filter === "all" || pr.cats.includes(filter)
   return (
     <div className="row">
-      <section className="win" aria-label="Inventory" style={{ flex: "1 1 440px", minWidth: 0, padding: "18px 20px 20px" }}>
+      <section className="win" aria-label="Projects and experience" style={{ flex: "1 1 440px", minWidth: 0, padding: "18px 20px 20px" }}>
         <div className="inv-top">
           <div className="tabs" role="tablist" aria-label="Inventory tabs">
             {(
@@ -204,73 +200,46 @@ export function Inventory({ selected, onSelect }: { selected: string; onSelect: 
               </button>
             ))}
           </div>
-          {tab === "items" ? (
-            <div className="tabs" aria-label="View">
-              {(["grid", "list"] as const).map((v) => (
-                <button key={v} type="button" aria-pressed={view === v} className={"tab small" + (view === v ? " on" : "")} onClick={() => setView(v)}>
-                  {v === "grid" ? "Grid" : "List"}
-                </button>
-              ))}
-            </div>
-          ) : null}
         </div>
 
         {tab === "items" ? (
-          <div className="stack-16">
-            <div className="tabs" aria-label="Filter by category">
-              {CATEGORIES.map(([id, label]) => (
-                <button key={id} type="button" aria-pressed={filter === id} className={"tab small" + (filter === id ? " on" : "")} onClick={() => setFilter(id)}>
-                  {label}
-                </button>
-              ))}
-            </div>
-
-            {view === "grid" ? (
-              <>
-                <div className="grid-slots">
-                  {PROJECTS.map((pr) => (
-                    <Slot
-                      key={pr.id}
-                      icon={pr.icon}
-                      label={pr.name}
-                      tip={{ t1: pr.name, t2: pr.badge ? `✦ ${pr.badge}` : pr.type, t3: pr.stack }}
-                      selected={selected === pr.id}
-                      dim={!visible(pr)}
-                      enchanted={!!pr.badge}
-                      onClick={() => onSelect(pr.id)}
-                    />
-                  ))}
-                  {Array.from({ length: Math.max(0, INVENTORY_SLOTS - PROJECTS.length) }, (_, i) => (
-                    <div key={i} className="slot locked" aria-hidden="true">
-                      ?
-                    </div>
-                  ))}
-                </div>
-                <p className="vt" style={{ margin: 0, fontSize: 14, color: "#4a4a4a" }}>
-                  Glowing items carry a badge. Locked slots unlock as new projects ship.
-                </p>
-              </>
-            ) : (
-              <ul className="inv-list">
-                {PROJECTS.filter(visible).map((pr) => (
-                  <li key={pr.id}>
-                    <button type="button" className={selected === pr.id ? "on" : ""} aria-pressed={selected === pr.id} onClick={() => onSelect(pr.id)}>
-                      <StaticSlot icon={pr.icon} size={28} enchanted={!!pr.badge} />
-                      <span className="inv-list-main">
-                        <strong>{pr.name}</strong>
-                        <span>
-                          {pr.org ? `${pr.org} · ` : ""}
-                          {pr.type}
-                        </span>
-                      </span>
-                      <span className="inv-list-date">
-                        <Todo text={pr.period} />
-                      </span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            )}
+          <div className="work-groups">
+            {PROJECT_GROUPS.map((g) => (
+              <section key={g.label} aria-label={g.label}>
+                <h3 className="work-group px">{g.label}</h3>
+                <ul className="inv-list work-list">
+                  {g.ids
+                    .map((id) => projectById[id])
+                    .filter(Boolean)
+                    .map((pr) => (
+                      <li key={pr.id}>
+                        <button
+                          type="button"
+                          className={selected === pr.id ? "on" : ""}
+                          aria-pressed={selected === pr.id}
+                          onClick={() => {
+                            onSelect(pr.id)
+                            // On phones the details sit below the list, so bring them into view.
+                            if (window.innerWidth < 900) requestAnimationFrame(() => document.querySelector(".project-card")?.scrollIntoView({ behavior: "smooth", block: "start" }))
+                          }}
+                        >
+                          <StaticSlot icon={pr.icon} size={28} enchanted={!!pr.badge} />
+                          <span className="inv-list-main">
+                            <span className="work-top">
+                              <strong>{pr.name}</strong>
+                              <span className="work-date">{pr.period || pr.type}</span>
+                            </span>
+                            <span className="work-sub">
+                              {pr.org ? <span className="work-org">{shortOrg(pr.org)} · </span> : null}
+                              {pr.result ? <span className="work-result">{pr.result}</span> : null}
+                            </span>
+                          </span>
+                        </button>
+                      </li>
+                    ))}
+                </ul>
+              </section>
+            ))}
           </div>
         ) : (
           <div className="stack-16">
@@ -420,10 +389,10 @@ export function QuickView() {
             {experience.map((p) => (
               <div key={p.id} className="q-item">
                 <div className="q-row">
-                  <strong>{p.org}</strong>
+                  <strong>{p.type.startsWith("Research") ? p.name : p.org}</strong>
                   <span className="q-date">{p.period}</span>
                 </div>
-                <div className="q-sub">{p.role}</div>
+                <div className="q-sub">{p.type.startsWith("Research") ? `${p.role}, ${shortOrg(p.org ?? "")}` : p.role}</div>
                 <ul>
                   {p.bullets.map((b) => (
                     <li key={b}>{b}</li>
