@@ -132,7 +132,7 @@ export default function Game({ posts }: { posts: Post[] }) {
     if (!loaded) return
     if (screen !== "home") achieve(screen)
     if (screen === "inventory") collect("projects", selected)
-    document.title = screen === "home" ? "Elaine Hong - Elaine's Craft" : `${SCREEN_TITLES[screen]} · Elaine Hong - Elaine's Craft`
+    document.title = screen === "home" ? "Elaine Hong" : `${SCREEN_TITLES[screen]} · Elaine Hong`
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [screen, loaded])
 
