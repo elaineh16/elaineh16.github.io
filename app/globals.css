@@ -262,6 +262,11 @@ dl.currently dt { color: var(--pink); } dl.currently dd { margin: 0; }
 .inv-list-main .work-sub { color: #4a4a4a; }
 .inv-list-main .work-org { color: #4a4a4a; }
 .inv-list-main .work-result { color: var(--wine); font-weight: 700; }
+/* Desktop: the page stays one screen tall; the list (and a long detail panel) scroll inside their panels */
+@media (min-width: 901px) and (min-height: 640px) {
+  .work-groups { max-height: calc(100vh - 410px); overflow-y: auto; overscroll-behavior: contain; padding-right: 6px; scrollbar-width: thin; scrollbar-color: #6a6a6a #b4b4b4; }
+  .win:has(.work-groups) + .project-card { max-height: calc(100vh - 320px); overflow-y: auto; scrollbar-width: thin; }
+}
 @media (max-height: 820px) and (min-width: 601px) { .work-list button { padding: 3px 10px; } .work-list .slot { width: 34px; height: 34px; } .work-groups { gap: 5px; } .work-group { margin-bottom: 2px; } .win:has(.work-groups) .inv-top { margin-bottom: 8px; } }
 
 /* ---- singleplayer story card ---- */
