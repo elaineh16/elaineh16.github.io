@@ -100,17 +100,33 @@ const GLYPHS: Record<string, string[]> = {
   " ": ["..", "..", "..", "..", "..", "..", "..", ".."],
 }
 
+/** Stone for the first word; every word after the first is Cornell-red brick ("ELAINE" stone, "HONG" red). */
+const LOGO_STONE = { face: [176, 160, 190, 148, 168, 204].map((v) => [v, v, v]), hi: [236, 236, 236], hi2: [214, 214, 214], lo: [104, 104, 108], lo2: [122, 122, 126], side: ["#55555b", "#43434a", "#35353b"] }
+const LOGO_RED = {
+  face: [[179, 27, 27], [160, 30, 30], [196, 48, 40], [150, 24, 24], [186, 40, 34], [205, 62, 50]],
+  hi: [235, 120, 110],
+  hi2: [215, 90, 80],
+  lo: [96, 16, 16],
+  lo2: [120, 20, 20],
+  side: ["#6e1212", "#580e0e", "#460a0a"],
+}
+
 export function drawBlockLogo(canvas: HTMLCanvasElement, word: string) {
   const H = 8
   const grid: boolean[][] = Array.from({ length: H }, () => [])
+  const wordAt: number[] = []
   let width = 0
+  let wordIndex = 0
   word.split("").forEach((ch, i) => {
     const glyph = GLYPHS[ch]
     if (!glyph) return
+    if (ch === " ") wordIndex++
     const w = glyph[0].length
     for (let y = 0; y < H; y++) for (let x = 0; x < w; x++) grid[y][width + x] = glyph[y].charAt(x) === "#"
+    for (let x = 0; x < w; x++) wordAt[width + x] = wordIndex
     width += w + (i < word.length - 1 ? 1 : 0)
   })
+  const palette = (x: number) => (wordAt[x] > 0 ? LOGO_RED : LOGO_STONE)
   const C = 5
   const pad = 4
   const ext = 10
@@ -130,26 +146,25 @@ export function drawBlockLogo(canvas: HTMLCanvasElement, word: string) {
   ctx.fillStyle = "#0e0e10"
   cells.forEach(([x, y]) => ctx.fillRect(pad + x * C - 2, pad + y * C - 2, C + 4, C + 4 + ext))
   cells.forEach(([x, y]) => {
+    const side = palette(x).side
     for (let k = 1; k <= ext; k++) {
-      ctx.fillStyle = k <= 3 ? "#55555b" : k <= 7 ? "#43434a" : "#35353b"
+      ctx.fillStyle = k <= 3 ? side[0] : k <= 7 ? side[1] : side[2]
       ctx.fillRect(pad + x * C, pad + y * C + k, C, C)
     }
   })
-  const stone = [176, 160, 190, 148, 168, 204]
   cells.forEach(([x, y]) => {
+    const pal = palette(x)
     const ox = pad + x * C
     const oy = pad + y * C
     const lift = 1.12 - (y / H) * 0.22
     for (let sy = 0; sy < C; sy++) {
       for (let sx = 0; sx < C; sx++) {
-        let v = stone[Math.floor(rnd() * stone.length)] * lift
-        let tint = 0
-        if (sy === 0 && !on(x, y - 1)) v = 236
-        else if (sx === 0 && !on(x - 1, y)) v = 214
-        else if (sy === C - 1 && !on(x, y + 1)) { v = 104; tint = 4 }
-        else if (sx === C - 1 && !on(x + 1, y)) { v = 122; tint = 4 }
-        const g = Math.min(255, v | 0)
-        ctx.fillStyle = `rgb(${g},${g},${Math.min(255, g + tint)})`
+        let c = pal.face[Math.floor(rnd() * pal.face.length)].map((v) => v * lift)
+        if (sy === 0 && !on(x, y - 1)) c = pal.hi
+        else if (sx === 0 && !on(x - 1, y)) c = pal.hi2
+        else if (sy === C - 1 && !on(x, y + 1)) c = pal.lo
+        else if (sx === C - 1 && !on(x + 1, y)) c = pal.lo2
+        ctx.fillStyle = `rgb(${c.map((v) => Math.min(255, v | 0)).join(",")})`
         ctx.fillRect(ox + sx, oy + sy, 1, 1)
       }
     }
