@@ -37,7 +37,12 @@ a { color: inherit; }
 
 .wrap { position: relative; z-index: 2; max-width: 1280px; min-height: 100vh; margin: 0 auto; padding-inline: 24px; padding-block: 56px 150px; display: flex; flex-direction: column; justify-content: center; gap: 32px; }
 @media (max-width: 600px) { .wrap { padding-inline: 16px; padding-block: 28px 140px; justify-content: flex-start; } }
-.wrap.no-hotbar { padding-bottom: 56px; }
+.wrap.no-hotbar { padding-bottom: 40px; }
+/* Pages start at the top, so every page title sits in the same place (no header above them any more).
+   The title screen stays centred, nudged up a little. */
+.wrap.sub { justify-content: flex-start; padding-top: clamp(24px, 5vh, 48px); }
+.wrap:not(.sub) { padding-top: 32px; padding-bottom: clamp(140px, 28vh, 320px); }
+@media (max-width: 600px) { .wrap.sub { padding-top: 24px; } .wrap:not(.sub) { padding-top: 28px; padding-bottom: 140px; } }
 
 .px { font-family: var(--f-pixel); }
 .vt { font-family: var(--f-term); }
@@ -75,7 +80,7 @@ a { color: inherit; }
 .head { padding-top: clamp(16px, 6vh, 64px); display: flex; flex-direction: column; align-items: center; text-align: center; }
 .title-wrap { position: relative; display: inline-block; }
 .title { display: block; border: 0; cursor: pointer; padding: 0; margin: 0; background: none; line-height: 0; }
-.title .logo { display: block; width: clamp(320px, 82vw, 1040px); height: auto; image-rendering: pixelated; filter: drop-shadow(0 8px 0 rgba(0,0,0,.35)); }
+.title .logo { display: block; width: clamp(320px, 56vw, 720px); height: auto; image-rendering: pixelated; filter: drop-shadow(0 8px 0 rgba(0,0,0,.35)); }
 .title:focus-visible { outline: 3px dashed #fff6c2; outline-offset: 6px; }
 .title.spin { animation: titlepop .32s ease-out; }
 @keyframes titlepop { 0% { transform: scale(1); } 45% { transform: scale(1.07); } 100% { transform: scale(1); } }
@@ -240,8 +245,8 @@ dl.currently dt { color: var(--pink); } dl.currently dd { margin: 0; }
 .inv-list-main .work-result { color: var(--wine); font-weight: 700; }
 /* Desktop: the page stays one screen tall; the list (and a long detail panel) scroll inside their panels */
 @media (min-width: 901px) and (min-height: 640px) {
-  .work-groups { max-height: calc(100vh - 330px); overflow-y: auto; overscroll-behavior: contain; padding-right: 8px; }
-  .win:has(.work-groups) + .project-card { max-height: calc(100vh - 240px); overflow-y: auto; overscroll-behavior: contain; }
+  .work-groups { max-height: calc(100vh - 290px); overflow-y: auto; overscroll-behavior: contain; padding-right: 8px; }
+  .win:has(.work-groups) + .project-card { max-height: calc(100vh - 200px); overflow-y: auto; overscroll-behavior: contain; }
   /* A stone scrollbar that is always visible (Macs otherwise hide it until you scroll) */
   .work-groups::-webkit-scrollbar, .win:has(.work-groups) + .project-card::-webkit-scrollbar { width: 12px; }
   .work-groups::-webkit-scrollbar-track, .win:has(.work-groups) + .project-card::-webkit-scrollbar-track { background: #8b8b8b; box-shadow: inset 2px 2px 0 #373737, inset -2px -2px 0 #fff; }
