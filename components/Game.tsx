@@ -5,7 +5,6 @@ import { ACHIEVEMENTS, ACHIEVEMENT_BY_ID, HOTBAR, PROJECTS, SCREEN_TITLES, SPLAS
 import { Background, Dialog, PixelIcon, Toast, Tooltip, ViewCount, Weather } from "@/components/game/primitives"
 import { Home } from "@/components/screens/Home"
 import { About, Arcade, Inventory, Multiplayer, QuickView } from "@/components/screens/Screens"
-import { SiteHeader } from "@/components/game/SiteHeader"
 import { Blog } from "@/components/screens/Blog"
 import type { Post } from "@/lib/blog"
 import { FortuneWheel } from "@/components/games/Fortune"
@@ -202,7 +201,6 @@ export default function Game({ posts }: { posts: Post[] }) {
       <Weather season={season} on={weather} />
       {toast && !QUIET.includes(screen) ? <Toast title={ACHIEVEMENT_BY_ID[toast].title} icon={ACHIEVEMENT_BY_ID[toast].icon} /> : null}
       <Tooltip />
-      <SiteHeader screen={screen} go={go} />
 
       <button
         type="button"
@@ -335,7 +333,13 @@ export default function Game({ posts }: { posts: Post[] }) {
                 {inner}
               </a>
             ) : (
-              <button key={h.label} type="button" className="hot" aria-label={`${h.label}: ${found} of ${ACHIEVEMENTS.length}`} onClick={() => setDialog("achievements")}>
+              <button
+                key={h.label}
+                type="button"
+                className="hot"
+                aria-label={h.action === "achievements" ? `${h.label}: ${found} of ${ACHIEVEMENTS.length}` : h.label}
+                onClick={() => (h.action === "quick" ? go("quick") : setDialog("achievements"))}
+              >
                 {inner}
               </button>
             )
