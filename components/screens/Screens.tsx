@@ -179,7 +179,7 @@ function ProjectDetail({ p }: { p: Project }) {
 }
 
 /** Long org names shortened for the cards; the detail panel shows the full name. */
-const shortOrg = (org: string) => org.replace("Cornell Engineering Undergraduate Research", "Cornell")
+const shortOrg = (org: string) => org.replace("Cornell Engineering Undergraduate Research", "Cornell").replace("Make A Play Foundation", "Make A Play")
 
 export function Inventory({ selected, onSelect }: { selected: string; onSelect: (id: string) => void }) {
   const [tab, setTab] = useState<"items" | "skills">("items")
