@@ -264,8 +264,8 @@ dl.currently dt { color: var(--pink); } dl.currently dd { margin: 0; }
 .inv-list-main .work-result { color: var(--wine); font-weight: 700; }
 /* Desktop: the page stays one screen tall; the list (and a long detail panel) scroll inside their panels */
 @media (min-width: 901px) and (min-height: 640px) {
-  .work-groups { max-height: calc(100vh - 410px); overflow-y: auto; overscroll-behavior: contain; padding-right: 8px; }
-  .win:has(.work-groups) + .project-card { max-height: calc(100vh - 320px); overflow-y: auto; overscroll-behavior: contain; }
+  .work-groups { max-height: calc(100vh - 330px); overflow-y: auto; overscroll-behavior: contain; padding-right: 8px; }
+  .win:has(.work-groups) + .project-card { max-height: calc(100vh - 240px); overflow-y: auto; overscroll-behavior: contain; }
   /* A stone scrollbar that is always visible (Macs otherwise hide it until you scroll) */
   .work-groups::-webkit-scrollbar, .win:has(.work-groups) + .project-card::-webkit-scrollbar { width: 12px; }
   .work-groups::-webkit-scrollbar-track, .win:has(.work-groups) + .project-card::-webkit-scrollbar-track { background: #8b8b8b; box-shadow: inset 2px 2px 0 #373737, inset -2px -2px 0 #fff; }

@@ -246,7 +246,7 @@ export default function Game({ posts }: { posts: Post[] }) {
         <PixelIcon name="openbook" size={28} />
       </button>
 
-      <main className={"wrap" + (screen === "home" ? "" : " sub") + (screen === "quick" ? " no-hotbar" : "")}>
+      <main className={"wrap" + (screen === "home" ? "" : " sub no-hotbar")}>
         {screen === "home" ? (
           <Home go={go} splash={splash} spinning={spinning} onTitle={onTitle} sound={sound} />
         ) : (
@@ -317,8 +317,8 @@ export default function Game({ posts }: { posts: Post[] }) {
         <p className="foot">Inspired by Minecraft · not affiliated with Mojang</p>
       </main>
 
-      {/* Plain View has its own Résumé, LinkedIn, GitHub and email buttons, so the hotbar steps aside there. */}
-      {screen !== "quick" ? (
+      {/* The hotbar lives on the title screen only, so it never covers a page's content. */}
+      {screen === "home" ? (
         <nav className="hotbar" aria-label="Quick access">
           {HOTBAR.map((h) => {
             const inner = (
