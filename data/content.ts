@@ -428,11 +428,12 @@ export const MENU: { label: string; screen: ScreenId; icon?: IconName }[] = [
   { label: "Mini-Games", screen: "arcade" },
 ]
 
-export const HOTBAR: { label: string; icon: IconName; href?: string; action?: "achievements" }[] = [
+export const HOTBAR: { label: string; icon: IconName; href?: string; action?: "achievements" | "quick" }[] = [
   { label: "Résumé", icon: "paper", href: RESUME_URL },
   { label: "GitHub", icon: "git", href: GITHUB_URL },
   { label: "LinkedIn", icon: "sign", href: LINKEDIN_URL },
   { label: "Email", icon: "mail", href: `mailto:${EMAIL}` },
+  { label: "Plain View", icon: "book", action: "quick" },
 ]
 
 export const SCREEN_TITLES: Record<Exclude<ScreenId, "home">, string> = {
