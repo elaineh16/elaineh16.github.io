@@ -58,16 +58,9 @@
 .backdrop::before { content: ""; position: absolute; inset: -3%; background: url("/backgrounds/campus.png") 70% 42% / cover no-repeat; image-rendering: pixelated; opacity: .13; animation: drift 60s ease-in-out infinite alternate; }
 .backdrop::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 0%, color-mix(in srgb, var(--bg) 35%, transparent) 100%); }
 .page[data-theme="dark"] .backdrop::before { opacity: .12; filter: brightness(.6) saturate(.8) hue-rotate(-10deg); }
-.page[data-theme="dark"] .stars { display: block; }
 @media (prefers-color-scheme: dark) {
   .page:not([data-theme="light"]) .backdrop::before { opacity: .12; filter: brightness(.6) saturate(.8) hue-rotate(-10deg); }
-  .page:not([data-theme="light"]) .stars { display: block; }
 }
-/* Pixel stars that only come out at night, twinkling slowly. */
-.stars { display: none; position: absolute; top: 0; left: 0; width: 3px; height: 3px; background: transparent; animation: twinkle 4s steps(2) infinite alternate;
-  box-shadow: 6vw 8vh #fff, 14vw 22vh #fde68a, 23vw 6vh #fff, 31vw 16vh #fff, 9vw 38vh #fff, 4vw 61vh #fde68a, 17vw 74vh #fff, 11vw 88vh #fff,
-    86vw 7vh #fff, 93vw 19vh #fde68a, 79vw 31vh #fff, 90vw 46vh #fff, 84vw 63vh #fff, 95vw 78vh #fde68a, 76vw 90vh #fff, 68vw 4vh #fff,
-    40vw 3vh #fff, 55vw 11vh #fde68a, 61vw 2vh #fff, 2vw 24vh #fff, 98vw 54vh #fff, 27vw 50vh #fff; opacity: .55; }
 .col { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; padding: 0 24px; }
 
 /* Hero: tilted polaroid + serif name + section tabs */
@@ -215,13 +208,12 @@
 @keyframes drift { from { transform: scale(1) translate(0, 0); } to { transform: scale(1.06) translate(-1.5%, -1%); } }
 @keyframes fall { to { transform: translate(-90px, 115vh) rotate(300deg); } }
 @keyframes slidein { from { translate: 0 160%; } to { translate: 0 0; } }
-@keyframes twinkle { from { opacity: .55; } to { opacity: .25; } }
 @keyframes blink { 50% { opacity: 0; } }
 @keyframes wave { 0%, 60%, 100% { transform: rotate(0); } 10%, 30% { transform: rotate(16deg); } 20% { transform: rotate(-8deg); } 40% { transform: rotate(-4deg); } 50% { transform: rotate(10deg); } }
 @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(34,165,90,.45); } 70%, 100% { box-shadow: 0 0 0 7px rgba(34,165,90,0); } }
 
 @media (prefers-reduced-motion: reduce) {
   .polaroid, .snap, .card, .slot { transition: none; }
-  .heroText > *, .polaroid, .wave, .cursor, .open i, .backdrop::before, .stars, .toast { animation: none; }
+  .heroText > *, .polaroid, .wave, .cursor, .open i, .backdrop::before, .toast { animation: none; }
   .petals { display: none; }
 }

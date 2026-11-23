@@ -91,9 +91,7 @@ export function SimpleSite() {
   return (
     <div className={s.page} data-simple-page="" suppressHydrationWarning>
       <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
-      <div className={s.backdrop} aria-hidden="true">
-        <span className={s.stars} />
-      </div>
+      <div className={s.backdrop} aria-hidden="true" />
       <Reveal />
       <Controls />
       <div className={s.col}>
