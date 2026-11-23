@@ -5,11 +5,11 @@ import "./globals.css"
 export const metadata: Metadata = {
   title: "Elaine Hong",
   description:
-    "Elaine Hong's portfolio as a Minecraft-inspired game: Cornell CS + Operations Research, software and ML engineering, research, and Division I fencing.",
+    "Elaine Hong: Cornell Computer Science + Operations Research, Class of 2028. Software engineering, ML evaluation, optimization research, and Division I fencing.",
   metadataBase: new URL("https://elaineh16.github.io"),
   openGraph: {
     title: "Elaine Hong",
-    description: "Explore Elaine Hong's projects, journey, and links in a Minecraft-inspired portfolio.",
+    description: "Cornell CS + ORIE '28. Software engineering, ML evaluation, optimization research and Division I fencing.",
     url: "https://elaineh16.github.io",
     type: "website",
   },

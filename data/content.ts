@@ -255,6 +255,7 @@ export const PROJECTS: Project[] = [
     ],
     stack: "Next.js · TypeScript · Canvas · Web Audio · GitHub Pages",
     result: "3 games, every sprite drawn from code",
+    link: "/play",
     github: "https://github.com/elaineh16/elaineh16.github.io",
   },
   {

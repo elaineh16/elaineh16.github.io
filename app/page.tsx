@@ -1,7 +1,6 @@
-import Game from "@/components/Game"
-import { loadPosts } from "@/lib/blog"
+import { SimpleSite } from "@/components/simple/SimpleSite"
 
 export default function Page() {
-  // Blog posts are read from content/blog/*.md when the site is built.
-  return <Game posts={loadPosts()} />
+  // The simple, one-page version of the site. The Minecraft version lives at /play.
+  return <SimpleSite />
 }
