@@ -17,6 +17,8 @@ import { load, save } from "@/lib/storage"
 const SCREENS: ScreenId[] = ["home", "about", "inventory", "arcade", "fortune", "fishing", "fencing", "multiplayer", "quick", "blog"]
 /** Screens people read: achievements unlock silently here (no pop-up, no jingle) and show in the corner panel. */
 const QUIET: ScreenId[] = ["home", "about", "inventory", "multiplayer", "quick", "blog"]
+/** ...except these, which are worth announcing wherever you are. */
+const LOUD = ["overworld"]
 
 function screenFromHash(): ScreenId {
   const raw = window.location.hash.replace("#", "").split("/")[0]
@@ -98,7 +100,7 @@ export default function Game({ posts }: { posts: Post[] }) {
       if (prev[id] || !ACHIEVEMENT_BY_ID[id]) return prev
       const next = { ...prev, [id]: true }
       save("ec.seen", next)
-      if (QUIET.includes(screenRef.current)) return next
+      if (QUIET.includes(screenRef.current) && !LOUD.includes(id)) return next
       setToast(id)
       if (soundRef.current) setTimeout(playJingle, 60)
       if (toastTimer.current) clearTimeout(toastTimer.current)
@@ -126,6 +128,11 @@ export default function Game({ posts }: { posts: Post[] }) {
     if (progress.projects.length >= PROJECTS.length) achieve("projects")
     if (progress.seasons.length >= SEASON_LIST.length) achieve("seasons")
   }, [progress, loaded, achieve])
+
+  // Everyone who reaches the game (usually from the simple homepage's link) has found the Minecraft version.
+  useEffect(() => {
+    if (loaded) achieve("overworld")
+  }, [loaded, achieve])
 
   useEffect(() => {
     if (!loaded) return
@@ -199,7 +206,7 @@ export default function Game({ posts }: { posts: Post[] }) {
       <div id="shade" />
       {screen !== "home" ? <div id="dim" /> : null}
       <Weather season={season} on={weather} />
-      {toast && !QUIET.includes(screen) ? <Toast title={ACHIEVEMENT_BY_ID[toast].title} icon={ACHIEVEMENT_BY_ID[toast].icon} /> : null}
+      {toast && (!QUIET.includes(screen) || LOUD.includes(toast)) ? <Toast title={ACHIEVEMENT_BY_ID[toast].title} icon={ACHIEVEMENT_BY_ID[toast].icon} /> : null}
       <Tooltip />
 
       <button

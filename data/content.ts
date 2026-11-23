@@ -437,6 +437,7 @@ export interface Achievement {
 }
 
 export const ACHIEVEMENTS: Achievement[] = [
+  { id: "overworld", title: "Into the Overworld", how: "Find the Minecraft version", icon: "compass" },
   { id: "about", title: "Getting to Know Elaine", how: "Open About Me", icon: "epee" },
   { id: "inventory", title: "The Builder", how: "Open Projects & Experience", icon: "laptop" },
   { id: "arcade", title: "Insert Coin", how: "Open Mini-Games", icon: "disc" },
