@@ -24,8 +24,20 @@
   font-size: 16px;
   line-height: 1.65;
 }
+/* Night mode: follows the visitor's system until they press the moon/sun button (data-theme on .page). */
+.page[data-theme="dark"] {
+  --bg: #141414;
+  --surface: #1c1c1d;
+  --text: #d4d4d8;
+  --strong: #fafafa;
+  --muted: #a1a1aa;
+  --line: #2c2c2e;
+  --accent: #e0574f;
+  --accent-ink: #141414;
+  color-scheme: dark;
+}
 @media (prefers-color-scheme: dark) {
-  .page {
+  .page:not([data-theme="light"]) {
     --bg: #141414;
     --surface: #1c1c1d;
     --text: #d4d4d8;
@@ -34,6 +46,7 @@
     --line: #2c2c2e;
     --accent: #e0574f;
     --accent-ink: #141414;
+    color-scheme: dark;
   }
 }
 .page a { color: var(--strong); text-decoration: underline; text-decoration-color: var(--line); text-decoration-thickness: 1.5px; text-underline-offset: 3px; transition: text-decoration-color .15s, color .15s; }
@@ -44,12 +57,22 @@
 .backdrop { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
 .backdrop::before { content: ""; position: absolute; inset: -3%; background: url("/backgrounds/campus.png") 70% 42% / cover no-repeat; image-rendering: pixelated; opacity: .13; animation: drift 60s ease-in-out infinite alternate; }
 .backdrop::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 0%, color-mix(in srgb, var(--bg) 35%, transparent) 100%); }
-@media (prefers-color-scheme: dark) { .backdrop::before { opacity: .12; } }
+.page[data-theme="dark"] .backdrop::before { opacity: .12; filter: brightness(.6) saturate(.8) hue-rotate(-10deg); }
+.page[data-theme="dark"] .stars { display: block; }
+@media (prefers-color-scheme: dark) {
+  .page:not([data-theme="light"]) .backdrop::before { opacity: .12; filter: brightness(.6) saturate(.8) hue-rotate(-10deg); }
+  .page:not([data-theme="light"]) .stars { display: block; }
+}
+/* Pixel stars that only come out at night, twinkling slowly. */
+.stars { display: none; position: absolute; top: 0; left: 0; width: 3px; height: 3px; background: transparent; animation: twinkle 4s steps(2) infinite alternate;
+  box-shadow: 6vw 8vh #fff, 14vw 22vh #fde68a, 23vw 6vh #fff, 31vw 16vh #fff, 9vw 38vh #fff, 4vw 61vh #fde68a, 17vw 74vh #fff, 11vw 88vh #fff,
+    86vw 7vh #fff, 93vw 19vh #fde68a, 79vw 31vh #fff, 90vw 46vh #fff, 84vw 63vh #fff, 95vw 78vh #fde68a, 76vw 90vh #fff, 68vw 4vh #fff,
+    40vw 3vh #fff, 55vw 11vh #fde68a, 61vw 2vh #fff, 2vw 24vh #fff, 98vw 54vh #fff, 27vw 50vh #fff; opacity: .55; }
 .col { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; padding: 0 24px; }
 
 /* Hero: tilted polaroid + serif name + section tabs */
 .hero { display: flex; align-items: center; gap: 36px; padding: 88px 0 36px; border-bottom: 1px solid var(--line); }
-.polaroid { flex: none; margin: 0; width: 168px; padding: 8px 8px 8px; background: #fff; border-radius: 3px; box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 8px 24px rgba(0,0,0,.09); rotate: -4deg; transition: rotate .25s; }
+.polaroid { flex: none; margin: 0; width: 168px; padding: 8px 8px 22px; background: #fff; border-radius: 3px; box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 8px 24px rgba(0,0,0,.09); rotate: -4deg; transition: rotate .25s; }
 .polaroid:hover { rotate: 0deg; scale: 1.03; }
 .polaroid figcaption { margin-top: 6px; font-size: 11px; line-height: 1.2; color: #71717a; text-align: center; }
 .polaroid img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; }
@@ -82,13 +105,22 @@
 .sub { display: block; color: var(--muted); font-size: 15px; }
 .chip { white-space: nowrap; font-weight: 600; color: var(--strong); }
 .chip i { display: inline-block; width: 11px; height: 11px; margin-right: 5px; border-radius: 2px; vertical-align: -1px; }
-.links { display: flex; flex-wrap: wrap; gap: 6px 18px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 15px; }
+/* Links as a Minecraft hotbar. */
+.hotbar { display: inline-flex; flex-wrap: wrap; gap: 0; margin-top: 6px; padding: 3px; background: #c6c6c6; border: 2px solid #111; box-shadow: inset 2px 2px 0 #fff, inset -2px -2px 0 #555; }
+.page .hotbar a { position: relative; display: block; text-decoration: none; }
+.hotbar .slot { width: 52px; height: 52px; }
+.page .hotbar a:hover .slot, .page .hotbar a:focus-visible .slot { background: #a6a6a6; transform: translateY(-3px); }
+.page .hotbar a:focus-visible { outline: 3px solid var(--accent); outline-offset: 1px; }
+.hotbar a span:last-child { position: absolute; left: 50%; top: calc(100% + 8px); translate: -50% -4px; padding: 4px 9px; white-space: nowrap; font-family: "Monocraft", ui-monospace, monospace; font-size: 13px; color: #fff; background: #100010f0; border: 2px solid #2a0a5e; border-radius: 3px; opacity: 0; pointer-events: none; transition: opacity .15s, translate .15s; z-index: 5; }
+.page .hotbar a:hover span:last-child, .page .hotbar a:focus-visible span:last-child { opacity: 1; translate: -50% 0; }
 
 /* Experience */
 .jobs { list-style: none; margin: 0; padding: 0; display: grid; gap: 26px; }
 .job { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 16px; }
-.badge { width: 44px; height: 44px; border-radius: 10px; display: grid; place-items: center; font-family: "Monocraft", ui-monospace, monospace; font-size: 19px; transition: transform .2s; }
-.job:hover .badge { transform: translateY(-2px) rotate(-6deg); }
+/* Minecraft inventory slot: grey square with a dark top-left and light bottom-right bevel. */
+.slot { flex: none; width: 44px; height: 44px; display: grid; place-items: center; background: #8b8b8b; box-shadow: inset 3px 3px 0 #373737, inset -3px -3px 0 #fff; transition: transform .2s, background .15s; }
+.slot canvas { display: block; image-rendering: pixelated; }
+.job:hover .slot, .card:hover .slot { transform: translateY(-2px) rotate(-6deg); background: #a6a6a6; }
 .job h3, .card h3 { margin: 0; font-size: 17px; font-weight: 500; color: var(--strong); }
 .role { margin: 1px 0 0; color: var(--muted); font-size: 15px; }
 .what { margin: 6px 0 0; font-size: 15px; }
@@ -98,21 +130,30 @@
 .cards { display: grid; gap: 14px; }
 .card { background: color-mix(in srgb, var(--surface) 92%, transparent); border: 1px solid var(--line); border-radius: 14px; padding: 18px 22px; box-shadow: 0 1px 2px rgba(0,0,0,.03); transition: border-color .15s, translate .15s; }
 .card:hover { border-color: color-mix(in srgb, var(--accent) 35%, var(--line)); translate: 0 -1px; }
-.status { margin: 0 0 6px; font-family: "Monocraft", ui-monospace, monospace; font-size: 11.5px; color: var(--muted); }
+.cardHead { display: flex; align-items: center; gap: 14px; }
+.cardHead .slot { width: 38px; height: 38px; }
+.status { margin: 0 0 2px; font-family: "Monocraft", ui-monospace, monospace; font-size: 11.5px; color: var(--muted); }
 .cardFoot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 16px; margin-top: 12px; }
 .tags { font-size: 12.5px; color: var(--muted); }
 .cardLinks { display: flex; gap: 14px; font-size: 14px; }
 
 /* Life: polaroid strip */
-.photos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; margin: 26px 0 8px; }
+.photos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin: 26px 0 8px; }
 .snap { margin: 0; padding: 7px 7px 10px; background: #fff; border-radius: 3px; box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 6px 18px rgba(0,0,0,.08); transition: rotate .25s, translate .25s; }
 .snap:hover { rotate: 0deg !important; translate: 0 -3px; }
 .snap img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
-.page .snap a { text-decoration: none; }
+.snap button { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
+.snap button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 .snap figcaption { margin-top: 6px; font-size: 11.5px; line-height: 1.3; color: #52525b; }
 
 /* Footer */
-.foot { margin-top: 48px; padding: 36px 0 48px; border-top: 1px solid var(--line); }
+/* A strip of grass block above the footer. */
+.grass { height: 18px; margin-top: 56px; background:
+  linear-gradient(to bottom, transparent 0 7px, #000 7px 8px, transparent 8px),
+  repeating-linear-gradient(90deg, #5d9b3a 0 8px, #6fb043 8px 14px, #4f8a34 14px 20px, #7cbd4f 20px 26px) top / 100% 6px no-repeat,
+  repeating-linear-gradient(90deg, #7a5236 0 10px, #8b5f3f 10px 16px, #5e3e28 16px 22px, #94663f 22px 30px) bottom / 100% 10px no-repeat;
+  box-shadow: 0 6px 0 -2px #4f8a34 inset; image-rendering: pixelated; }
+.foot { padding: 32px 0 48px; }
 .foot p { margin: 0 0 6px; }
 .footBig { font-family: "Monocraft", ui-monospace, monospace; font-size: 24px; color: var(--strong); }
 .ctas { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0 28px !important; }
@@ -128,11 +169,35 @@
   .backdrop::before { background-position: 72% 40%; }
 }
 @media (max-width: 600px) {
+  .controls { top: 14px; right: 12px; }
+  .hotbar .slot { width: 46px; height: 46px; }
   .hero { flex-direction: column; align-items: flex-start; gap: 26px; padding: 48px 0 28px; }
   .polaroid { width: 140px; }
-  .photos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .photos { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .toast { left: 12px; right: 12px; bottom: 12px; }
   .section h2, .footBig { font-size: 21px; }
 }
+/* XP bar along the top that fills as you scroll. */
+.xp { position: fixed; top: 0; left: 0; right: 0; z-index: 30; height: 7px; background: #1b1b1b; border-bottom: 1px solid #000; }
+.xpFill { height: 100%; background: repeating-linear-gradient(90deg, #80ff20 0 calc(5.55% - 2px), #1b1b1b calc(5.55% - 2px) 5.55%); background-size: 100vw 100%; box-shadow: inset 0 2px 0 #c8ff86, inset 0 -2px 0 #3d9a10; transition: width .12s linear; }
+
+/* Day/night and petal buttons: small stone buttons in the corner. */
+.controls { position: fixed; top: 18px; right: 18px; z-index: 31; display: flex; gap: 8px; }
+.mcBtn { width: 40px; height: 40px; display: grid; place-items: center; padding: 0; cursor: pointer; background: #8b8b8b; border: 2px solid #111; box-shadow: inset 2px 2px 0 #c6c6c6, inset -2px -2px 0 #555; }
+.mcBtn:hover { background: #9a9a9a; }
+.mcBtn[data-on] { background: #6e6e6e; box-shadow: inset 2px 2px 0 #3a3a3a, inset -2px -2px 0 #9a9a9a; }
+.mcBtn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+/* Falling pixel petals. */
+.petals { position: fixed; inset: 0; z-index: 2; pointer-events: none; overflow: hidden; }
+.petals span { position: absolute; top: -24px; width: 10px; height: 8px; background: #e6a4b4; box-shadow: 4px 4px 0 #f7d3dc; animation: fall linear infinite; }
+
+/* "Advancement Made!" welcome toast. */
+.toast { position: fixed; bottom: 20px; right: 20px; z-index: 40; display: flex; align-items: center; gap: 12px; padding: 8px 16px 8px 8px; background: #212121; border: 3px solid #0c0b10; box-shadow: inset 0 0 0 3px #555; max-width: calc(100vw - 32px); animation: slidein .4s steps(5) both; }
+.toast .slot { width: 44px; height: 44px; }
+.toastTop { display: block; font-family: "Monocraft", ui-monospace, monospace; font-size: 14px; color: #ffff55; }
+.toastTitle { display: block; font-family: "Monocraft", ui-monospace, monospace; font-size: 15px; color: #fff; }
+
 /* Motion: the hero settles in on load, and later blocks fade up as they scroll into view (see Reveal.tsx). */
 .heroText > * { animation: rise .7s cubic-bezier(.2,.7,.2,1) both; }
 .polaroid { animation: drop .9s cubic-bezier(.2,.8,.25,1.2) both; }
@@ -148,11 +213,15 @@
 @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 @keyframes drop { from { opacity: 0; transform: translateY(-18px) rotate(8deg); } to { opacity: 1; transform: none; } }
 @keyframes drift { from { transform: scale(1) translate(0, 0); } to { transform: scale(1.06) translate(-1.5%, -1%); } }
+@keyframes fall { to { transform: translate(-90px, 115vh) rotate(300deg); } }
+@keyframes slidein { from { translate: 0 160%; } to { translate: 0 0; } }
+@keyframes twinkle { from { opacity: .55; } to { opacity: .25; } }
 @keyframes blink { 50% { opacity: 0; } }
 @keyframes wave { 0%, 60%, 100% { transform: rotate(0); } 10%, 30% { transform: rotate(16deg); } 20% { transform: rotate(-8deg); } 40% { transform: rotate(-4deg); } 50% { transform: rotate(10deg); } }
 @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(34,165,90,.45); } 70%, 100% { box-shadow: 0 0 0 7px rgba(34,165,90,0); } }
 
 @media (prefers-reduced-motion: reduce) {
-  .polaroid, .snap, .card, .badge { transition: none; }
-  .heroText > *, .polaroid, .wave, .cursor, .open i, .backdrop::before { animation: none; }
+  .polaroid, .snap, .card, .slot { transition: none; }
+  .heroText > *, .polaroid, .wave, .cursor, .open i, .backdrop::before, .stars, .toast { animation: none; }
+  .petals { display: none; }
 }

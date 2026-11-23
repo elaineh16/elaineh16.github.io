@@ -191,23 +191,6 @@ export const PROJECTS: Project[] = [
     github: "https://github.com/elaineh16/BigRedHack25",
   },
   {
-    id: "prosperity",
-    kind: "project",
-    badge: "Top 1% of 18,803 teams",
-    icon: "chip",
-    name: "IMC Prosperity 4",
-    type: "Trading competition",
-    period: "",
-    cats: ["research"],
-    desc: "IMC's global algorithmic trading competition, played on simulated order books across several products.",
-    bullets: [
-      "Analyzed simulated order-book data in Pandas to build and backtest market-making, statistical-arbitrage, and pairs-trading strategies.",
-      "Priced options on simulated underlyings and traded deviations between market prices and estimated fair value.",
-    ],
-    stack: "Python · Pandas · NumPy",
-    result: "Top 1% of 18,803 teams worldwide",
-  },
-  {
     id: "trading",
     kind: "project",
     icon: "chart",
@@ -222,41 +205,6 @@ export const PROJECTS: Project[] = [
     ],
     stack: "Python · Redis · WebSockets",
     result: "Live signals over WebSockets",
-  },
-  {
-    id: "wardrobe",
-    kind: "project",
-    icon: "hat",
-    name: "TheWardrobeDB",
-    type: "Full-stack build · Club tool",
-    period: "",
-    cats: ["swe"],
-    desc: "A rental system for Cornell's Wardrobe club that replaced several manual Google Sheets with one live platform.",
-    bullets: [
-      "Students browse the catalog by category, size, color and brand, and request rentals for specific dates.",
-      "Staff approve requests, log returns and manage inventory from a dashboard; availability updates as items go out and come back.",
-    ],
-    stack: "FastAPI · SQLAlchemy · Next.js · TypeScript · Tailwind",
-    result: "Replaced the club's manual spreadsheets",
-    github: "https://github.com/elaineh16/TheWardrobeDB",
-  },
-  {
-    id: "site",
-    kind: "project",
-    icon: "stone",
-    name: "ELAINECRAFT (this website)",
-    type: "Side project · Ongoing",
-    period: "",
-    cats: ["swe"],
-    desc: "This portfolio, built as a Minecraft-style game with no game engine.",
-    bullets: [
-      "Every sprite and icon is drawn to a canvas from code, and every sound is synthesized with the Web Audio API.",
-      "Three mini-games (Gone Fishing, Fencing Duel, Fortune Cookie Wheel) with weighted odds, collections and achievements.",
-    ],
-    stack: "Next.js · TypeScript · Canvas · Web Audio · GitHub Pages",
-    result: "3 games, every sprite drawn from code",
-    link: "/play",
-    github: "https://github.com/elaineh16/elaineh16.github.io",
   },
   {
     id: "asset",
@@ -282,7 +230,7 @@ export const EXPERIENCE_ORDER = ["finmd", "rag", "makeaplay", "combopt", "chess"
 export const PROJECT_GROUPS: { label: string; ids: string[] }[] = [
   { label: "Experience", ids: ["finmd", "rag", "makeaplay"] },
   { label: "Research", ids: ["combopt", "chess"] },
-  { label: "Projects", ids: ["prosperity", "trading", "navidate", "bear", "asset", "wardrobe", "site"] },
+  { label: "Projects", ids: ["trading", "navidate", "bear", "asset"] },
 ]
 
 export const QUICK_PROJECTS = [
@@ -489,6 +437,7 @@ export interface Achievement {
 }
 
 export const ACHIEVEMENTS: Achievement[] = [
+  { id: "overworld", title: "Into the Overworld", how: "Find the Minecraft version", icon: "compass" },
   { id: "about", title: "Getting to Know Elaine", how: "Open About Me", icon: "epee" },
   { id: "inventory", title: "The Builder", how: "Open Projects & Experience", icon: "laptop" },
   { id: "arcade", title: "Insert Coin", how: "Open Mini-Games", icon: "disc" },
