@@ -209,6 +209,14 @@ export default function Game({ posts }: { posts: Post[] }) {
       {toast && (!QUIET.includes(screen) || LOUD.includes(toast)) ? <Toast title={ACHIEVEMENT_BY_ID[toast].title} icon={ACHIEVEMENT_BY_ID[toast].icon} /> : null}
       <Tooltip />
 
+      {/* Way back to the regular (simple) homepage. Title screen only, like the hotbar, so it never covers a page's heading;
+          every other screen has a Back button to the title screen. */}
+      {screen === "home" ? (
+        <a className="back-site" href="/" data-t1="Back to the regular site">
+          <span aria-hidden="true">←</span> Regular site
+        </a>
+      ) : null}
+
       <button
         type="button"
         className="corner-btn wx"
@@ -336,7 +344,7 @@ export default function Game({ posts }: { posts: Post[] }) {
               </>
             )
             return h.href ? (
-              <a key={h.label} className="hot" href={h.href} target={h.href.startsWith("mailto:") ? undefined : "_blank"} rel="noreferrer" aria-label={h.label}>
+              <a key={h.label} className="hot" href={h.href} target={h.href === "/" || h.href.startsWith("mailto:") ? undefined : "_blank"} rel="noreferrer" aria-label={h.label}>
                 {inner}
               </a>
             ) : (
