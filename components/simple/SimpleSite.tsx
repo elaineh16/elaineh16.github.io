@@ -1,7 +1,6 @@
 // The simple version of the site: one quiet, readable page, rendered at build time so all the text is in the HTML.
 // It reads the same data as the Minecraft version (data/content.ts), so the two never drift apart.
 import { EMAIL, GITHUB_URL, LINKEDIN_URL, PHOTOS, PROJECT_GROUPS, PROJECTS, RESUME_URL, type Project } from "@/data/content"
-import { PixelField } from "./PixelField"
 import { Reveal } from "./Reveal"
 import s from "./simple.module.css"
 
@@ -79,7 +78,7 @@ function Card({ p }: { p: Project }) {
 export function SimpleSite() {
   return (
     <div className={s.page}>
-      <PixelField />
+      <div className={s.backdrop} aria-hidden="true" />
       <Reveal />
       <div className={s.col}>
         <header className={s.hero} id="top">
