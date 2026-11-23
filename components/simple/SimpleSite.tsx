@@ -1,68 +1,76 @@
-// The simple version of the site: one readable page, rendered at build time so all the text is in the HTML.
+// The simple version of the site: one quiet, readable page, rendered at build time so all the text is in the HTML.
 // It reads the same data as the Minecraft version (data/content.ts), so the two never drift apart.
-import { EMAIL, GITHUB_URL, LINKEDIN_URL, PROFILE, PROJECT_GROUPS, PROJECTS, RESUME_URL, SKILLS, type Project } from "@/data/content"
-import { Sprite } from "@/components/game/primitives"
+import { EMAIL, GITHUB_URL, LINKEDIN_URL, PHOTOS, PROJECT_GROUPS, PROJECTS, RESUME_URL, type Project } from "@/data/content"
+import { PixelField } from "./PixelField"
 import s from "./simple.module.css"
+
+const CAL_URL = "https://calendly.com/eh698-cornell/30min"
 
 const byId = Object.fromEntries(PROJECTS.map((p) => [p.id, p])) as Record<string, Project>
 const group = (label: string) => (PROJECT_GROUPS.find((g) => g.label === label)?.ids ?? []).map((id) => byId[id]).filter(Boolean)
 
-function Links({ p }: { p: Project }) {
-  if (!p.link && !p.github) return null
+// Small coloured badges stand in for company logos.
+const BADGE: Record<string, { mark: string; bg: string; fg: string }> = {
+  finmd: { mark: "F", bg: "#e8f0ff", fg: "#2457c5" },
+  rag: { mark: "A", bg: "#efe9ff", fg: "#5b3cc4" },
+  makeaplay: { mark: "M", bg: "#fff1e0", fg: "#b45309" },
+  combopt: { mark: "C", bg: "#fbe9e9", fg: "#b31b1b" },
+  chess: { mark: "C", bg: "#fbe9e9", fg: "#b31b1b" },
+}
+const ORG: Record<string, string> = { combopt: "Cornell University", chess: "Cornell University" }
+const NAME: Record<string, string> = { site: "This website, the Minecraft edition" }
+
+const status = (p: Project) => p.type.toLowerCase().replace("side project · ", "").replace("full-stack build · ", "")
+const tags = (p: Project) => p.stack.split(" · ").slice(0, 4).join(" · ")
+
+function Badge({ id }: { id: string }) {
+  const b = BADGE[id] ?? { mark: "•", bg: "#eee", fg: "#555" }
   return (
-    <span className={s.links}>
-      {p.link ? (
-        <a href={p.link} target="_blank" rel="noreferrer">
-          Live ↗
-        </a>
-      ) : null}
-      {p.github ? (
-        <a href={p.github} target="_blank" rel="noreferrer">
-          GitHub ↗
-        </a>
-      ) : null}
+    <span className={s.badge} style={{ background: b.bg, color: b.fg }} aria-hidden="true">
+      {b.mark}
     </span>
   )
 }
 
-function Entry({ p }: { p: Project }) {
+function Job({ p }: { p: Project }) {
   const research = p.type.startsWith("Research")
   return (
-    <article className={s.entry}>
-      <div className={s.entryHead}>
-        <h3>
-          {research ? p.name : (p.org ?? p.name)}
-          {!research && p.org ? <span className={s.muted}> · {p.role}</span> : null}
-        </h3>
-        <span className={s.date}>{p.period}</span>
+    <li className={s.job}>
+      <Badge id={p.id} />
+      <div>
+        <h3>{research ? p.name : p.org}</h3>
+        <p className={s.role}>
+          {research ? `${p.role}, ${ORG[p.id] ?? p.org}` : p.role?.replace(" (remote)", "")}, {p.period}
+        </p>
+        <p className={s.what}>{p.bullets[0] ?? p.desc}</p>
+        {p.result ? <p className={s.win}>↳ {p.result}</p> : null}
       </div>
-      {research ? <p className={s.sub}>{p.role}{p.org ? `, ${p.org.replace("Cornell Engineering Undergraduate Research", "Cornell")}` : ""}</p> : p.org && p.name !== p.org ? <p className={s.sub}>{p.name}</p> : null}
-      <ul>
-        {(p.bullets.length ? p.bullets : [p.desc]).map((b) => (
-          <li key={b}>{b}</li>
-        ))}
-      </ul>
-      <p className={s.stack}>
-        {p.stack}
-        <Links p={p} />
-      </p>
-    </article>
+    </li>
   )
 }
 
 function Card({ p }: { p: Project }) {
   return (
     <article className={s.card}>
-      <div className={s.cardHead}>
-        <h3>{p.name}</h3>
-        <span className={s.date}>{p.period || p.type}</span>
+      <p className={s.status}>{status(p)}</p>
+      <h3>{NAME[p.id] ?? p.name}</h3>
+      <p className={s.what}>{p.desc}</p>
+      {p.result ? <p className={s.win}>↳ {p.result}</p> : null}
+      <div className={s.cardFoot}>
+        <span className={s.tags}>{tags(p)}</span>
+        <span className={s.cardLinks}>
+          {p.link ? (
+            <a href={p.link} target={p.link.startsWith("/") ? undefined : "_blank"} rel="noreferrer">
+              {p.link.startsWith("/") ? "play" : "live"} ↗
+            </a>
+          ) : null}
+          {p.github ? (
+            <a href={p.github} target="_blank" rel="noreferrer">
+              github ↗
+            </a>
+          ) : null}
+        </span>
       </div>
-      {p.result ? <p className={s.result}>{p.result}</p> : null}
-      <p>{p.desc}</p>
-      <p className={s.stack}>
-        {p.stack}
-        <Links p={p} />
-      </p>
     </article>
   )
 }
@@ -70,108 +78,143 @@ function Card({ p }: { p: Project }) {
 export function SimpleSite() {
   return (
     <div className={s.page}>
-      <header className={s.top}>
-        <a href="#" className={s.brand}>
-          Elaine Hong
-        </a>
-        <nav aria-label="Sections">
-          <a href="#about">About</a>
-          <a href="#experience">Experience</a>
-          <a href="#projects">Projects</a>
-          <a href="#contact">Contact</a>
-          <a className={s.btn} href={RESUME_URL} target="_blank" rel="noreferrer">
-            Résumé
-          </a>
-        </nav>
-      </header>
-
-      <main className={s.main}>
-        <section className={s.hero}>
-          <div className={s.avatar} aria-hidden="true">
-            <Sprite scale={5} />
-          </div>
+      <PixelField />
+      <div className={s.col}>
+        <header className={s.hero} id="top">
+          <figure className={s.polaroid}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/photos/elaine.jpg" alt="Elaine Hong" width={280} height={283} />
+          </figure>
           <div>
-            <h1 className={s.name}>Elaine Hong</h1>
-            <p className={s.lead}>Computer Science + Operations Research at Cornell · Class of 2028</p>
-            <p className={s.tagline}>
-              I build software, evaluate ML systems, and work on optimization research. I also fence épée for Cornell&apos;s NCAA Division I team.
-            </p>
-            <div className={s.ctas}>
-              <a className={s.btn} href={RESUME_URL} target="_blank" rel="noreferrer">
-                Résumé
+            <h1 className={s.name}>elaine hong</h1>
+            <p className={s.where}>cs + operations research @ cornell &apos;28 · toronto → ithaca</p>
+            <nav className={s.nav} aria-label="Sections">
+              <a href="#about">about</a>
+              <a href="#experience">experience</a>
+              <a href="#projects">projects</a>
+              <a href="#life">life</a>
+              <a href={RESUME_URL} target="_blank" rel="noreferrer">
+                résumé ↗
               </a>
-              <a className={s.ghost} href={`mailto:${EMAIL}`}>
-                Email
-              </a>
-              <a className={s.ghost} href={LINKEDIN_URL} target="_blank" rel="noreferrer">
-                LinkedIn
-              </a>
-              <a className={s.ghost} href={GITHUB_URL} target="_blank" rel="noreferrer">
-                GitHub
-              </a>
-            </div>
+            </nav>
           </div>
-        </section>
+        </header>
 
         <section id="about" className={s.section}>
-          <h2>About</h2>
-          {PROFILE.about.map((t) => (
-            <p key={t}>{t}</p>
-          ))}
+          <p>
+            hi! i&apos;m elaine. i study computer science and operations research at{" "}
+            <span className={s.chip}>
+              <i style={{ background: "#b31b1b" }} />
+              cornell
+            </span>
+            , where i also fence épée on the ncaa division i team.
+          </p>
+          <p className={s.kicker}>recently</p>
+          <ul className={s.recent}>
+            <li>
+              ml engineer intern at{" "}
+              <span className={s.chip}>
+                <i style={{ background: "#5b3cc4" }} />
+                anote ai
+              </span>
+              <span className={s.sub}>↳ showed ROUGE-L understated numeric accuracy 10–16× on FinanceBench</span>
+            </li>
+            <li>
+              software engineer intern at{" "}
+              <span className={s.chip}>
+                <i style={{ background: "#2457c5" }} />
+                finmd
+              </span>
+              <span className={s.sub}>↳ shipped analytics to production, cut p50 latency 60%</span>
+            </li>
+            <li>researching how llms can help mixed-integer solvers, at cornell</li>
+            <li>
+              winning <a href="#projects">bigred//hacks</a> with a rhythm game you play with your body
+            </li>
+          </ul>
+          <p>
+            i like problems where software, models and people meet. right now i&apos;m looking for{" "}
+            <strong>summer 2027 swe + quant internships</strong>.
+          </p>
+          <p className={s.links}>
+            <a href={`mailto:${EMAIL}`}>email</a>
+            <a href={LINKEDIN_URL} target="_blank" rel="noreferrer">
+              linkedin
+            </a>
+            <a href={GITHUB_URL} target="_blank" rel="noreferrer">
+              github
+            </a>
+            <a href={RESUME_URL} target="_blank" rel="noreferrer">
+              résumé
+            </a>
+            <a href={CAL_URL} target="_blank" rel="noreferrer">
+              cal
+            </a>
+          </p>
         </section>
 
         <section id="experience" className={s.section}>
-          <h2>Experience</h2>
-          {group("Experience").map((p) => (
-            <Entry key={p.id} p={p} />
-          ))}
-          <h2 className={s.h2gap}>Research</h2>
-          {group("Research").map((p) => (
-            <Entry key={p.id} p={p} />
-          ))}
+          <h2>experience</h2>
+          <ul className={s.jobs}>
+            {group("Experience").map((p) => (
+              <Job key={p.id} p={p} />
+            ))}
+          </ul>
+          <h2 className={s.h2gap}>research</h2>
+          <ul className={s.jobs}>
+            {group("Research").map((p) => (
+              <Job key={p.id} p={p} />
+            ))}
+          </ul>
         </section>
 
         <section id="projects" className={s.section}>
-          <h2>Projects</h2>
-          <div className={s.grid}>
+          <h2>projects</h2>
+          <p className={s.lede}>things i&apos;ve built, and am building</p>
+          <div className={s.cards}>
             {group("Projects").map((p) => (
               <Card key={p.id} p={p} />
             ))}
           </div>
         </section>
 
-        <section className={s.section}>
-          <h2>Skills</h2>
-          <dl className={s.skills}>
-            {SKILLS.map((g) => (
-              <div key={g.label}>
-                <dt>{g.label}</dt>
-                <dd>{g.items.join(" · ")}</dd>
-              </div>
-            ))}
-          </dl>
-        </section>
-
-        <section id="contact" className={s.section}>
-          <h2>Contact</h2>
+        <section id="life" className={s.section}>
+          <h2>life</h2>
           <p>
-            The best way to reach me is <a href={`mailto:${EMAIL}`}>{EMAIL}</a>. I&apos;m also on{" "}
-            <a href={LINKEDIN_URL} target="_blank" rel="noreferrer">
-              LinkedIn
-            </a>{" "}
-            and{" "}
-            <a href={GITHUB_URL} target="_blank" rel="noreferrer">
-              GitHub
-            </a>
-            .
+            épée is the heaviest of the three blades: the whole body is target and whoever lands first scores. i started because a friend got a discount
+            if we signed up with him, made the canadian national team, and now compete for cornell. off the strip: swe conference director, orie club
+            publicity chair, poker, bloons td 6 strategy videos, and any excuse to try a new coffee shop.
           </p>
+          <div className={s.photos}>
+            {PHOTOS.map((ph, i) => (
+              <figure key={ph.src} className={s.snap} style={{ rotate: `${[-3, 2, -1.5, 3][i % 4]}deg` }}>
+                <a href={ph.src} target="_blank" rel="noreferrer">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={ph.thumb} alt={ph.alt} loading="lazy" />
+                </a>
+                <figcaption>{ph.caption.toLowerCase()}</figcaption>
+              </figure>
+            ))}
+          </div>
         </section>
-      </main>
 
-      <footer className={s.foot}>
-        <span>© {new Date().getFullYear()} Elaine Hong</span>
-        <a href="/play">Prefer games? Play the Minecraft version →</a>
-      </footer>
+        <footer className={s.foot}>
+          <p className={s.footBig}>let&apos;s work together!</p>
+          <p>open to summer 2027 software engineering and quant roles.</p>
+          <p className={s.ctas}>
+            <a className={s.btn} href={`mailto:${EMAIL}`}>
+              say hi
+            </a>
+            <a className={s.ghost} href={CAL_URL} target="_blank" rel="noreferrer">
+              book a 30 min chat
+            </a>
+          </p>
+          <p className={s.fine}>
+            <span>© {new Date().getFullYear()} elaine hong</span>
+            <a href="/play">prefer games? play the minecraft version →</a>
+          </p>
+        </footer>
+      </div>
     </div>
   )
 }
