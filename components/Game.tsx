@@ -5,6 +5,7 @@ import { ACHIEVEMENTS, ACHIEVEMENT_BY_ID, HOTBAR, PROJECTS, SCREEN_TITLES, SPLAS
 import { Background, Dialog, PixelIcon, Toast, Tooltip, ViewCount, Weather } from "@/components/game/primitives"
 import { Home } from "@/components/screens/Home"
 import { About, Arcade, Inventory, Multiplayer, QuickView } from "@/components/screens/Screens"
+import { ScrollNav } from "@/components/game/ScrollNav"
 import { Blog } from "@/components/screens/Blog"
 import type { Post } from "@/lib/blog"
 import { FortuneWheel } from "@/components/games/Fortune"
@@ -315,6 +316,7 @@ export default function Game({ posts }: { posts: Post[] }) {
         <p className="foot">Inspired by Minecraft · not affiliated with Mojang</p>
       </main>
 
+      <ScrollNav screen={screen} go={go} paused={dialog !== null} />
       {/* The hotbar lives on the title screen only, so it never covers a page's content. */}
       {screen === "home" ? (
         <nav className="hotbar" aria-label="Quick access">
