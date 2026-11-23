@@ -104,7 +104,7 @@ export function SimpleSite() {
           </figure>
           <div className={s.heroText}>
             <p className={s.hello}>
-              Hi there, welcome! <span className={s.wave} aria-hidden="true">👋</span>
+              Hello there! <span className={s.wave} aria-hidden="true">👋</span>
             </p>
             <h1 className={s.name}>
               Elaine Hong<span className={s.cursor} aria-hidden="true" />
