@@ -2,6 +2,7 @@
 // It reads the same data as the Minecraft version (data/content.ts), so the two never drift apart.
 import { EMAIL, GITHUB_URL, LINKEDIN_URL, PHOTOS, PROJECT_GROUPS, PROJECTS, RESUME_URL, type Project } from "@/data/content"
 import { PixelField } from "./PixelField"
+import { Reveal } from "./Reveal"
 import s from "./simple.module.css"
 
 const CAL_URL = "https://calendly.com/eh698-cornell/30min"
@@ -35,7 +36,7 @@ function Badge({ id }: { id: string }) {
 function Job({ p }: { p: Project }) {
   const research = p.type.startsWith("Research")
   return (
-    <li className={s.job}>
+    <li className={s.job} data-reveal="">
       <Badge id={p.id} />
       <div>
         <h3>{research ? p.name : p.org}</h3>
@@ -51,7 +52,7 @@ function Job({ p }: { p: Project }) {
 
 function Card({ p }: { p: Project }) {
   return (
-    <article className={s.card}>
+    <article className={s.card} data-reveal="">
       <p className={s.status}>{status(p)}</p>
       <h3>{NAME[p.id] ?? p.name}</h3>
       <p className={s.what}>{p.desc}</p>
@@ -79,15 +80,25 @@ export function SimpleSite() {
   return (
     <div className={s.page}>
       <PixelField />
+      <Reveal />
       <div className={s.col}>
         <header className={s.hero} id="top">
           <figure className={s.polaroid}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/photos/elaine.jpg" alt="Elaine Hong" width={280} height={283} />
+            <img src="/photos/elaine.jpg" alt="Elaine smiling in a grey flat cap on a sunny bridge" width={320} height={320} />
+            <figcaption>that&apos;s me!</figcaption>
           </figure>
-          <div>
-            <h1 className={s.name}>elaine hong</h1>
+          <div className={s.heroText}>
+            <p className={s.hello}>
+              hi there, welcome! <span className={s.wave} aria-hidden="true">👋</span>
+            </p>
+            <h1 className={s.name}>
+              elaine hong<span className={s.cursor} aria-hidden="true" />
+            </h1>
             <p className={s.where}>cs + operations research @ cornell &apos;28 · toronto → ithaca</p>
+            <p className={s.open}>
+              <i aria-hidden="true" /> open to summer 2027 swe + quant internships
+            </p>
             <nav className={s.nav} aria-label="Sections">
               <a href="#about">about</a>
               <a href="#experience">experience</a>
@@ -100,9 +111,9 @@ export function SimpleSite() {
           </div>
         </header>
 
-        <section id="about" className={s.section}>
+        <section id="about" className={s.section} data-reveal="">
           <p>
-            hi! i&apos;m elaine. i study computer science and operations research at{" "}
+            thanks for stopping by! i&apos;m elaine, and i study computer science and operations research at{" "}
             <span className={s.chip}>
               <i style={{ background: "#b31b1b" }} />
               cornell
@@ -133,8 +144,7 @@ export function SimpleSite() {
             </li>
           </ul>
           <p>
-            i like problems where software, models and people meet. right now i&apos;m looking for{" "}
-            <strong>summer 2027 swe + quant internships</strong>.
+            i like problems where software, models and people meet, and building things people actually enjoy using.
           </p>
           <p className={s.links}>
             <a href={`mailto:${EMAIL}`}>email</a>
@@ -154,13 +164,13 @@ export function SimpleSite() {
         </section>
 
         <section id="experience" className={s.section}>
-          <h2>experience</h2>
+          <h2 data-reveal="">experience</h2>
           <ul className={s.jobs}>
             {group("Experience").map((p) => (
               <Job key={p.id} p={p} />
             ))}
           </ul>
-          <h2 className={s.h2gap}>research</h2>
+          <h2 className={s.h2gap} data-reveal="">research</h2>
           <ul className={s.jobs}>
             {group("Research").map((p) => (
               <Job key={p.id} p={p} />
@@ -169,8 +179,8 @@ export function SimpleSite() {
         </section>
 
         <section id="projects" className={s.section}>
-          <h2>projects</h2>
-          <p className={s.lede}>things i&apos;ve built, and am building</p>
+          <h2 data-reveal="">projects</h2>
+          <p className={s.lede} data-reveal="">things i&apos;ve built, and am building</p>
           <div className={s.cards}>
             {group("Projects").map((p) => (
               <Card key={p.id} p={p} />
@@ -179,15 +189,15 @@ export function SimpleSite() {
         </section>
 
         <section id="life" className={s.section}>
-          <h2>life</h2>
-          <p>
+          <h2 data-reveal="">life</h2>
+          <p data-reveal="">
             épée is the heaviest of the three blades: the whole body is target and whoever lands first scores. i started because a friend got a discount
             if we signed up with him, made the canadian national team, and now compete for cornell. off the strip: swe conference director, orie club
             publicity chair, poker, bloons td 6 strategy videos, and any excuse to try a new coffee shop.
           </p>
           <div className={s.photos}>
             {PHOTOS.map((ph, i) => (
-              <figure key={ph.src} className={s.snap} style={{ rotate: `${[-3, 2, -1.5, 3][i % 4]}deg` }}>
+              <figure key={ph.src} className={s.snap} data-reveal="" style={{ rotate: `${[-3, 2, -1.5, 3][i % 4]}deg`, transitionDelay: `${i * 90}ms` }}>
                 <a href={ph.src} target="_blank" rel="noreferrer">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={ph.thumb} alt={ph.alt} loading="lazy" />
@@ -198,9 +208,9 @@ export function SimpleSite() {
           </div>
         </section>
 
-        <footer className={s.foot}>
+        <footer className={s.foot} id="contact" data-reveal="">
           <p className={s.footBig}>let&apos;s work together!</p>
-          <p>open to summer 2027 software engineering and quant roles.</p>
+          <p>whether it&apos;s an internship, a project, fencing, or a coffee chat, my inbox is always open. i&apos;d love to hear from you.</p>
           <p className={s.ctas}>
             <a className={s.btn} href={`mailto:${EMAIL}`}>
               say hi
