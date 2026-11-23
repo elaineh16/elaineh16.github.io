@@ -198,10 +198,13 @@ export function SimpleSite() {
         <section id="life" className={s.section}>
           <h2 data-reveal="">Life</h2>
           <p data-reveal="">
-            Épée is the heaviest of the three blades: the whole body is target, and whoever lands first scores. I started because a friend got a
-            discount if we signed up with him, went on to make the Canadian National Team, and now compete for Cornell. Off the strip, you&apos;ll find
-            me as SWE conference director and ORIE Club publicity chair, playing poker, watching Bloons TD 6 strategy videos, or finding any excuse to
-            try a new coffee shop.
+            I fence épée, the heaviest of the three blades: the whole body is target, and whoever lands first scores. I picked it up because a
+            friend got a discount if I signed up with him. Somehow that turned into a spot on the Canadian National Team, and now I compete for
+            Cornell&apos;s Division I fencing team.
+          </p>
+          <p data-reveal="">
+            Off the strip, I&apos;m Conference Director for Cornell SWE and Publicity Chair for C.ORIE. The rest of the time, I&apos;m probably
+            playing poker, watching way too many Bloons TD 6 strategy videos, or finding an excuse to try another coffee shop.
           </p>
           <Photos hide={["golden-hour"]} />
         </section>
