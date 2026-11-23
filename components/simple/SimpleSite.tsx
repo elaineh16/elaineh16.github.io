@@ -1,9 +1,10 @@
 // The simple version of the site: one quiet, readable page, rendered at build time so all the text is in the HTML.
 // It reads the same data as the Minecraft version (data/content.ts), so the two never drift apart.
-import { EMAIL, GITHUB_URL, LINKEDIN_URL, PHOTOS, PROJECT_GROUPS, PROJECTS, RESUME_URL, type Project } from "@/data/content"
+import { EMAIL, GITHUB_URL, LINKEDIN_URL, PROJECT_GROUPS, PROJECTS, RESUME_URL, type Project } from "@/data/content"
 import { PixelIcon } from "@/components/game/primitives"
 import type { IconName } from "@/lib/pixel-art"
 import { Controls } from "./Controls"
+import { Photos } from "./Photos"
 import { Reveal } from "./Reveal"
 import s from "./simple.module.css"
 
@@ -13,7 +14,7 @@ const byId = Object.fromEntries(PROJECTS.map((p) => [p.id, p])) as Record<string
 const group = (label: string) => (PROJECT_GROUPS.find((g) => g.label === label)?.ids ?? []).map((id) => byId[id]).filter(Boolean)
 
 const ORG: Record<string, string> = { combopt: "Cornell University", chess: "Cornell University" }
-const NAME: Record<string, string> = { site: "This website, the Minecraft edition" }
+const NAME: Record<string, string> = {}
 
 const status = (p: Project) => p.type.replace("Side project · ", "").replace("Full-stack build · ", "")
 const tags = (p: Project) => p.stack.split(" · ").slice(0, 4).join(" · ")
@@ -100,7 +101,6 @@ export function SimpleSite() {
           <figure className={s.polaroid}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/photos/elaine.jpg" alt="Elaine smiling in a grey flat cap on a sunny bridge" width={320} height={320} />
-            <figcaption>That&apos;s me!</figcaption>
           </figure>
           <div className={s.heroText}>
             <p className={s.hello}>
@@ -203,17 +203,7 @@ export function SimpleSite() {
             me as SWE conference director and ORIE Club publicity chair, playing poker, watching Bloons TD 6 strategy videos, or finding any excuse to
             try a new coffee shop.
           </p>
-          <div className={s.photos}>
-            {PHOTOS.filter((ph) => !ph.src.includes("golden-hour")).map((ph, i) => (
-              <figure key={ph.src} className={s.snap} data-reveal="" style={{ rotate: `${[-3, 2, -1.5][i % 3]}deg`, transitionDelay: `${i * 90}ms` }}>
-                <a href={ph.src} target="_blank" rel="noreferrer">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={ph.thumb} alt={ph.alt} loading="lazy" />
-                </a>
-                <figcaption>{ph.caption}</figcaption>
-              </figure>
-            ))}
-          </div>
+          <Photos hide={["golden-hour"]} />
         </section>
 
         <div className={s.grass} aria-hidden="true" />
@@ -230,7 +220,7 @@ export function SimpleSite() {
           </p>
           <p className={s.fine}>
             <span>© {new Date().getFullYear()} Elaine Hong</span>
-            <a href="/play">Prefer games? Play the Minecraft version →</a>
+            <a href="/play">Play Minecraft version!</a>
           </p>
         </footer>
       </div>

@@ -72,7 +72,7 @@
 
 /* Hero: tilted polaroid + serif name + section tabs */
 .hero { display: flex; align-items: center; gap: 36px; padding: 88px 0 36px; border-bottom: 1px solid var(--line); }
-.polaroid { flex: none; margin: 0; width: 168px; padding: 8px 8px 8px; background: #fff; border-radius: 3px; box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 8px 24px rgba(0,0,0,.09); rotate: -4deg; transition: rotate .25s; }
+.polaroid { flex: none; margin: 0; width: 168px; padding: 8px 8px 22px; background: #fff; border-radius: 3px; box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 8px 24px rgba(0,0,0,.09); rotate: -4deg; transition: rotate .25s; }
 .polaroid:hover { rotate: 0deg; scale: 1.03; }
 .polaroid figcaption { margin-top: 6px; font-size: 11px; line-height: 1.2; color: #71717a; text-align: center; }
 .polaroid img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; }
@@ -142,7 +142,8 @@
 .snap { margin: 0; padding: 7px 7px 10px; background: #fff; border-radius: 3px; box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 6px 18px rgba(0,0,0,.08); transition: rotate .25s, translate .25s; }
 .snap:hover { rotate: 0deg !important; translate: 0 -3px; }
 .snap img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
-.page .snap a { text-decoration: none; }
+.snap button { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
+.snap button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 .snap figcaption { margin-top: 6px; font-size: 11.5px; line-height: 1.3; color: #52525b; }
 
 /* Footer */
